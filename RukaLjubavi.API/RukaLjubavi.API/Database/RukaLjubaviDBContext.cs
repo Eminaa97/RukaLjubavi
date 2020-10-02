@@ -16,8 +16,10 @@ namespace RukaLjubavi.API.Database
         }
 
         public virtual DbSet<Benefiktor> Benefiktor { get; set; }
+        public virtual DbSet<BenefiktorKategorije> BenefiktorKategorije { get; set; }
         public virtual DbSet<Donacija> Donacija { get; set; }
         public virtual DbSet<Donator> Donator { get; set; }
+        public virtual DbSet<DonatorKategorije> DonatorKategorije { get; set; }
         public virtual DbSet<Grad> Grad { get; set; }
         public virtual DbSet<Kategorija> Kategorija { get; set; }
         public virtual DbSet<OcjenaDonacije> OcjenaDonacije { get; set; }
@@ -27,7 +29,7 @@ namespace RukaLjubavi.API.Database
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("Server=(local);Database=RukaLjubaviDB;Integrated Security=True;Trusted_Connection=True;");
             }
         }
@@ -60,6 +62,21 @@ namespace RukaLjubavi.API.Database
                     .HasConstraintName("FK__Benefikto__GradI__29572725");
             });
 
+            modelBuilder.Entity<BenefiktorKategorije>(entity =>
+            {
+                entity.ToTable("Benefiktor_Kategorije");
+
+                entity.HasOne(d => d.Benefiktor)
+                    .WithMany(p => p.BenefiktorKategorije)
+                    .HasForeignKey(d => d.BenefiktorId)
+                    .HasConstraintName("FK__Benefikto__Benef__31EC6D26");
+
+                entity.HasOne(d => d.Kategorija)
+                    .WithMany(p => p.BenefiktorKategorije)
+                    .HasForeignKey(d => d.KategorijaId)
+                    .HasConstraintName("FK__Benefikto__Kateg__32E0915F");
+            });
+
             modelBuilder.Entity<Donacija>(entity =>
             {
                 entity.Property(e => e.DatumVrijeme).HasColumnType("datetime");
@@ -73,17 +90,17 @@ namespace RukaLjubavi.API.Database
                 entity.HasOne(d => d.Benefiktor)
                     .WithMany(p => p.Donacija)
                     .HasForeignKey(d => d.BenefiktorId)
-                    .HasConstraintName("FK__Donacija__Benefi__2F10007B");
+                    .HasConstraintName("FK__Donacija__Benefi__36B12243");
 
                 entity.HasOne(d => d.Donator)
                     .WithMany(p => p.Donacija)
                     .HasForeignKey(d => d.DonatorId)
-                    .HasConstraintName("FK__Donacija__Donato__2E1BDC42");
+                    .HasConstraintName("FK__Donacija__Donato__35BCFE0A");
 
                 entity.HasOne(d => d.Kategorija)
                     .WithMany(p => p.Donacija)
                     .HasForeignKey(d => d.KategorijaId)
-                    .HasConstraintName("FK__Donacija__Katego__300424B4");
+                    .HasConstraintName("FK__Donacija__Katego__37A5467C");
             });
 
             modelBuilder.Entity<Donator>(entity =>
@@ -106,8 +123,6 @@ namespace RukaLjubavi.API.Database
 
                 entity.Property(e => e.LozinkaSalt).HasMaxLength(200);
 
-                entity.Property(e => e.MjestoPrebivalista).HasMaxLength(50);
-
                 entity.Property(e => e.MjestoRodjenja).HasMaxLength(50);
 
                 entity.Property(e => e.Prezime).HasMaxLength(50);
@@ -118,6 +133,21 @@ namespace RukaLjubavi.API.Database
                     .WithMany(p => p.Donator)
                     .HasForeignKey(d => d.GradId)
                     .HasConstraintName("FK__Donator__GradId__267ABA7A");
+            });
+
+            modelBuilder.Entity<DonatorKategorije>(entity =>
+            {
+                entity.ToTable("Donator_Kategorije");
+
+                entity.HasOne(d => d.Donator)
+                    .WithMany(p => p.DonatorKategorije)
+                    .HasForeignKey(d => d.DonatorId)
+                    .HasConstraintName("FK__Donator_K__Donat__2E1BDC42");
+
+                entity.HasOne(d => d.Kategorija)
+                    .WithMany(p => p.DonatorKategorije)
+                    .HasForeignKey(d => d.KategorijaId)
+                    .HasConstraintName("FK__Donator_K__Kateg__2F10007B");
             });
 
             modelBuilder.Entity<Grad>(entity =>
@@ -141,7 +171,7 @@ namespace RukaLjubavi.API.Database
                 entity.HasOne(d => d.Donacija)
                     .WithMany(p => p.OcjenaDonacije)
                     .HasForeignKey(d => d.DonacijaId)
-                    .HasConstraintName("FK__OcjenaDon__Donac__32E0915F");
+                    .HasConstraintName("FK__OcjenaDon__Donac__3A81B327");
             });
 
             modelBuilder.Entity<PredefinisaniKomentari>(entity =>

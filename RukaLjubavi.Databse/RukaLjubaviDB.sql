@@ -16,7 +16,6 @@ create table Donator
 	JMBG nvarchar(13),
 	DatumRodjenja date,
 	MjestoRodjenja nvarchar(50),
-	MjestoPrebivalista nvarchar(50),
 	Email nvarchar(50),
 	LozinkaSalt nvarchar(200),
 	LozinkaHash nvarchar(200),
@@ -44,6 +43,20 @@ create table Kategorija
 (
 	Id int primary key identity(1,1),
 	Naziv nvarchar(50),
+)
+
+create table Donator_Kategorije
+(
+	Id int primary key identity(1,1),
+	DonatorId int foreign key references Donator(Id),
+	KategorijaId int foreign key references Kategorija(Id),
+)
+
+create table Benefiktor_Kategorije
+(
+	Id int primary key identity(1,1),
+	BenefiktorId int foreign key references Benefiktor(Id),
+	KategorijaId int foreign key references Kategorija(Id),
 )
 
 create table Donacija

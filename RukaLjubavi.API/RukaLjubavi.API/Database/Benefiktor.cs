@@ -7,6 +7,7 @@ namespace RukaLjubavi.API.Database
     {
         public Benefiktor()
         {
+            BenefiktorKategorije = new HashSet<BenefiktorKategorije>();
             Donacija = new HashSet<Donacija>();
         }
 
@@ -22,6 +23,7 @@ namespace RukaLjubavi.API.Database
         public int? GradId { get; set; }
 
         public virtual Grad Grad { get; set; }
+        public virtual ICollection<BenefiktorKategorije> BenefiktorKategorije { get; set; }
         public virtual ICollection<Donacija> Donacija { get; set; }
     }
 }

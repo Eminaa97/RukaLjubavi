@@ -8,6 +8,7 @@ namespace RukaLjubavi.API.Database
         public Donator()
         {
             Donacija = new HashSet<Donacija>();
+            DonatorKategorije = new HashSet<DonatorKategorije>();
         }
 
         public int Id { get; set; }
@@ -16,7 +17,6 @@ namespace RukaLjubavi.API.Database
         public string Jmbg { get; set; }
         public DateTime? DatumRodjenja { get; set; }
         public string MjestoRodjenja { get; set; }
-        public string MjestoPrebivalista { get; set; }
         public string Email { get; set; }
         public string LozinkaSalt { get; set; }
         public string LozinkaHash { get; set; }
@@ -27,5 +27,6 @@ namespace RukaLjubavi.API.Database
 
         public virtual Grad Grad { get; set; }
         public virtual ICollection<Donacija> Donacija { get; set; }
+        public virtual ICollection<DonatorKategorije> DonatorKategorije { get; set; }
     }
 }

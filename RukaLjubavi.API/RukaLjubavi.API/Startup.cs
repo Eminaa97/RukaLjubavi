@@ -35,6 +35,7 @@ namespace RukaLjubavi.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ruka Ljubavi API", Version = "v1" });
             });
 
+            //Scaffold-DbContext -Connection "Server=(local);Database=RukaLjubaviDB;Integrated Security=True;Trusted_Connection=True;" -Provider Microsoft.EntityFrameworkCore.SqlServer -OutputDir Database -context RukaLjubaviDBContext -force
             services.AddDbContext<RukaLjubaviDBContext>(opt => 
                 opt.UseSqlServer(Configuration.GetConnectionString("RukaLjubaviDb")).
                 EnableSensitiveDataLogging());
