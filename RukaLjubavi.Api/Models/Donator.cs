@@ -14,8 +14,14 @@ namespace RukaLjubavi.Api.Models
         public string Jmbg { get; set; }
         public DateTime DatumRodjenja { get; set; }
 
+
         [ForeignKey(nameof(MjestoRodjenjaId))]
         public Grad MjestoRodjenja { get; set; }
         public int MjestoRodjenjaId { get; set; }
+
+
+        [ForeignKey(nameof(KorisnikId))]
+        public Korisnik Korisnik { get; set; }
+        public int KorisnikId { get; set; }
     }
 }

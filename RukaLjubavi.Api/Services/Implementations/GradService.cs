@@ -4,7 +4,7 @@ using RukaLjubavi.Api.Database;
 using RukaLjubavi.Api.Dto;
 using RukaLjubavi.Api.Models;
 
-namespace RukaLjubavi.Api.Services
+namespace RukaLjubavi.Api.Services.Implementations
 {
     public class GradService : BaseDataService<Grad, GradDto, GradInsertRequest>, IGradService
     {

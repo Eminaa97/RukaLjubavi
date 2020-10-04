@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RukaLjubavi.Api.Services
+namespace RukaLjubavi.Api.Services.Implementations
 {
     public class BaseDataService<TModel, TDto, TInsertModel> : IBaseDataService<TModel, TDto, TInsertModel>
         where TModel : class, IEntity

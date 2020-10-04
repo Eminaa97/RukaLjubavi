@@ -8,9 +8,9 @@ namespace RukaLjubavi.Api.Models
         public int KategorijaId { get; set; }
 
         [ForeignKey(nameof(BenefiktorId))]
-        public  Benefiktor Benefiktor { get; set; }
+        public Benefiktor Benefiktor { get; set; }
 
         [ForeignKey(nameof(KategorijaId))]
-        public  Kategorija Kategorija { get; set; }
+        public Kategorija Kategorija { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace RukaLjubavi.Api.Services
         private readonly IOptions<AppSettings> _options;
 
         public KorisnikService(
-            RukaLjubaviDbContext context, 
+            RukaLjubaviDbContext context,
             IMapper mapper,
             IOptions<AppSettings> options
             )
@@ -97,11 +97,44 @@ namespace RukaLjubavi.Api.Services
 
             entity.LozinkaSalt = GenerateSalt();
             entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Password);
+
+            if (request is DonatorInsertRequest dir)
+            {
+                var req = _mapper.Map<Donator>(dir);
+                req.Korisnik = entity;
+                _context.Add(req);
+
+                foreach (var item in dir.Kategorije)
+                {
+                    _context.DonatorKategorije.Add(new DonatorKategorija
+                    {
+                        KategorijaId = item,
+                        Donator = req
+                    });
+                }
+            }
+            else if (request is BenefiktorInsertRequest bir)
+            {
+                var req = _mapper.Map<Benefiktor>(bir);
+                req.Korisnik = entity;
+                _context.Add(req);
+
+                foreach (var item in bir.Kategorije)
+                {
+                    _context.BenefiktorKategorije.Add(new BenefiktorKategorija
+                    {
+                        KategorijaId = item,
+                        Benefiktor = req
+                    });
+                }
+            }
+
             _context.SaveChanges();
 
             return _mapper.Map<UserDto>(entity);
         }
 
+        [Obsolete("TODO")]
         public UserDto Update(int id, UserUpdateRequest request)
         {
             var entity = _context.Korisnici.Find(id);
@@ -147,12 +180,36 @@ namespace RukaLjubavi.Api.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
             #endregion
 
-            var user = _mapper.Map<AuthenticatedUser>(entity);
-            user.Token = tokenHandler.WriteToken(token);
-            return user;
-        }
-        
 
+            if (entity.TipKorisnika == TipKorisnika.Benefiktor)
+            {
+                var user = _mapper.Map<AuthenticatedBenefiktor>(entity);
+                user.Token = tokenHandler.WriteToken(token);
+
+                var benefiktor = _context.Benefiktori.FirstOrDefault(x => x.KorisnikId == user.Id);
+
+                user.NazivKompanije = benefiktor.NazivKompanije;
+                user.Pdvbroj = benefiktor.Pdvbroj;
+
+                return user;
+            }
+            else
+            {
+                var user = _mapper.Map<AuthenticatedDonator>(entity);
+                user.Token = tokenHandler.WriteToken(token);
+
+                var donator = _context.Donatori.FirstOrDefault(x => x.KorisnikId == user.Id);
+
+                user.Jmbg = donator.Jmbg;
+                user.Ime = donator.Ime;
+                user.Prezime = donator.Prezime;
+
+                return user;
+            }
+        }
+
+
+        #region Authentication
         private string GenerateSalt()
         {
             var buf = new byte[16];
@@ -172,6 +229,6 @@ namespace RukaLjubavi.Api.Services
             byte[] inArray = algorithm.ComputeHash(dst);
             return Convert.ToBase64String(inArray);
         }
-
+        #endregion
     }
 }

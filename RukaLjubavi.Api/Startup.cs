@@ -14,6 +14,7 @@ using RukaLjubavi.Api.Middleware;
 using RukaLjubavi.Api.Services;
 using System.Text;
 using System;
+using RukaLjubavi.Api.Services.Implementations;
 
 namespace RukaLjubavi.Api
 {
@@ -32,29 +33,6 @@ namespace RukaLjubavi.Api
             // General
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
-
-            // Authentication
-            services
-               .AddAuthentication(x =>
-               {
-                   x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                   x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-               })
-               .AddJwtBearer(options =>
-               {
-                   var config = Configuration.GetSection(nameof(AppSettings)).Get<AppSettings>();
-
-                   options.RequireHttpsMetadata = false;
-                   options.SaveToken = true;
-                   options.TokenValidationParameters = new TokenValidationParameters
-                   {
-                       ClockSkew = TimeSpan.FromMinutes(5),
-                       ValidateIssuerSigningKey = false,
-                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(config.Secret)),
-                       ValidateIssuer = false,
-                       ValidateAudience = false
-                   };
-               });
 
             // Swagger
             services.AddSwaggerGen(options =>
@@ -86,6 +64,29 @@ namespace RukaLjubavi.Api
                 });
             });
 
+            // Authentication
+            services
+               .AddAuthentication(x =>
+               {
+                   x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                   x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+               })
+               .AddJwtBearer(options =>
+               {
+                   var config = Configuration.GetSection(nameof(AppSettings)).Get<AppSettings>();
+
+                   options.RequireHttpsMetadata = false;
+                   options.SaveToken = true;
+                   options.TokenValidationParameters = new TokenValidationParameters
+                   {
+                       ClockSkew = TimeSpan.FromMinutes(5),
+                       ValidateIssuerSigningKey = false,
+                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(config.Secret)),
+                       ValidateIssuer = false,
+                       ValidateAudience = false
+                   };
+               });
+
             // Database access
             services.AddDbContext<RukaLjubaviDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("RukaLjubaviDb")).EnableSensitiveDataLogging());
@@ -94,6 +95,9 @@ namespace RukaLjubavi.Api
             services.AddScoped<IKorisnikService, KorisnikService>();
             services.AddScoped<IDrzavaService, DrzavaService>();
             services.AddScoped<IGradService, GradService>();
+            services.AddScoped<IKategorijaService,KategorijaService>();
+            services.AddScoped<INotifikacijaService, NotifikacijaService>();
+
 
             // Configuration
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
@@ -112,7 +116,7 @@ namespace RukaLjubavi.Api
             app.UseSwaggerUI(config =>
             {
                 config.SwaggerEndpoint("/swagger/v1/swagger.json", "RukaLjubaviAPI");
-                config.RoutePrefix = string.Empty;
+                //config.RoutePrefix = string.Empty;
             });
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseRouting();

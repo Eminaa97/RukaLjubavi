@@ -24,6 +24,8 @@ namespace RukaLjubavi.Api.Mappers
             //CreateMap<UserUpdateRequest, Korisnik>();
             CreateMap<Korisnik, UserDto>().ReverseMap();
             CreateMap<Korisnik, AuthenticatedUser>();
+            CreateMap<BenefiktorInsertRequest, Benefiktor>().ReverseMap();
+            CreateMap<DonatorInsertRequest, Donator>().ReverseMap();
         }
     }
 }

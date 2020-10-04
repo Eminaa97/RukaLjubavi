@@ -1,5 +1,6 @@
 ﻿using RukaLjubavi.API.Models;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RukaLjubavi.Api.Models
 {
@@ -9,5 +10,9 @@ namespace RukaLjubavi.Api.Models
         public int Id { get; set; }
         public string NazivKompanije { get; set; }
         public string Pdvbroj { get; set; }
+
+        [ForeignKey(nameof(KorisnikId))]
+        public Korisnik Korisnik { get; set; }
+        public int KorisnikId { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using RukaLjubavi.Api.Database;
 using RukaLjubavi.Api.Models;
 using RukaLjubavi.Api.Services;
 
-namespace RukaLjubavi.Api.Services
+namespace RukaLjubavi.Api.Services.Implementations
 {
     public class DrzavaService : BaseDataService<Drzava, DrzavaDto, DrzavaInsertRequest>, IDrzavaService
     {
