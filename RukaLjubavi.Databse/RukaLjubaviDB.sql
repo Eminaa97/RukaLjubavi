@@ -1,91 +1,112 @@
-create database RukaLjubaviDB
+CREATE DATABASE RukaLjubaviDB;
+GO
 
-use RukaLjubaviDB
+USE RukaLjubaviDB;
+GO
 
-create table Grad
+CREATE TABLE Drzave
 (
 	Id int primary key identity(1,1),
 	Naziv nvarchar(50),
 )
+GO
 
-create table Donator
+CREATE TABLE Gradovi
+(
+	Id int primary key identity(1,1),
+	Naziv nvarchar(50),
+	DrzavaId int foreign key references Drzave(Id)
+)
+GO
+
+CREATE TABLE Korisnici
+(
+	Id int primary key identity(1,1),
+	Email nvarchar(50),
+	LozinkaSalt nvarchar(200),
+	LozinkaHash nvarchar(200),
+	DatumRegistracije datetime,
+	Telefon nvarchar(20),
+	Adresa nvarchar(100),
+	IsVerifikovan bit,
+	MjestoPrebivalistaID int foreign key references Gradovi(Id)
+)
+GO
+
+CREATE TABLE Donator
 (
 	Id int primary key identity(1,1),
 	Ime nvarchar(50),
 	Prezime nvarchar(50),
 	JMBG nvarchar(13),
 	DatumRodjenja date,
-	MjestoRodjenja nvarchar(50),
-	Email nvarchar(50),
-	LozinkaSalt nvarchar(200),
-	LozinkaHash nvarchar(200),
-	Telefon nvarchar(20),
-	Adresa nvarchar(50),
-	isVerifikovan bit,
-	GradId int foreign key references Grad(Id)
+	MjestoRodjenjaID int foreign key references Gradovi(Id)
+)
+GO
+
+CREATE TABLE Benefiktor
+(
+	Id int primary key identity(1,1),
+	NazivKompanije nvarchar(100),
+	PDVBroj nvarchar(20)
+)
+GO
+
+CREATE TABLE Notifikacije
+(
+	Id int primary key identity(1,1),
+	UserId int foreign key references Korisnici(Id),
+	Sadrzaj nvarchar(255),
+	DatumSlanja datetime,
+	DatumPregleda datetime
 )
 
-create table Benefiktor
+CREATE TABLE Kategorija
 (
 	Id int primary key identity(1,1),
 	Naziv nvarchar(50),
-	PDVBroj nvarchar(20),
-	Email nvarchar(50),
-	Telefon nvarchar(20),
-	LozinkaSalt nvarchar(200),
-	LozinkaHash nvarchar(200),
-	Adresa nvarchar(50),
-	isVerifikovan bit,
-	GradId int foreign key references Grad(Id)
-)
+);
+GO
 
-create table Kategorija
+CREATE TABLE Donator_Kategorije
 (
-	Id int primary key identity(1,1),
-	Naziv nvarchar(50),
-)
+	DonatorId int foreign key references Donator(Id),
+	KategorijaId int foreign key references Kategorija(Id),
+	constraint PK_Donator_KategorijeID primary key(DonatorId, KategorijaId)
+);
+GO
 
-create table Donator_Kategorije
+CREATE TABLE Benefiktor_Kategorije
+(
+	BenefiktorId int foreign key references Benefiktor(Id),
+	KategorijaId int foreign key references Kategorija(Id),
+	constraint PK_Benefiktor_KategorijeID primary key(BenefiktorId, KategorijaId)
+)
+GO
+
+CREATE TABLE Donacija
 (
 	Id int primary key identity(1,1),
 	DonatorId int foreign key references Donator(Id),
-	KategorijaId int foreign key references Kategorija(Id),
-)
-
-create table Benefiktor_Kategorije
-(
-	Id int primary key identity(1,1),
-	BenefiktorId int foreign key references Benefiktor(Id),
-	KategorijaId int foreign key references Kategorija(Id),
-)
-
-create table Donacija
-(
-	Id int primary key identity(1,1),
-	DonatorId int foreign key references Donator(Id),
-	BenefiktorId int foreign key references Benefiktor(Id),
-	KategorijaId int foreign key references Kategorija(Id),
+	BenefiktorId int,
+	KategorijaId int,
 	Opis nvarchar(200),
 	Kolicina int,
 	isPrihvacena bit,
-	isObavljena bit,
-	DatumVrijeme datetime
+	DatumVrijeme datetime,
+	FOREIGN KEY (BenefiktorId, KategorijaId) REFERENCES Benefiktor_Kategorije (BenefiktorId, KategorijaId)
 )
+GO 
 
-create table OcjenaDonacije
+CREATE TABLE OcjenaDonacije
 (
 	Id int primary key identity(1,1),
 	DonacijaId int foreign key references Donacija(Id),
 	Komentar nvarchar(200),
+	KomentarId int,
 	Povjerljivost int,
 	BrzinaDostavljanja int,
 	PostivanjeDogovora int,
-	isOcjenioDonator bit,
-	isOcjenioBenefiktor bit,
+	Ocjenjivac int, -- 1 = Donator, 2 = Benefiktor
 )
-
-create table PredefinisaniKomentari
-(
-	Id int primary key identity(1,1),
-	Komentar nvarchar(200)
-)
+GO 
