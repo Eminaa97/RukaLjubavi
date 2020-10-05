@@ -15,6 +15,7 @@ namespace RukaLjubavi.Api.Models
         public int BrzinaDostavljanja { get; set; }
         public int PostivanjeDogovora { get; set; }
         public TipKorisnika Ocjenjivac { get; set; }
+        public int KorisnikId { get; set; }
 
         [ForeignKey(nameof(DonacijaId))]
         public Donacija Donacija { get; set; }

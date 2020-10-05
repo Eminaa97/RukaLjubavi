@@ -13,12 +13,12 @@ namespace RukaLjubavi.Api.Models
         public bool IsPrihvacena { get; set; }
         public DateTime DatumVrijeme { get; set; }
 
-        // [ForeignKey(nameof(BenefiktorId),nameof(KategorijaId))]
+        [ForeignKey("BenefiktorId,KategorijaId")]
         public virtual BenefiktorKategorija BenefiktorKategorije { get; set; }
 
-        [ForeignKey(nameof(BenefiktorKategorije))]
+        //[ForeignKey(nameof(BenefiktorKategorije)), Column(Order = 0)]
         public int BenefiktorId { get; set; }
-        [ForeignKey(nameof(BenefiktorKategorije))]
+        //[ForeignKey(nameof(BenefiktorKategorije)), Column(Order = 1)]
         public int KategorijaId { get; set; }
 
         [ForeignKey(nameof(DonatorId))]
