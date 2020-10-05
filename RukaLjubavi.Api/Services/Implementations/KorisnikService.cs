@@ -38,8 +38,42 @@ namespace RukaLjubavi.Api.Services
         public UserDto Get(int id)
         {
             var entity = _context.Korisnici.FirstOrDefault(x => x.Id == id);
+            var returns = _mapper.Map<UserDto>(entity);
 
-            return _mapper.Map<UserDto>(entity);
+            returns.KorisnikId = id;
+
+            if (entity.TipKorisnika == TipKorisnika.Benefiktor)
+            {
+                var benefiktor = _context.Benefiktori.FirstOrDefault(x => x.KorisnikId == id);
+                returns.Id = benefiktor.Id;
+            }
+            else
+            {
+                var donator = _context.Donatori.FirstOrDefault(x => x.KorisnikId == id);
+                returns.Id = donator.Id;
+            }
+
+            return returns;
+        }
+
+        public DonatorDto GetDonator(int donatorId)
+        {
+            var entity = _context.Donatori
+                .Include(x => x.Korisnik)
+                .ThenInclude(x => x.MjestoPrebivalista)
+                .FirstOrDefault(x => x.Id == donatorId);
+
+            return _mapper.Map<DonatorDto>(entity);
+        }
+
+        public BenefiktorDto GetBenefiktor(int benefiktorId)
+        {
+            var entity = _context.Benefiktori
+                .Include(x => x.Korisnik)
+                .ThenInclude(x => x.MjestoPrebivalista)
+                .FirstOrDefault(x => x.Id == benefiktorId);
+
+            return _mapper.Map<BenefiktorDto>(entity);
         }
 
         public IList<UserDto> Get(UserSearchRequest search)
@@ -81,6 +115,22 @@ namespace RukaLjubavi.Api.Services
             var entities = query.ToList();
 
             var result = _mapper.Map<IList<UserDto>>(entities.Where(x => 1 == 1));
+
+            foreach (var item in result)
+            {
+                item.KorisnikId = item.Id;
+
+                if (item.TipKorisnika == TipKorisnika.Benefiktor)
+                {
+                    var benefiktor = _context.Benefiktori.FirstOrDefault(x => x.KorisnikId == item.Id);
+                    item.Id = benefiktor.Id;
+                }
+                else
+                {
+                    var donator = _context.Donatori.FirstOrDefault(x => x.KorisnikId == item.Id);
+                    item.Id = donator.Id;
+                }
+            }
 
             return result;
         }
@@ -134,12 +184,66 @@ namespace RukaLjubavi.Api.Services
             return _mapper.Map<UserDto>(entity);
         }
 
-        [Obsolete("TODO")]
         public UserDto Update(int id, UserUpdateRequest request)
         {
             var entity = _context.Korisnici.Find(id);
-
             _mapper.Map(request, entity);
+
+            if (request is DonatorUpdateRequest dir)
+            {
+                var donator = _context.Donatori.FirstOrDefault(x => x.Id == dir.Id);
+                donator.Ime = dir.Ime;
+                donator.Prezime = dir.Prezime;
+                _context.Update(donator);
+
+                var kategorije = _context.DonatorKategorije.Where(a => a.DonatorId == request.Id).ToList();
+
+                foreach (var item in kategorije)
+                {
+                    if (!dir.Kategorije.Any(a => a == item.KategorijaId))
+                    {
+                        _context.DonatorKategorije.Remove(item);
+                    }
+                }
+                foreach (var item in dir.Kategorije)
+                {
+                    if (!_context.DonatorKategorije.Any(a => a.KategorijaId == item && a.DonatorId == request.Id))
+                    {
+                        _context.DonatorKategorije.Add(new DonatorKategorija
+                        {
+                            KategorijaId = item,
+                            Donator = donator
+                        });
+                    }
+                }
+            }
+            else if (request is BenefiktorUpdateRequest bir)
+            {
+                var benefiktor = _context.Benefiktori.FirstOrDefault(x => x.Id == bir.Id);
+                benefiktor.NazivKompanije = bir.NazivKompanije;
+                _context.Update(benefiktor);
+
+                var kategorije = _context.BenefiktorKategorije.Where(a => a.BenefiktorId == request.Id).ToList();
+
+                foreach (var item in kategorije)
+                {
+                    if (!bir.Kategorije.Any(a => a == item.KategorijaId))
+                    {
+                        _context.BenefiktorKategorije.Remove(item);
+                    }
+                }
+                foreach (var item in bir.Kategorije)
+                {
+                    if (!_context.BenefiktorKategorije.Any(a => a.KategorijaId == item && a.BenefiktorId == request.Id))
+                    {
+                        _context.BenefiktorKategorije.Add(new BenefiktorKategorija
+                        {
+                            KategorijaId = item,
+                            Benefiktor = benefiktor
+                        });
+                    }
+                }
+            }
 
             _context.SaveChanges();
 
@@ -172,7 +276,8 @@ namespace RukaLjubavi.Api.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, entity.Id.ToString()),
-                    new Claim(ClaimTypes.Name, entity.Email),
+                    new Claim("user_type", entity.TipKorisnika.ToString()),
+                    new Claim(ClaimTypes.Email, entity.Email),
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)

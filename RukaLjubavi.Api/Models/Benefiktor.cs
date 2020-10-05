@@ -1,5 +1,4 @@
-﻿using RukaLjubavi.API.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RukaLjubavi.Api.Models

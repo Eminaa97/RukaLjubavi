@@ -1,4 +1,4 @@
-﻿namespace RukaLjubavi.API.Models
+﻿namespace RukaLjubavi.Api.Models
 {
     public interface IEntity
     {
