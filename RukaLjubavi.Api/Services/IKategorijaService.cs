@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RukaLjubavi.Api.Services
 {
-    interface IKategorijaService : IBaseDataService<Kategorija, KategorijaDto, KategorijaInsertRequest>
+    public interface IKategorijaService : IBaseDataService<Kategorija, KategorijaDto, KategorijaInsertRequest>
     {
     }
 }

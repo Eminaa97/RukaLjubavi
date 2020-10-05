@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RukaLjubavi.Api.Contracts.Requests;
 using RukaLjubavi.Api.Services;
 
 namespace RukaLjubavi.Api.Controllers
@@ -24,5 +25,18 @@ namespace RukaLjubavi.Api.Controllers
         {
             return Ok(_drzavaService.Get());
         }
+
+        [HttpGet("{Id}")]
+        public IActionResult Get(int Id)
+        {
+            return Ok(_drzavaService.Get(Id));
+        }
+
+        [HttpPost]
+        public IActionResult Insert(DrzavaInsertRequest request)
+        {
+            return Ok(_drzavaService.Insert(request));
+        }
+
     }
 }

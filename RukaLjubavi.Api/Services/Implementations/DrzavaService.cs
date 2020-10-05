@@ -3,7 +3,6 @@ using RukaLjubavi.Api.Contracts.Dto;
 using RukaLjubavi.Api.Contracts.Requests;
 using RukaLjubavi.Api.Database;
 using RukaLjubavi.Api.Models;
-using RukaLjubavi.Api.Services;
 
 namespace RukaLjubavi.Api.Services.Implementations
 {
