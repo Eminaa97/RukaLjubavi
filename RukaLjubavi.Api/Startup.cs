@@ -97,6 +97,8 @@ namespace RukaLjubavi.Api
             services.AddScoped<IGradService, GradService>();
             services.AddScoped<IKategorijaService,KategorijaService>();
             services.AddScoped<INotifikacijaService, NotifikacijaService>();
+            services.AddScoped<IDonacijaService, DonacijaService>();
+            services.AddScoped<IOcjenaDonacijeService, OcjenaDonacijeService>();
 
 
             // Configuration

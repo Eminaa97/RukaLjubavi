@@ -15,6 +15,14 @@ namespace RukaLjubavi.Api.Mappers
             CreateMap<GradSearchRequest, Grad>();
             CreateMap<GradDto, Grad>().ReverseMap();
 
+            CreateMap<DonacijaDto, Donacija>().ReverseMap();
+            CreateMap<DonacijaInsertRequest, Donacija>();
+            CreateMap<DonacijaSearchRequest, Donacija>();
+
+            CreateMap<OcjenaDonacijeDto, OcjenaDonacije>().ReverseMap();
+            CreateMap<OcjenaDonacijeInsertRequest, OcjenaDonacije>();
+            CreateMap<OcjenaDonacijeSearchRequest, OcjenaDonacije>();
+
             CreateMap<DrzavaInsertRequest, Grad>();
             CreateMap<DrzavaSearchRequest, Grad>();
             CreateMap<DrzavaDto, Drzava>().ReverseMap();
