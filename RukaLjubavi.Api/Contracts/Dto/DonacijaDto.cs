@@ -13,7 +13,13 @@ namespace RukaLjubavi.Api.Contracts.Dto
         public int Kolicina { get; set; }
         public bool IsPrihvacena { get; set; }
         public DateTime DatumVrijeme { get; set; }
-        public virtual BenefiktorKategorija BenefiktorKategorije { get; set; }
-        public virtual Donator Donator { get; set; }
+        public string DonatorIme { get; set; }
+        public string DonatorPrezime { get; set; }
+        public string DonatorJmbg { get; set; }
+        public DateTime DonatorDatumRodjenja { get; set; }
+        public string DonatorMjestoRodjenja { get; set; }
+        public string BenefiktorNazivKompanije { get; set; }
+        public string BenefiktorPdvbroj { get; set; }
+        public string NazivKategorije { get; set; }
     }
 }

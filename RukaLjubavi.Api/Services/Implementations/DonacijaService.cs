@@ -31,16 +31,22 @@ namespace RukaLjubavi.Api.Services.Implementations
         {
             var q = _context.Donacije
                 .Include(x => x.BenefiktorKategorije)
+                .Include(x => x.Donator.MjestoRodjenja)
                 .Include(x => x.BenefiktorKategorije.Benefiktor)
                 .Include(x => x.BenefiktorKategorije.Kategorija)
                 .Include(x => x.Donator).AsQueryable();
-
             return _mapper.Map<IList<DonacijaDto>>(q);
         }
 
         public DonacijaDto Get(int id)
         {
-            var entity = _context.Donacije.FirstOrDefault(x => x.Id == id);
+            var entity = _context.Donacije
+                .Include(x => x.BenefiktorKategorije)
+                .Include(x => x.Donator.MjestoRodjenja)
+                .Include(x => x.BenefiktorKategorije.Benefiktor)
+                .Include(x => x.BenefiktorKategorije.Kategorija)
+                .Include(x => x.Donator)
+                .FirstOrDefault(x => x.Id == id);
 
             return _mapper.Map<DonacijaDto>(entity);
         }

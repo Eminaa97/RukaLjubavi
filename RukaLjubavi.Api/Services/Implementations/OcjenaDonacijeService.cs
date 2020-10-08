@@ -29,6 +29,10 @@ namespace RukaLjubavi.Api.Services.Implementations
         {
             var q = _context.OcjeneDonacija
                 .Include(x => x.Donacija)
+                .Include(x => x.Donacija.Donator)
+                .Include(x => x.Donacija.Donator.MjestoRodjenja)
+                .Include(x => x.Donacija.BenefiktorKategorije.Kategorija)
+                .Include(x => x.Donacija.BenefiktorKategorije.Benefiktor)
                 .AsQueryable();
 
             return _mapper.Map<IList<OcjenaDonacijeDto>>(q);
@@ -36,7 +40,13 @@ namespace RukaLjubavi.Api.Services.Implementations
 
         public OcjenaDonacijeDto Get(int id)
         {
-            var entity = _context.OcjeneDonacija.FirstOrDefault(x => x.Id == id);
+            var entity = _context.OcjeneDonacija
+                .Include(x => x.Donacija)
+                .Include(x => x.Donacija.Donator)
+                .Include(x => x.Donacija.Donator.MjestoRodjenja)
+                .Include(x => x.Donacija.BenefiktorKategorije.Kategorija)
+                .Include(x => x.Donacija.BenefiktorKategorije.Benefiktor)
+                .FirstOrDefault(x => x.Id == id);
 
             return _mapper.Map<OcjenaDonacijeDto>(entity);
         }

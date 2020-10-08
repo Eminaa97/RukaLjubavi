@@ -15,11 +15,29 @@ namespace RukaLjubavi.Api.Mappers
             CreateMap<GradSearchRequest, Grad>();
             CreateMap<GradDto, Grad>().ReverseMap();
 
-            CreateMap<DonacijaDto, Donacija>().ReverseMap();
+            CreateMap<Donacija, DonacijaDto>()
+                .ForMember(x => x.DonatorIme, src => src.MapFrom(y => y.Donator.Ime))
+                .ForMember(x => x.DonatorPrezime, src => src.MapFrom(y => y.Donator.Prezime))
+                .ForMember(x => x.DonatorJmbg, src => src.MapFrom(y => y.Donator.Jmbg))
+                .ForMember(x => x.DonatorDatumRodjenja, src => src.MapFrom(y => y.Donator.DatumRodjenja))
+                .ForMember(x => x.DonatorMjestoRodjenja, src => src.MapFrom(y => y.Donator.MjestoRodjenja.Naziv))
+                .ForMember(x => x.BenefiktorNazivKompanije, src => src.MapFrom(y => y.BenefiktorKategorije.Benefiktor.NazivKompanije))
+                .ForMember(x => x.BenefiktorPdvbroj, src => src.MapFrom(y => y.BenefiktorKategorije.Benefiktor.Pdvbroj))
+                .ForMember(x => x.NazivKategorije, src => src.MapFrom(y => y.BenefiktorKategorije.Kategorija.Naziv))
+                .ReverseMap();
             CreateMap<DonacijaInsertRequest, Donacija>();
             CreateMap<DonacijaSearchRequest, Donacija>();
 
-            CreateMap<OcjenaDonacijeDto, OcjenaDonacije>().ReverseMap();
+            CreateMap<OcjenaDonacije, OcjenaDonacijeDto>()
+                .ForMember(x => x.DonatorIme, src => src.MapFrom(y => y.Donacija.Donator.Ime))
+                .ForMember(x => x.DonatorPrezime, src => src.MapFrom(y => y.Donacija.Donator.Prezime))
+                .ForMember(x => x.DonatorJmbg, src => src.MapFrom(y => y.Donacija.Donator.Jmbg))
+                .ForMember(x => x.DonatorDatumRodjenja, src => src.MapFrom(y => y.Donacija.Donator.DatumRodjenja))
+                .ForMember(x => x.DonatorMjestoRodjenja, src => src.MapFrom(y => y.Donacija.Donator.MjestoRodjenja.Naziv))
+                .ForMember(x => x.BenefiktorNazivKompanije, src => src.MapFrom(y => y.Donacija.BenefiktorKategorije.Benefiktor.NazivKompanije))
+                .ForMember(x => x.BenefiktorPdvbroj, src => src.MapFrom(y => y.Donacija.BenefiktorKategorije.Benefiktor.Pdvbroj))
+                .ForMember(x => x.NazivKategorije, src => src.MapFrom(y => y.Donacija.BenefiktorKategorije.Kategorija.Naziv))
+                .ReverseMap();
             CreateMap<OcjenaDonacijeInsertRequest, OcjenaDonacije>();
             CreateMap<OcjenaDonacijeSearchRequest, OcjenaDonacije>();
 
