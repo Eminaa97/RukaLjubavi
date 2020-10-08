@@ -30,6 +30,8 @@ namespace RukaLjubavi.Api.Mappers
 
             CreateMap<OcjenaDonacije, OcjenaDonacijeDto>()
                 .ForMember(x => x.DonatorIme, src => src.MapFrom(y => y.Donacija.Donator.Ime))
+                .ForMember(x => x.Kolicina, src => src.MapFrom(y => y.Donacija.Kolicina))
+                .ForMember(x => x.IsPrihvacena, src => src.MapFrom(y => y.Donacija.IsPrihvacena))
                 .ForMember(x => x.DonatorPrezime, src => src.MapFrom(y => y.Donacija.Donator.Prezime))
                 .ForMember(x => x.DonatorJmbg, src => src.MapFrom(y => y.Donacija.Donator.Jmbg))
                 .ForMember(x => x.DonatorDatumRodjenja, src => src.MapFrom(y => y.Donacija.Donator.DatumRodjenja))
@@ -38,7 +40,9 @@ namespace RukaLjubavi.Api.Mappers
                 .ForMember(x => x.BenefiktorPdvbroj, src => src.MapFrom(y => y.Donacija.BenefiktorKategorije.Benefiktor.Pdvbroj))
                 .ForMember(x => x.NazivKategorije, src => src.MapFrom(y => y.Donacija.BenefiktorKategorije.Kategorija.Naziv))
                 .ReverseMap();
-            CreateMap<OcjenaDonacijeInsertRequest, OcjenaDonacije>();
+            CreateMap<OcjenaDonacije, OcjenaDonacijeInsertRequest>()
+                .ForMember(x => x.OcjenjivacTipKorisnika, src => src.MapFrom(y => y.Ocjenjivac))
+                .ReverseMap();
             CreateMap<OcjenaDonacijeSearchRequest, OcjenaDonacije>();
 
             CreateMap<DrzavaInsertRequest, Grad>();

@@ -14,7 +14,6 @@ namespace RukaLjubavi.Api.Contracts.Dto
         public int BrzinaDostavljanja { get; set; }
         public int PostivanjeDogovora { get; set; }
         public int KorisnikId { get; set; }
-        public string Opis { get; set; }
         public int Kolicina { get; set; }
         public bool IsPrihvacena { get; set; }
         public DateTime DatumVrijeme { get; set; }

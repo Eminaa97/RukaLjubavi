@@ -35,6 +35,12 @@ namespace RukaLjubavi.Api.Services.Implementations
                 .Include(x => x.BenefiktorKategorije.Benefiktor)
                 .Include(x => x.BenefiktorKategorije.Kategorija)
                 .Include(x => x.Donator).AsQueryable();
+
+            if (search.IsPrihvacena != null)
+            {
+                q = q.Where(x => x.IsPrihvacena == search.IsPrihvacena);
+            }
+
             return _mapper.Map<IList<DonacijaDto>>(q);
         }
 
