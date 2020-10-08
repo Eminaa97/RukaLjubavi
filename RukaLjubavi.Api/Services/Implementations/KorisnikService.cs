@@ -138,7 +138,6 @@ namespace RukaLjubavi.Api.Services
         public UserDto Insert(UserInsertRequest request)
         {
             var entity = _mapper.Map<Korisnik>(request);
-            _context.Add(entity);
 
             if (request.Password != request.ConfirmPassword)
             {
@@ -147,6 +146,10 @@ namespace RukaLjubavi.Api.Services
 
             entity.LozinkaSalt = GenerateSalt();
             entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Password);
+            entity.TipKorisnika = request is DonatorInsertRequest ? TipKorisnika.Donator : TipKorisnika.Benefiktor;
+            entity.DatumRegistracije = DateTime.UtcNow;
+
+            _context.Add(entity);
 
             if (request is DonatorInsertRequest dir)
             {
@@ -181,7 +184,7 @@ namespace RukaLjubavi.Api.Services
 
             _context.SaveChanges();
 
-            return _mapper.Map<UserDto>(entity);
+            return GetRegistrationOrUpdateUser(entity.Id);
         }
 
         public UserDto Update(int id, UserUpdateRequest request)
@@ -191,12 +194,12 @@ namespace RukaLjubavi.Api.Services
 
             if (request is DonatorUpdateRequest dir)
             {
-                var donator = _context.Donatori.FirstOrDefault(x => x.Id == dir.Id);
+                var donator = _context.Donatori.FirstOrDefault(x => x.KorisnikId == dir.KorisnikId);
                 donator.Ime = dir.Ime;
                 donator.Prezime = dir.Prezime;
                 _context.Update(donator);
 
-                var kategorije = _context.DonatorKategorije.Where(a => a.DonatorId == request.Id).ToList();
+                var kategorije = _context.DonatorKategorije.Where(a => a.DonatorId == donator.Id).ToList();
 
                 foreach (var item in kategorije)
                 {
@@ -207,7 +210,7 @@ namespace RukaLjubavi.Api.Services
                 }
                 foreach (var item in dir.Kategorije)
                 {
-                    if (!_context.DonatorKategorije.Any(a => a.KategorijaId == item && a.DonatorId == request.Id))
+                    if (!_context.DonatorKategorije.Any(a => a.KategorijaId == item && a.DonatorId == donator.Id))
                     {
                         _context.DonatorKategorije.Add(new DonatorKategorija
                         {
@@ -219,11 +222,11 @@ namespace RukaLjubavi.Api.Services
             }
             else if (request is BenefiktorUpdateRequest bir)
             {
-                var benefiktor = _context.Benefiktori.FirstOrDefault(x => x.Id == bir.Id);
+                var benefiktor = _context.Benefiktori.FirstOrDefault(x => x.KorisnikId == bir.KorisnikId);
                 benefiktor.NazivKompanije = bir.NazivKompanije;
                 _context.Update(benefiktor);
 
-                var kategorije = _context.BenefiktorKategorije.Where(a => a.BenefiktorId == request.Id).ToList();
+                var kategorije = _context.BenefiktorKategorije.Where(a => a.BenefiktorId == benefiktor.Id).ToList();
 
                 foreach (var item in kategorije)
                 {
@@ -234,7 +237,7 @@ namespace RukaLjubavi.Api.Services
                 }
                 foreach (var item in bir.Kategorije)
                 {
-                    if (!_context.BenefiktorKategorije.Any(a => a.KategorijaId == item && a.BenefiktorId == request.Id))
+                    if (!_context.BenefiktorKategorije.Any(a => a.KategorijaId == item && a.BenefiktorId == benefiktor.Id))
                     {
                         _context.BenefiktorKategorije.Add(new BenefiktorKategorija
                         {
@@ -247,7 +250,7 @@ namespace RukaLjubavi.Api.Services
 
             _context.SaveChanges();
 
-            return _mapper.Map<UserDto>(entity);
+            return GetRegistrationOrUpdateUser(id);
         }
 
         public AuthenticatedUser Login(UserLoginRequest request)
@@ -335,5 +338,28 @@ namespace RukaLjubavi.Api.Services
             return Convert.ToBase64String(inArray);
         }
         #endregion
+
+        private UserDto GetRegistrationOrUpdateUser(int id)
+        {
+            var lastEntity = _context.Korisnici
+               .Include(x => x.MjestoPrebivalista)
+               .FirstOrDefault(x => x.Id == id);
+
+            var returns = _mapper.Map<UserDto>(lastEntity);
+            returns.KorisnikId = returns.Id;
+
+            if (returns.TipKorisnika == TipKorisnika.Benefiktor)
+            {
+                var benefiktor = _context.Benefiktori.FirstOrDefault(x => x.KorisnikId == returns.KorisnikId);
+                returns.Id = benefiktor.Id;
+            }
+            else
+            {
+                var donator = _context.Donatori.FirstOrDefault(x => x.KorisnikId == returns.KorisnikId);
+                returns.Id = donator.Id;
+            }
+
+            return returns;
+        }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RukaLjubavi.Api.Contracts.Requests;
 using RukaLjubavi.Api.Services;
@@ -33,6 +29,7 @@ namespace RukaLjubavi.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Insert(DrzavaInsertRequest request)
         {
             return Ok(_drzavaService.Insert(request));

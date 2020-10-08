@@ -34,8 +34,14 @@ namespace RukaLjubavi.Api.Mappers
             CreateMap<NotifikacijaSearchRequest, Notifikacija>();
             CreateMap<NotifikacijaDto, Notifikacija>().ReverseMap();
 
-            CreateMap<Korisnik, UserDto>().ReverseMap();
+            CreateMap<UserInsertRequest, Korisnik>();
+            CreateMap<UserUpdateRequest, Korisnik>();
+            CreateMap<Korisnik, UserDto>()
+                .ForMember(x => x.MjestoPrebivalista, src => src.MapFrom(y => y.MjestoPrebivalista.Naziv))
+                .ReverseMap();
             CreateMap<Korisnik, AuthenticatedUser>();
+            CreateMap<Korisnik, AuthenticatedBenefiktor>();
+            CreateMap<Korisnik, AuthenticatedDonator>();
             CreateMap<BenefiktorInsertRequest, Benefiktor>().ReverseMap();
             CreateMap<DonatorInsertRequest, Donator>().ReverseMap();
             CreateMap<BenefiktorUpdateRequest, Benefiktor>().ReverseMap();

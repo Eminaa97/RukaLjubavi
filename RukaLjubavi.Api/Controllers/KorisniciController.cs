@@ -18,7 +18,7 @@ namespace RukaLjubavi.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Get([FromBody] UserSearchRequest request)
+        public IActionResult Search([FromBody] UserSearchRequest request)
         {
             return Ok(_korisnikService.Get(request));
         }
@@ -41,10 +41,28 @@ namespace RukaLjubavi.Api.Controllers
             return Ok(_korisnikService.GetBenefiktor(id));
         }
 
-        [HttpPost("register")]
-        public IActionResult Register([FromBody] UserInsertRequest request)
+        [HttpPost("donatori/register")]
+        public IActionResult Register([FromBody] DonatorInsertRequest request)
         {
             return Ok(_korisnikService.Insert(request));
+        }
+
+        [HttpPost("benefiktori/register")]
+        public IActionResult Register([FromBody] BenefiktorInsertRequest request)
+        {
+            return Ok(_korisnikService.Insert(request));
+        }
+
+        [HttpPatch("donatori/update")]
+        public IActionResult Update([FromBody] DonatorUpdateRequest request)
+        {
+            return Ok(_korisnikService.Update(request.KorisnikId, request));
+        }
+
+        [HttpPatch("benefiktori/update")]
+        public IActionResult Update([FromBody] BenefiktorUpdateRequest request)
+        {
+            return Ok(_korisnikService.Update(request.KorisnikId, request));
         }
 
         [HttpPost("login")]

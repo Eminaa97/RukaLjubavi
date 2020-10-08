@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace RukaLjubavi.Api.Contracts.Requests
 {
     public class UserUpdateRequest
     {
-        public int Id { get; set; }
+        public int KorisnikId { get; set; }
         public string Email { get; set; }
         public string Telefon { get; set; }
         public string Adresa { get; set; }
