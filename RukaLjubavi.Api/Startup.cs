@@ -89,7 +89,7 @@ namespace RukaLjubavi.Api
 
             // Database access
             services.AddDbContext<RukaLjubaviDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("RukaLjubaviDb")).EnableSensitiveDataLogging());
+                options.UseSqlServer(Configuration.GetConnectionString("RukaLjubaviPleskDb")).EnableSensitiveDataLogging());
 
             // Services
             services.AddScoped<IKorisnikService, KorisnikService>();
