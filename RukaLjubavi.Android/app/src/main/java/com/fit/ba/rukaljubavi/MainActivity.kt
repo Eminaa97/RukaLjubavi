@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity()
             override fun onResponse(call: Call<List<Drzava>>, response: Response<List<Drzava>>) {
                 if(response.isSuccessful){
                     val list = response.body()!!
+                    Toast.makeText(this@MainActivity,list[0].naziv, Toast.LENGTH_SHORT).show()
                 }
             }
         })
