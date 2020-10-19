@@ -26,6 +26,12 @@ class MainActivity : AppCompatActivity()
             startActivity(intent)
             load()
         }
+
+        btnLogout.setOnClickListener {
+            val intent = Intent(this,PrijavaActivity::class.java)
+            startActivity(intent)
+            load()
+        }
     }
 
     private fun load(){

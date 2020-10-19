@@ -69,7 +69,7 @@
             android:rowCount="3">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/btnMoviesList"
+                android:id="@+id/btnNovaDonacija"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -110,7 +110,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/btnActorsList"
+                android:id="@+id/btnDonacije"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -155,7 +155,7 @@
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
                 app:cardElevation="6dp"
-                android:id="@+id/btnNewsPlace"
+                android:id="@+id/btnBenefiktori"
                 app:cardCornerRadius="12dp"
                 android:layout_margin="12dp"
                 android:foreground="?android:attr/selectableItemBackground"
@@ -221,7 +221,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="About"
+                        android:text="O nama"
                         android:textSize="18sp"
                         android:textColor="@android:color/black"
                         android:layout_marginTop="12dp">
@@ -262,7 +262,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Logout"
+                        android:text="Odjavi se"
                         android:textSize="18sp"
                         android:textColor="@android:color/black"
                         android:layout_marginTop="12dp">
