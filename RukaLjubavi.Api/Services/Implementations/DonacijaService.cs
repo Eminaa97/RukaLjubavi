@@ -40,6 +40,10 @@ namespace RukaLjubavi.Api.Services.Implementations
             {
                 q = q.Where(x => x.IsPrihvacena == search.IsPrihvacena);
             }
+            if (search.DonatorId.HasValue)
+            {
+                q = q.Where(x => x.DonatorId == search.DonatorId);
+            }
 
             return _mapper.Map<IList<DonacijaDto>>(q);
         }
@@ -60,7 +64,7 @@ namespace RukaLjubavi.Api.Services.Implementations
         public DonacijaDto Insert(DonacijaInsertRequest donacija)
         {
             var entity = _mapper.Map<Donacija>(donacija);
-
+            entity.DatumVrijeme = DateTime.UtcNow;
             _context.Donacije.Add(entity);
             _context.SaveChanges();
 

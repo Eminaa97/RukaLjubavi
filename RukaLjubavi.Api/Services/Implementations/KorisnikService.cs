@@ -255,6 +255,7 @@ namespace RukaLjubavi.Api.Services
 
         public AuthenticatedUser Login(UserLoginRequest request)
         {
+            var users = _context.Korisnici.ToList();
             var entity = _context.Korisnici.FirstOrDefault(x => x.Email == request.Email);
 
             #region User existence check
@@ -296,6 +297,7 @@ namespace RukaLjubavi.Api.Services
 
                 var benefiktor = _context.Benefiktori.FirstOrDefault(x => x.KorisnikId == user.Id);
 
+                user.BenefiktorId = benefiktor.Id;
                 user.NazivKompanije = benefiktor.NazivKompanije;
                 user.Pdvbroj = benefiktor.Pdvbroj;
 
@@ -308,6 +310,7 @@ namespace RukaLjubavi.Api.Services
 
                 var donator = _context.Donatori.FirstOrDefault(x => x.KorisnikId == user.Id);
 
+                user.DonatorId = donator.Id;
                 user.Jmbg = donator.Jmbg;
                 user.Ime = donator.Ime;
                 user.Prezime = donator.Prezime;

@@ -15,9 +15,7 @@ namespace RukaLjubavi.Api.Controllers
     {
         private readonly IDonacijaService _donacijaService;
 
-        public DonacijaController(
-            IDonacijaService _donacijaService
-            )
+        public DonacijaController( IDonacijaService _donacijaService )
         {
             this._donacijaService = _donacijaService;
         }

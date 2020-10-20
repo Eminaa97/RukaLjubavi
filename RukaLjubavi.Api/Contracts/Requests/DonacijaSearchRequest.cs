@@ -8,5 +8,6 @@ namespace RukaLjubavi.Api.Contracts.Requests
     public class DonacijaSearchRequest
     {
         public bool? IsPrihvacena { get; set; }
+        public int? DonatorId { get; set; }
     }
 }

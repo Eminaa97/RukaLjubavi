@@ -11,9 +11,9 @@ namespace RukaLjubavi.Api.Services
 {
     public interface IDonacijaService
     {
-        public IList<DonacijaDto> Get(DonacijaSearchRequest search);
-        public DonacijaDto Get(int id);
-        public DonacijaDto Insert(DonacijaInsertRequest user);
-        public DonacijaDto Prihvati(int id);
+        IList<DonacijaDto> Get(DonacijaSearchRequest search);
+        DonacijaDto Get(int id);
+        DonacijaDto Insert(DonacijaInsertRequest user);
+        DonacijaDto Prihvati(int id);
     }
 }

@@ -10,11 +10,13 @@
     }
     public class AuthenticatedBenefiktor : AuthenticatedUser
     {
+        public int BenefiktorId { get; set; }
         public string NazivKompanije { get; set; }
         public string Pdvbroj { get; set; }
     }
     public class AuthenticatedDonator : AuthenticatedUser
     {
+        public int DonatorId { get; set; }
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public string Jmbg { get; set; }
