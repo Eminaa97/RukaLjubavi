@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RukaLjubavi.Api.Contracts.Requests;
@@ -31,7 +32,7 @@ namespace RukaLjubavi.Api.Controllers
         {
             return Ok(_kategorijaService.Get(Id));
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult Insert(KategorijaInsertRequest request)
         {

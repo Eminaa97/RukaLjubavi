@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RukaLjubavi.Api.Contracts.Requests;
 using RukaLjubavi.Api.Services;
 
@@ -53,12 +54,14 @@ namespace RukaLjubavi.Api.Controllers
             return Ok(_korisnikService.Insert(request));
         }
 
+        [Authorize]
         [HttpPatch("donatori/update")]
         public IActionResult Update([FromBody] DonatorUpdateRequest request)
         {
             return Ok(_korisnikService.Update(request.KorisnikId, request));
         }
 
+        [Authorize]
         [HttpPatch("benefiktori/update")]
         public IActionResult Update([FromBody] BenefiktorUpdateRequest request)
         {

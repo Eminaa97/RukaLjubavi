@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace RukaLjubavi.Api.Contracts.Requests
 {
     public class UserUpdateRequest
     {
         public int KorisnikId { get; set; }
+        [EmailAddress]
         public string Email { get; set; }
+        [Phone]
         public string Telefon { get; set; }
         public string Adresa { get; set; }
         public bool IsVerifikovan { get; set; }
