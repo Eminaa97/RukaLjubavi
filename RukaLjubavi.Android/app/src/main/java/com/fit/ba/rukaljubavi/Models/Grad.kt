@@ -2,7 +2,8 @@ package com.fit.ba.rukaljubavi.Models
 
 import java.io.Serializable
 
-class Grad : Serializable {
-    var id: Int? = null
-    var naziv: String? = null
+class Grad(var id: Int, var naziv: String) : Serializable {
+    override fun toString(): String {
+        return naziv!!
+    }
 }

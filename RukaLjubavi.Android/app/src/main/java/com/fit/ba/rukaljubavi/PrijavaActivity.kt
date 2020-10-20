@@ -23,17 +23,12 @@ class PrijavaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_prijava)
 
-        btnNewAccountDonator.setOnClickListener {
-            val intent = Intent(this,RegistracijaDonatorActivity::class.java)
+        btnNewRegister.setOnClickListener {
+            val intent = Intent(this,RegistracijaIzborActivity::class.java)
             startActivity(intent)
         }
 
-        btnNewAccountBenefiktor.setOnClickListener {
-            val intent = Intent(this,RegistracijaBenefiktorActivity::class.java)
-            startActivity(intent)
-        }
-
-        btnLogin.setOnClickListener {
+        btnPrijava.setOnClickListener {
             login()
         }
 
@@ -44,13 +39,24 @@ class PrijavaActivity : AppCompatActivity() {
         login.email = txtPrUsername!!.text.toString()
         login.password = txtPrPassword!!.text.toString()
 
+        if(login.email.isNullOrBlank() || login.password.isNullOrBlank()){
+            txtPrPassword.setBackgroundResource(R.drawable.input_field_error)
+            txtPrUsername.setBackgroundResource(R.drawable.input_field_error)
+            return
+        }
+
+        var loading = LoadingDialog(this@PrijavaActivity)
+        loading.startLoadingDialog()
+
         val requestCall = service.login(login)
         requestCall.enqueue(object : Callback<Unit> {
             override fun onFailure(call: Call<Unit>, t: Throwable) {
-                Toast.makeText(this@PrijavaActivity,"Pogrešno korisničko ime ili lozinka.", Toast.LENGTH_SHORT).show()
+                loading.stopDialog()
+                Toast.makeText(this@PrijavaActivity,"Server error", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                loading.stopDialog()
                 if(response.isSuccessful){
                     val intent = Intent(this@PrijavaActivity,MainActivity::class.java)
                     startActivity(intent)

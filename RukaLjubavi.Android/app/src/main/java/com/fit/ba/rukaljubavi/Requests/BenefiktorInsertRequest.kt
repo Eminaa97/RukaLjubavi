@@ -1,8 +1,9 @@
 package com.fit.ba.rukaljubavi.Requests
 
+import java.io.Serializable
 import java.util.ArrayList
 
-class BenefiktorInsertRequest {
+class BenefiktorInsertRequest : Serializable {
     var email: String? = null
     var telefon: String? = null
     var adresa: String? = null

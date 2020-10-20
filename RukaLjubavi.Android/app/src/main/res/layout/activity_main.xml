@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background_red"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -19,30 +19,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_height="52dp"
-                android:layout_width="52dp"
-                android:src="@drawable/logo"
-                />
-
             <TextView
                 android:id="@+id/txtDashboard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="26sp"
-                android:textColor="#ffffff"
-                android:textStyle="bold"
-                android:gravity="center"
+                android:fontFamily="@font/regular"
+                android:gravity="left"
                 android:text="Dobrodošli"
-                />
+                android:textColor="#ffffff"
+                android:textSize="26sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_below="@+id/txtDashboard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:gravity="center"
+                android:gravity="left"
                 android:textColor="#ffffff"
+                android:fontFamily="@font/regular"
                 android:text="Ruka ljubavi"
                 />
 
@@ -100,6 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Nova donacija"
+                        android:fontFamily="@font/regular"
                         android:textSize="18sp"
                         android:textColor="@android:color/black"
                         android:layout_marginTop="12dp">
@@ -142,6 +138,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="12dp"
                         android:text="Donacije"
+                        android:fontFamily="@font/regular"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"></TextView>
 
@@ -182,6 +179,7 @@
                         android:layout_height="match_parent"
                         android:text="Benefiktori"
                         android:textSize="18sp"
+                        android:fontFamily="@font/regular"
                         android:textColor="@android:color/black"
                         android:layout_marginTop="12dp">
                     </TextView>
@@ -222,6 +220,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="O nama"
+                        android:fontFamily="@font/regular"
                         android:textSize="18sp"
                         android:textColor="@android:color/black"
                         android:layout_marginTop="12dp">
@@ -256,6 +255,7 @@
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
+                        android:padding="5dp"
                         android:src="@drawable/logout">
                     </ImageView>
 
@@ -263,6 +263,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Odjavi se"
+                        android:fontFamily="@font/regular"
                         android:textSize="18sp"
                         android:textColor="@android:color/black"
                         android:layout_marginTop="12dp">
@@ -279,6 +280,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:fontFamily="@font/regular"
             android:text="© Emina Mesić, Ajdin Ćatić"
             android:gravity="center_horizontal"
             >
@@ -288,6 +290,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:fontFamily="@font/regular"
             android:text="Faculty of Information Technology Mostar"
             android:gravity="center_horizontal"
             android:layout_marginBottom="13dp"

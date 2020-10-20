@@ -14,14 +14,11 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 
-        val animation = AnimationUtils.loadAnimation(this, R.anim.top_animation)
-        img.startAnimation(animation)
-
         val r = Runnable {
-            val intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this,PrijavaActivity::class.java)
             startActivity(intent)
             finish()
         }
-        Handler().postDelayed(r, 2500)
+        Handler().postDelayed(r, 2000)
     }
 }

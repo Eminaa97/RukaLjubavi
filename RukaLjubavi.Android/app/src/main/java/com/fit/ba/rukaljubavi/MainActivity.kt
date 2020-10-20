@@ -24,29 +24,11 @@ class MainActivity : AppCompatActivity()
         btnAbout.setOnClickListener {
             val intent = Intent(this,AboutActivity::class.java)
             startActivity(intent)
-            load()
         }
 
         btnLogout.setOnClickListener {
             val intent = Intent(this,PrijavaActivity::class.java)
             startActivity(intent)
-            load()
         }
-    }
-
-    private fun load(){
-        val requestCall = service.getAll()
-        requestCall.enqueue(object : Callback<List<Drzava>> {
-            override fun onFailure(call: Call<List<Drzava>>, t: Throwable) {
-                Toast.makeText(this@MainActivity,"Error: ${t.toString()}", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onResponse(call: Call<List<Drzava>>, response: Response<List<Drzava>>) {
-                if(response.isSuccessful){
-                    val list = response.body()!!
-                    Toast.makeText(this@MainActivity,list[0].naziv, Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
     }
 }
