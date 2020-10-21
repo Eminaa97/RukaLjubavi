@@ -1,38 +1,145 @@
 package com.fit.ba.rukaljubavi
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
 import com.fit.ba.rukaljubavi.Models.Drzava
+import com.fit.ba.rukaljubavi.Models.Grad
+import com.fit.ba.rukaljubavi.Requests.BenefiktorInsertRequest
 import com.fit.ba.rukaljubavi.Requests.DonatorInsertRequest
 import com.fit.ba.rukaljubavi.Services.APIService
 import com.fit.ba.rukaljubavi.Services.DonatorService
+import com.fit.ba.rukaljubavi.Services.GradService
+import kotlinx.android.synthetic.main.activity_registracija_benefiktor.*
 import kotlinx.android.synthetic.main.activity_registracija_donator.*
+import kotlinx.android.synthetic.main.activity_registracija_donator.btnBack4
+import kotlinx.android.synthetic.main.activity_registracija_donator.txtRegAdresa
+import kotlinx.android.synthetic.main.activity_registracija_donator.txtRegEmail
+import kotlinx.android.synthetic.main.activity_registracija_donator.txtRegPassword
+import kotlinx.android.synthetic.main.activity_registracija_donator.txtRegPasswordPotvrda
+import kotlinx.android.synthetic.main.activity_registracija_donator.txtRegTelefon
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class RegistracijaDonatorActivity : AppCompatActivity() {
 
     private val service = APIService.buildService(DonatorService::class.java)
+    private val serviceGradovi = APIService.buildService(GradService::class.java)
+    var spinnerMjestoRodjenja: Spinner? = null
+    var spinnerMjestoPrebivalista: Spinner? = null
+    var donator = DonatorInsertRequest()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registracija_donator)
 
-        btnBackToLogin.setOnClickListener {
-            val intent = Intent(this,PrijavaActivity::class.java)
+        btnBack4.setOnClickListener {
+            val intent = Intent(this,RegistracijaIzborActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
-        btnSignUp.setOnClickListener {
+        btnRegistracijaDonatorDalje.setOnClickListener {
             sendNoviDonator()
+        }
+
+        spinnerMjestoPrebivalista = spnDonMjestoPrebivalista
+        spinnerMjestoRodjenja = spnDonMjestoRodjenja
+        loadGradovi()
+        spinnerMjestoPrebivalista!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                var grad = p0!!.getItemAtPosition(p2) as Grad
+                donator.mjestoPrebivalistaId = grad.id
+            }
+        }
+        spinnerMjestoRodjenja!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                var grad = p0!!.getItemAtPosition(p2) as Grad
+                donator.mjestoRodjenjaId = grad.id
+            }
         }
     }
 
+    private fun loadGradovi() {
+        var loading = LoadingDialog(this@RegistracijaDonatorActivity)
+        loading.startLoadingDialog()
+        val requestCall = serviceGradovi.getAll()
+        requestCall.enqueue(object : Callback<List<Grad>> {
+            override fun onFailure(call: Call<List<Grad>>, t: Throwable) {
+                Toast.makeText(this@RegistracijaDonatorActivity,"Server error", Toast.LENGTH_SHORT).show()
+                loading.stopDialog()
+            }
+
+            override fun onResponse(call: Call<List<Grad>>, response: Response<List<Grad>>) {
+                if(response.isSuccessful){
+                    var list = response.body()
+                    var gradoviMR = list!!.toMutableList()
+                    var gradoviMP = list!!.toMutableList()
+                    initMjestoRodjenjaSpinner(gradoviMR)
+                    initMjestoPrebivalistaSpinner(gradoviMP)
+                }
+                loading.stopDialog()
+            }
+        })
+    }
+
+    private fun initMjestoRodjenjaSpinner(gradovi: MutableList<Grad>?){
+        gradovi!!.add(0, Grad(-1,"Mjesto rođenja"))
+        var adapter = object : ArrayAdapter<Grad>(this@RegistracijaDonatorActivity,R.layout.spinner_list_item,gradovi!!){
+            override fun isEnabled(position: Int): Boolean {
+                return position != 0
+            }
+
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view = super.getDropDownView(position, convertView, parent)
+                val tv = view as TextView
+                if (position === 0) {
+                    tv.setTextColor(Color.GRAY)
+                } else {
+                    tv.setTextColor(Color.BLACK)
+                }
+                return view
+            }
+        }
+        adapter.setDropDownViewResource(R.layout.spinner_item)
+        spinnerMjestoRodjenja!!.adapter = adapter
+    }
+
+    private fun initMjestoPrebivalistaSpinner(gradovi: MutableList<Grad>?){
+        gradovi!!.add(0, Grad(-1,"Mjesto prebivalista"))
+        var adapter = object : ArrayAdapter<Grad>(this@RegistracijaDonatorActivity,R.layout.spinner_list_item,gradovi!!){
+            override fun isEnabled(position: Int): Boolean {
+                return position != 0
+            }
+
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view = super.getDropDownView(position, convertView, parent)
+                val tv = view as TextView
+                if (position === 0) {
+                    tv.setTextColor(Color.GRAY)
+                } else {
+                    tv.setTextColor(Color.BLACK)
+                }
+                return view
+            }
+        }
+        adapter.setDropDownViewResource(R.layout.spinner_item)
+        spinnerMjestoPrebivalista!!.adapter = adapter
+    }
+
     private fun sendNoviDonator() {
-        var donator = DonatorInsertRequest()
         donator.ime = txtRegIme!!.text.toString()
         donator.prezime = txtRegPrezime!!.text.toString()
         donator.adresa = txtRegAdresa!!.text.toString()
@@ -41,23 +148,81 @@ class RegistracijaDonatorActivity : AppCompatActivity() {
         donator.password = txtRegPassword!!.text.toString()
         donator.confirmPassword = txtRegPasswordPotvrda!!.text.toString()
         donator.telefon = txtRegTelefon!!.text.toString()
-        donator.mjestoPrebivalistaId = txtregMjestoPrebivalista!!.text.toString().toIntOrNull()
-        donator.datumRodjenja = txtregDatumRodjenja!!.text.toString()
-        donator.mjestoRodjenjaId = txtregMjestoRodjenja!!.text.toString().toIntOrNull()
-        donator.kategorije.add(0,1)
+        donator.datumRodjenja = txtRegDatumRodjenja!!.text.toString()
 
-        val requestCall = service.send(donator)
-        requestCall.enqueue(object : Callback<Unit> {
-            override fun onFailure(call: Call<Unit>, t: Throwable) {
-                Toast.makeText(this@RegistracijaDonatorActivity,"Error: ${t.toString()}", Toast.LENGTH_SHORT).show()
-            }
+        var error: Boolean = false
 
-            override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-                if(response.isSuccessful){
-                    val intent = Intent(this@RegistracijaDonatorActivity,PrijavaActivity::class.java)
-                    startActivity(intent)
-                }
-            }
-        })
+        if(donator.ime.isNullOrBlank()){
+            txtRegIme.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtRegIme.setBackgroundResource(R.drawable.input_field)
+        if(donator.prezime.isNullOrBlank()){
+            txtRegPrezime.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtRegPrezime.setBackgroundResource(R.drawable.input_field)
+        if(donator.adresa.isNullOrBlank()){
+            txtRegAdresa.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtRegAdresa.setBackgroundResource(R.drawable.input_field)
+        if(donator.email.isNullOrBlank()){
+            txtRegEmail.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtRegEmail.setBackgroundResource(R.drawable.input_field)
+        if(donator.telefon.isNullOrBlank()){
+            txtRegTelefon.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtRegTelefon.setBackgroundResource(R.drawable.input_field)
+        if(donator.jmbg.isNullOrBlank()){
+            txtRegJMBG.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtRegJMBG.setBackgroundResource(R.drawable.input_field)
+        if(donator.password.isNullOrBlank()){
+            txtRegPassword.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtRegPassword.setBackgroundResource(R.drawable.input_field)
+        if(donator.confirmPassword.isNullOrBlank()){
+            txtRegPasswordPotvrda.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtRegPasswordPotvrda.setBackgroundResource(R.drawable.input_field)
+        if(donator.datumRodjenja.isNullOrBlank()){
+            txtRegDatumRodjenja.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtRegDatumRodjenja.setBackgroundResource(R.drawable.input_field)
+        if(donator.mjestoPrebivalistaId == -1){
+            spnDonMjestoPrebivalista.setBackgroundResource(R.drawable.spiner_field_error)
+            error = true
+        }
+        else
+            spnDonMjestoPrebivalista.setBackgroundResource(R.drawable.spiner_field)
+        if(donator.mjestoRodjenjaId == -1){
+            spnDonMjestoRodjenja.setBackgroundResource(R.drawable.spiner_field_error)
+            error = true
+        }
+        else
+            spnDonMjestoRodjenja.setBackgroundResource(R.drawable.spiner_field)
+
+        if(!error) {
+            val intent = Intent(this, DonatorKategorijeActivity::class.java)
+            intent.putExtra("NEW_DONATOR", donator)
+            startActivity(intent)
+        }
     }
 }

@@ -1,227 +1,262 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".RegistracijaDonatorActivity"
-    android:background="#E4E9EF">
+    tools:context=".RegistracijaBenefiktorActivity"
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp"
-        >
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/btnBack4"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="48dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:layout_constraintBottom_toTopOf="@+id/textView6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.131"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.247"
+            app:srcCompat="@drawable/arrow" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginRight="48dp"
+            android:fontFamily="@font/regular"
+            android:text="Donator"
+            android:textColor="@color/gray"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.863"
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/txtRegIme"
+            android:layout_width="310dp"
+            android:layout_height="50sp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/input_field"
+            android:ems="10"
+            android:fontFamily="@font/regular"
+            android:hint="Ime"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <EditText
+            android:id="@+id/txtRegPrezime"
+            android:layout_width="310dp"
+            android:layout_height="50sp"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:fontFamily="@font/regular"
+            android:hint="Prezime"
+            android:background="@drawable/input_field"
+            android:textColorHint="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRegIme" />
+
+        <EditText
+            android:id="@+id/txtRegAdresa"
+            android:layout_width="310dp"
+            android:layout_height="50sp"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="Adresa"
+            android:background="@drawable/input_field"
+            android:textColorHint="@color/gray"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRegPrezime" />
+
+        <EditText
+            android:id="@+id/txtRegTelefon"
+            android:layout_width="310dp"
+            android:layout_height="50sp"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="Telefon"
+            android:background="@drawable/input_field"
+            android:textColorHint="@color/gray"
+            android:inputType="phone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRegAdresa" />
+
+        <EditText
+            android:id="@+id/txtRegEmail"
+            android:layout_width="310dp"
+            android:layout_height="50sp"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="Email"
+            android:background="@drawable/input_field"
+            android:textColorHint="@color/gray"
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRegTelefon" />
+
+        <EditText
+            android:id="@+id/txtRegJMBG"
+            android:layout_width="310dp"
+            android:layout_height="50sp"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="JMBG"
+            android:background="@drawable/input_field"
+            android:textColorHint="@color/gray"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRegEmail" />
+
+        <EditText
+            android:id="@+id/txtRegDatumRodjenja"
+            android:layout_width="310dp"
+            android:layout_height="50sp"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="Datum rođenja"
+            android:background="@drawable/input_field"
+            android:textColorHint="@color/gray"
+            android:inputType="date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRegJMBG" />
+
+        <Spinner
+            android:id="@+id/spnDonMjestoRodjenja"
+            android:layout_width="310dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/spiner_field"
+            android:fontFamily="@font/regular"
+            android:spinnerMode="dialog"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRegDatumRodjenja" />
+
+        <Spinner
+            android:id="@+id/spnDonMjestoPrebivalista"
+            android:layout_width="310dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/spiner_field"
+            android:fontFamily="@font/regular"
+            android:spinnerMode="dialog"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spnDonMjestoRodjenja" />
+
+        <EditText
+            android:id="@+id/txtRegPassword"
+            android:layout_width="310dp"
+            android:layout_height="50sp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/input_field"
+            android:ems="10"
+            android:hint="Lozinka"
+            android:inputType="textPassword"
+            android:textColorHint="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spnDonMjestoPrebivalista" />
+
+        <EditText
+            android:id="@+id/txtRegPasswordPotvrda"
+            android:layout_width="310dp"
+            android:layout_height="50sp"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="Lozinka potvrda"
+            android:background="@drawable/input_field"
+            android:textColorHint="@color/gray"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRegPassword" />
+
+        <Button
+            android:id="@+id/btnRegistracijaDonatorDalje"
+            android:layout_width="162dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/regular"
+            android:text="Dalje"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRegPasswordPotvrda" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:fontFamily="@font/regular"
+            android:text="Lični podaci"
+            android:textColor="@color/gray"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.195"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnBack4" />
 
         <ImageView
-            android:layout_width="126dp"
-            android:layout_height="111dp"
-            android:layout_gravity="center"
-            android:src="@drawable/logo" />
+            android:id="@+id/imageView2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:rotation="270"
+            app:layout_constraintBottom_toBottomOf="@+id/spnDonMjestoPrebivalista"
+            app:layout_constraintEnd_toEndOf="@+id/spnDonMjestoPrebivalista"
+            app:layout_constraintHorizontal_bias="0.91"
+            app:layout_constraintStart_toStartOf="@+id/spnDonMjestoPrebivalista"
+            app:layout_constraintTop_toTopOf="@+id/spnDonMjestoPrebivalista"
+            app:layout_constraintVertical_bias="0.566"
+            app:srcCompat="@drawable/arrow" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dobrodošli,"
-            android:textSize="40sp"
-            android:fontFamily="sans-serif"
+        <ImageView
+            android:id="@+id/imageView2a"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:rotation="270"
+            app:layout_constraintBottom_toBottomOf="@+id/spnDonMjestoRodjenja"
+            app:layout_constraintEnd_toEndOf="@+id/spnDonMjestoRodjenja"
+            app:layout_constraintHorizontal_bias="0.91"
+            app:layout_constraintStart_toStartOf="@+id/spnDonMjestoRodjenja"
+            app:layout_constraintTop_toTopOf="@+id/spnDonMjestoRodjenja"
+            app:layout_constraintVertical_bias="0.566"
+            app:srcCompat="@drawable/arrow" />
 
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kreirajte profil"
-            android:textSize="18sp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Ime"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtRegIme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Prezime"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtRegPrezime"
-                    android:inputType="text"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="JMBG"
-                app:counterMaxLength="15"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:id="@+id/txtRegJMBG"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Telefon"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:id="@+id/txtRegTelefon"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Adresa"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:id="@+id/txtRegAdresa"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Datum rođenja"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:id="@+id/txtregDatumRodjenja"
-                    android:layout_height="wrap_content"
-                    android:inputType="date"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Mjesto rođenja"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:id="@+id/txtregMjestoRodjenja"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Mjesto prebivališta"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:id="@+id/txtregMjestoPrebivalista"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Email"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtRegEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Password"
-                app:passwordToggleEnabled="true"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:id="@+id/txtRegPassword"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Password potvrda"
-                app:passwordToggleEnabled="true"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:id="@+id/txtRegPasswordPotvrda"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btnSignUp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Registruj se"
-            android:background="#000"
-            android:textColor="#fff"
-            />
-
-        <Button
-            android:foreground="?android:attr/selectableItemBackground"
-            android:focusable="true"
-            android:clickable="true"
-            android:id="@+id/btnBackToLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Već imate profil? Prijavite se."
-            android:background="@android:color/transparent"
-            />
-
-    </LinearLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

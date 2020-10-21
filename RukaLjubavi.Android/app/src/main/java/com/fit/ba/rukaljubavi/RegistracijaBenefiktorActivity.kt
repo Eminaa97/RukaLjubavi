@@ -49,7 +49,6 @@ class RegistracijaBenefiktorActivity : AppCompatActivity() {
                 var grad = p0!!.getItemAtPosition(p2) as Grad
                 benefiktor.mjestoPrebivalistaId = grad.id
             }
-
         }
     }
 
