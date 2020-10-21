@@ -22,7 +22,9 @@ class RegistracijaBenefiktorActivity : AppCompatActivity() {
     private val serviceGradovi = APIService.buildService(GradService::class.java)
     private val service = APIService.buildService(BenefiktorService::class.java)
     var benefiktor = BenefiktorInsertRequest()
-    var gradovi: MutableList<Grad>? = arrayListOf(Grad(1,"test"),Grad(2,"teswwwwt"))
+    var gradovi: MutableList<Grad>? = arrayListOf()
+    var spinner: Spinner? = null
+    var adapter:ArrayAdapter<Grad>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,38 +41,41 @@ class RegistracijaBenefiktorActivity : AppCompatActivity() {
             sendNoviBenefiktor()
         }
 
+        spinner = spnBenLokacija
         getLokacije()
-        var adapter = ArrayAdapter<Grad>(this,android.R.layout.simple_list_item_1,gradovi!!)
-        spnBenLokacija.adapter = adapter
-        spnBenLokacija.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                var g = p0!!.getItemAtPosition(p2) as Grad
-                benefiktor.mjestoPrebivalistaId = g.id
+                var grad = p0!!.getItemAtPosition(p2) as Grad
+                benefiktor.mjestoPrebivalistaId = grad.id
             }
 
         }
     }
 
     private fun getLokacije() {
+        var loading = LoadingDialog(this@RegistracijaBenefiktorActivity)
+        loading.startLoadingDialog()
         val requestCall = serviceGradovi.getAll()
         requestCall.enqueue(object : Callback<List<Grad>> {
             override fun onFailure(call: Call<List<Grad>>, t: Throwable) {
                 Toast.makeText(this@RegistracijaBenefiktorActivity,"Server error", Toast.LENGTH_SHORT).show()
+                loading.stopDialog()
             }
 
             override fun onResponse(call: Call<List<Grad>>, response: Response<List<Grad>>) {
                 if(response.isSuccessful){
                     var list = response.body()
                     gradovi = list!!.toMutableList()
-                    Toast.makeText(this@RegistracijaBenefiktorActivity,"Pogrešno korisničko ime ili lozinka. Pokušajte ponovo.", Toast.LENGTH_SHORT).show()
-
+                    adapter = ArrayAdapter<Grad>(this@RegistracijaBenefiktorActivity,android.R.layout.simple_list_item_1,gradovi!!)
+                    spinner!!.adapter = adapter
                 }
                 else{
                     Toast.makeText(this@RegistracijaBenefiktorActivity,"Pogrešno korisničko ime ili lozinka. Pokušajte ponovo.", Toast.LENGTH_SHORT).show()
                 }
+                loading.stopDialog()
             }
         })
     }

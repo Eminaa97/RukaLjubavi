@@ -165,10 +165,24 @@
             android:layout_width="310dp"
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
+            android:background="@drawable/spiner_field"
             android:fontFamily="@font/regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtRegTelefon" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:rotation="270"
+            app:layout_constraintBottom_toBottomOf="@+id/spnBenLokacija"
+            app:layout_constraintEnd_toEndOf="@+id/spnBenLokacija"
+            app:layout_constraintHorizontal_bias="0.91"
+            app:layout_constraintStart_toStartOf="@+id/spnBenLokacija"
+            app:layout_constraintTop_toTopOf="@+id/spnBenLokacija"
+            app:layout_constraintVertical_bias="0.566"
+            app:srcCompat="@drawable/arrow" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
