@@ -1,21 +1,22 @@
 package com.fit.ba.rukaljubavi
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
-import androidx.core.app.NotificationCompat
+import android.view.ViewGroup
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.fit.ba.rukaljubavi.Models.Grad
 import com.fit.ba.rukaljubavi.Requests.BenefiktorInsertRequest
-import com.fit.ba.rukaljubavi.Services.*
+import com.fit.ba.rukaljubavi.Services.APIService
+import com.fit.ba.rukaljubavi.Services.BenefiktorService
+import com.fit.ba.rukaljubavi.Services.GradService
 import kotlinx.android.synthetic.main.activity_registracija_benefiktor.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class RegistracijaBenefiktorActivity : AppCompatActivity() {
 
@@ -24,7 +25,6 @@ class RegistracijaBenefiktorActivity : AppCompatActivity() {
     var benefiktor = BenefiktorInsertRequest()
     var gradovi: MutableList<Grad>? = arrayListOf()
     var spinner: Spinner? = null
-    var adapter:ArrayAdapter<Grad>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,13 +36,11 @@ class RegistracijaBenefiktorActivity : AppCompatActivity() {
         }
 
         btnRegistracijaBenefiktorDalje.setOnClickListener {
-            val intent = Intent(this,PDVBrojPotvrdaActivity::class.java)
-            startActivity(intent)
             sendNoviBenefiktor()
         }
 
         spinner = spnBenLokacija
-        getLokacije()
+        loadGradovi()
         spinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
@@ -55,7 +53,7 @@ class RegistracijaBenefiktorActivity : AppCompatActivity() {
         }
     }
 
-    private fun getLokacije() {
+    private fun loadGradovi() {
         var loading = LoadingDialog(this@RegistracijaBenefiktorActivity)
         loading.startLoadingDialog()
         val requestCall = serviceGradovi.getAll()
@@ -69,11 +67,25 @@ class RegistracijaBenefiktorActivity : AppCompatActivity() {
                 if(response.isSuccessful){
                     var list = response.body()
                     gradovi = list!!.toMutableList()
-                    adapter = ArrayAdapter<Grad>(this@RegistracijaBenefiktorActivity,android.R.layout.simple_list_item_1,gradovi!!)
+                    gradovi!!.add(0,Grad(-1,"Lokacija"))
+                    var adapter = object : ArrayAdapter<Grad>(this@RegistracijaBenefiktorActivity,android.R.layout.simple_list_item_1,gradovi!!){
+                        override fun isEnabled(position: Int): Boolean {
+                            return position != 0
+                        }
+
+                        override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                            val view = super.getDropDownView(position, convertView, parent)
+                            val tv = view as TextView
+                            if (position === 0) {
+                                tv.setTextColor(Color.GRAY)
+                            } else {
+                                tv.setTextColor(Color.BLACK)
+                            }
+                            return view
+                        }
+                    }
+                    adapter.setDropDownViewResource(R.layout.spinner_item)
                     spinner!!.adapter = adapter
-                }
-                else{
-                    Toast.makeText(this@RegistracijaBenefiktorActivity,"Pogrešno korisničko ime ili lozinka. Pokušajte ponovo.", Toast.LENGTH_SHORT).show()
                 }
                 loading.stopDialog()
             }
@@ -88,8 +100,55 @@ class RegistracijaBenefiktorActivity : AppCompatActivity() {
         benefiktor.confirmPassword = txtRegPasswordPotvrda!!.text.toString()
         benefiktor.telefon = txtRegTelefon!!.text.toString()
 
-        val intent = Intent(this, PDVBrojPotvrdaActivity::class.java)
-        intent.putExtra("NEW_BENEFIKTOR",benefiktor)
-        startActivity(intent)
+        var error: Boolean = false
+
+        if(benefiktor.nazivKompanije.isNullOrBlank()){
+            txtRegNazivKompanije.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtRegNazivKompanije.setBackgroundResource(R.drawable.input_field)
+        if(benefiktor.adresa.isNullOrBlank()){
+            txtRegAdresa.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtRegAdresa.setBackgroundResource(R.drawable.input_field)
+        if(benefiktor.email.isNullOrBlank()){
+            txtRegEmail.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtRegEmail.setBackgroundResource(R.drawable.input_field)
+        if(benefiktor.telefon.isNullOrBlank()){
+            txtRegTelefon.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtRegTelefon.setBackgroundResource(R.drawable.input_field)
+        if(benefiktor.password.isNullOrBlank()){
+            txtRegPassword.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtRegPassword.setBackgroundResource(R.drawable.input_field)
+        if(benefiktor.confirmPassword.isNullOrBlank()){
+            txtRegPasswordPotvrda.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtRegPasswordPotvrda.setBackgroundResource(R.drawable.input_field)
+        if(benefiktor.mjestoPrebivalistaId == -1){
+            spnBenLokacija.setBackgroundResource(R.drawable.spiner_field_error)
+            error = true
+        }
+        else
+            spnBenLokacija.setBackgroundResource(R.drawable.spiner_field)
+
+        if(!error) {
+            val intent = Intent(this, BenefiktorKategorijeActivity::class.java)
+            intent.putExtra("NEW_BENEFIKTOR", benefiktor)
+            startActivity(intent)
+        }
     }
 }

@@ -11,22 +11,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PDVBrojPotvrdaActivity"></activity>
+        <activity android:name=".BenefiktorKategorijeActivity"></activity>
+        <activity android:name=".PDVBrojPotvrdaActivity" />
         <activity
             android:name=".RegistracijaIzborActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".RegistracijaBenefiktorActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".RegistracijaDonatorActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".PrijavaActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".SplashScreenActivity"
             android:screenOrientation="portrait">

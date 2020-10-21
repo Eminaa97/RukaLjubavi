@@ -164,10 +164,13 @@
             android:id="@+id/spnBenLokacija"
             android:layout_width="310dp"
             android:layout_height="50dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/spiner_field"
             android:fontFamily="@font/regular"
+            android:spinnerMode="dialog"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtRegTelefon" />
 

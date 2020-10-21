@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RukaLjubavi</string>
+    <string name="spinner_prompt1">Vaša lokacija</string>
 </resources>

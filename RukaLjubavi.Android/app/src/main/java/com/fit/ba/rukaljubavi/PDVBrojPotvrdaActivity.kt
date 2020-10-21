@@ -8,9 +8,7 @@ import android.widget.Toast
 import com.fit.ba.rukaljubavi.Requests.BenefiktorInsertRequest
 import com.fit.ba.rukaljubavi.Services.APIService
 import com.fit.ba.rukaljubavi.Services.BenefiktorService
-import com.fit.ba.rukaljubavi.Services.DonatorService
 import kotlinx.android.synthetic.main.activity_p_d_v_broj_potvrda.*
-import kotlinx.android.synthetic.main.activity_registracija_benefiktor.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,13 +24,18 @@ class PDVBrojPotvrdaActivity : AppCompatActivity() {
         var benefiktor = intent.getSerializableExtra("NEW_BENEFIKTOR") as BenefiktorInsertRequest
 
         btnBack2.setOnClickListener {
-            val intent = Intent(this,RegistracijaBenefiktorActivity::class.java)
+            val intent = Intent(this,BenefiktorKategorijeActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         btnProvjeriPdvBroj.setOnClickListener {
             benefiktor.pdvbroj = txtRegPDVBroj!!.text.toString()
-            sendBenefiktor(benefiktor)
+            if(benefiktor.pdvbroj.isNullOrBlank()){
+                txtRegPDVBroj.setBackgroundResource(R.drawable.input_field_error)
+            }
+            else
+                sendBenefiktor(benefiktor)
         }
     }
 

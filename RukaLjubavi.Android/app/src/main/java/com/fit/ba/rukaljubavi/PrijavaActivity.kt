@@ -39,34 +39,47 @@ class PrijavaActivity : AppCompatActivity() {
         login.email = txtPrUsername!!.text.toString()
         login.password = txtPrPassword!!.text.toString()
 
-        if(login.email.isNullOrBlank() || login.password.isNullOrBlank()){
-            txtPrPassword.setBackgroundResource(R.drawable.input_field_error)
+        var error: Boolean = false
+
+        if (login.email.isNullOrBlank()) {
             txtPrUsername.setBackgroundResource(R.drawable.input_field_error)
-            return
+            error = true
         }
+        else
+            txtPrUsername.setBackgroundResource(R.drawable.input_field)
+        if (login.password.isNullOrBlank()) {
+            txtPrPassword.setBackgroundResource(R.drawable.input_field_error)
+            error = true
+        }
+        else
+            txtPrPassword.setBackgroundResource(R.drawable.input_field)
 
-        var loading = LoadingDialog(this@PrijavaActivity)
-        loading.startLoadingDialog()
+        if (!error) {
+            var loading = LoadingDialog(this@PrijavaActivity)
+            loading.startLoadingDialog()
 
-        val requestCall = service.login(login)
-        requestCall.enqueue(object : Callback<Unit> {
-            override fun onFailure(call: Call<Unit>, t: Throwable) {
-                loading.stopDialog()
-                Toast.makeText(this@PrijavaActivity,"Server error", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-                loading.stopDialog()
-                if(response.isSuccessful){
-                    val intent = Intent(this@PrijavaActivity,MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
+            val requestCall = service.login(login)
+            requestCall.enqueue(object : Callback<Unit> {
+                override fun onFailure(call: Call<Unit>, t: Throwable) {
+                    loading.stopDialog()
+                    Toast.makeText(this@PrijavaActivity, "Server error", Toast.LENGTH_SHORT).show()
                 }
-                else{
-                    Toast.makeText(this@PrijavaActivity,"Pogrešno korisničko ime ili lozinka. Pokušajte ponovo.", Toast.LENGTH_SHORT).show()
+
+                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                    loading.stopDialog()
+                    if (response.isSuccessful) {
+                        val intent = Intent(this@PrijavaActivity, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Toast.makeText(
+                            this@PrijavaActivity,
+                            "Pogrešno korisničko ime ili lozinka. Pokušajte ponovo.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-            }
-        })
+            })
+        }
     }
-
 }

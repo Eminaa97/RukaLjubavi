@@ -13,6 +13,7 @@ class RegistracijaIzborActivity : AppCompatActivity() {
         btnBack.setOnClickListener{
             val intent = Intent(this,PrijavaActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         btnRegistracijaDonator.setOnClickListener {
