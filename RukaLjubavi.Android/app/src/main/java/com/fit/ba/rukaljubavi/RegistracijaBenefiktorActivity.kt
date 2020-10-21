@@ -68,7 +68,7 @@ class RegistracijaBenefiktorActivity : AppCompatActivity() {
                     var list = response.body()
                     gradovi = list!!.toMutableList()
                     gradovi!!.add(0,Grad(-1,"Lokacija"))
-                    var adapter = object : ArrayAdapter<Grad>(this@RegistracijaBenefiktorActivity,android.R.layout.simple_list_item_1,gradovi!!){
+                    var adapter = object : ArrayAdapter<Grad>(this@RegistracijaBenefiktorActivity,R.layout.spinner_list_item,gradovi!!){
                         override fun isEnabled(position: Int): Boolean {
                             return position != 0
                         }

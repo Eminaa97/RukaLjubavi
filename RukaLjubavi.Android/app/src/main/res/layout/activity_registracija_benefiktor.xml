@@ -130,21 +130,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRegPassword" />
 
-    <Button
-        android:id="@+id/btnRegistracijaBenefiktorDalje"
-        android:layout_width="162dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/button"
-        android:fontFamily="@font/regular"
-        android:text="Dalje"
-        android:textAllCaps="false"
-        android:textColor="#fff"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRegPasswordPotvrda" />
+        <Button
+            android:id="@+id/btnRegistracijaBenefiktorDalje"
+            android:layout_width="162dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/regular"
+            android:text="Dalje"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRegPasswordPotvrda" />
 
     <TextView
         android:id="@+id/textView5"
@@ -168,7 +170,7 @@
             android:background="@drawable/spiner_field"
             android:fontFamily="@font/regular"
             android:spinnerMode="dialog"
-            android:textSize="18sp"
+            android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"

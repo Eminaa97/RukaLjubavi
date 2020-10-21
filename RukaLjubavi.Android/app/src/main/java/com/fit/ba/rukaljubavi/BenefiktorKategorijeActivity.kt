@@ -39,9 +39,14 @@ class BenefiktorKategorijeActivity : AppCompatActivity() {
         }
 
         btnRegistracijaBenefiktorDalje2.setOnClickListener {
-            val intent = Intent(this,PDVBrojPotvrdaActivity::class.java)
-            intent.putExtra("NEW_BENEFIKTOR", benefiktor)
-            startActivity(intent)
+            if(benefiktor!!.kategorije.size == 0){
+                Toast.makeText(this@BenefiktorKategorijeActivity,"Niste izabrali nijednu kategoriju.", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                val intent = Intent(this,PDVBrojPotvrdaActivity::class.java)
+                intent.putExtra("NEW_BENEFIKTOR", benefiktor)
+                startActivity(intent)
+            }
         }
 
         lv = lstKategorije

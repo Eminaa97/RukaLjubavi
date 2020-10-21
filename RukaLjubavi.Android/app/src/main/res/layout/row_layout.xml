@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-    android:padding="10sp"
+    android:padding="15sp"
     android:textAllCaps="true"
     android:textSize="18dp"
     android:fontFamily="@font/regular"

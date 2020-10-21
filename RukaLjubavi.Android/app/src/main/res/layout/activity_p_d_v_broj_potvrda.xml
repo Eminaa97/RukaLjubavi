@@ -8,8 +8,8 @@
 
     <Button
         android:id="@+id/btnProvjeriPdvBroj"
-        android:layout_width="310dp"
-        android:layout_height="50sp"
+        android:layout_width="162dp"
+        android:layout_height="53dp"
         android:background="@drawable/button"
         android:fontFamily="@font/regular"
         android:text="Provjeri"
