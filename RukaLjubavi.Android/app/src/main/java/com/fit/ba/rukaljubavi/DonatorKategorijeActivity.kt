@@ -112,7 +112,7 @@ class DonatorKategorijeActivity : AppCompatActivity(){
                     finish()
                 }
                 else{
-                    Toast.makeText(this@DonatorKategorijeActivity,"Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DonatorKategorijeActivity,response.message(), Toast.LENGTH_SHORT).show()
                 }
                 loading.stopDialog()
             }

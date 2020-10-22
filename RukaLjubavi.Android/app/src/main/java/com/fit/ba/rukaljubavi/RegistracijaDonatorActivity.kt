@@ -1,9 +1,13 @@
 package com.fit.ba.rukaljubavi
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -25,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_registracija_donator.txtRegTelefo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.Year
 import java.util.*
 
 class RegistracijaDonatorActivity : AppCompatActivity() {
@@ -34,6 +39,7 @@ class RegistracijaDonatorActivity : AppCompatActivity() {
     var spinnerMjestoRodjenja: Spinner? = null
     var spinnerMjestoPrebivalista: Spinner? = null
     var donator = DonatorInsertRequest()
+    var datePicker: DatePickerDialog.OnDateSetListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +53,39 @@ class RegistracijaDonatorActivity : AppCompatActivity() {
 
         btnRegistracijaDonatorDalje.setOnClickListener {
             sendNoviDonator()
+        }
+
+        txtRegDatumRodjenja.isFocusable = false
+        txtRegDatumRodjenja.isClickable = true
+        txtRegDatumRodjenja.inputType = InputType.TYPE_NULL
+        txtRegDatumRodjenja.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                var calendar: Calendar = Calendar.getInstance()
+                var year: Int = calendar.get(Calendar.YEAR)
+                var month: Int = calendar.get(Calendar.MONTH)
+                var day: Int = calendar.get(Calendar.DAY_OF_MONTH)
+
+                var dpd: DatePickerDialog = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    DatePickerDialog(
+                        this@RegistracijaDonatorActivity,
+                        android.R.style.Theme_DeviceDefault_Dialog_MinWidth,
+                        datePicker,
+                        year,month,day
+                    )
+                } else {
+                    TODO("VERSION.SDK_INT < N")
+                }
+
+                dpd.window!!.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+                dpd.show()
+            }
+        })
+
+        datePicker = object : DatePickerDialog.OnDateSetListener{
+            override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+                //donator.datumRodjenja = """$year-$month-${dayOfMonth}"""
+                txtRegDatumRodjenja.setText("""$dayOfMonth.$month.${year}""")
+            }
         }
 
         spinnerMjestoPrebivalista = spnDonMjestoPrebivalista
@@ -148,7 +187,7 @@ class RegistracijaDonatorActivity : AppCompatActivity() {
         donator.password = txtRegPassword!!.text.toString()
         donator.confirmPassword = txtRegPasswordPotvrda!!.text.toString()
         donator.telefon = txtRegTelefon!!.text.toString()
-        donator.datumRodjenja = txtRegDatumRodjenja!!.text.toString()
+        donator.datumRodjenja = "2020-10-22T22:52:56.207Z"
 
         var error: Boolean = false
 
