@@ -8,15 +8,14 @@ import com.fit.ba.rukaljubavi.Models.Drzava
 import com.fit.ba.rukaljubavi.R
 import com.fit.ba.rukaljubavi.Services.APIService
 import com.fit.ba.rukaljubavi.Services.DrzavaService
+import kotlinx.android.synthetic.main.activity_alert_dialog.*
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity()
+class DonatorHomePageActivity : AppCompatActivity()
 {
-    private val service = APIService.buildService(DrzavaService::class.java)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,9 +26,12 @@ class MainActivity : AppCompatActivity()
         }
 
         btnLogout.setOnClickListener {
-            val intent = Intent(this,PrijavaActivity::class.java)
+            AlertDialog(this@DonatorHomePageActivity).startAlertDialog(PrijavaActivity::class.java)
+        }
+
+        btnMainProfile.setOnClickListener {
+            val intent = Intent(this,DonatorProfilActivity::class.java)
             startActivity(intent)
-            finish()
         }
     }
 }

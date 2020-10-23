@@ -4,13 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.fit.ba.rukaljubavi.Requests.BenefiktorInsertRequest
 import com.fit.ba.rukaljubavi.Requests.PrijavaRequest
 import com.fit.ba.rukaljubavi.Services.APIService
-import com.fit.ba.rukaljubavi.Services.DonatorService
 import com.fit.ba.rukaljubavi.Services.PrijavaService
 import kotlinx.android.synthetic.main.activity_prijava.*
-import kotlinx.android.synthetic.main.activity_registracija_benefiktor.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -68,7 +65,7 @@ class PrijavaActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                     loading.stopDialog()
                     if (response.isSuccessful) {
-                        val intent = Intent(this@PrijavaActivity, MainActivity::class.java)
+                        val intent = Intent(this@PrijavaActivity, DonatorHomePageActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {
