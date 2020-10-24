@@ -8,6 +8,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -213,8 +214,15 @@ class RegistracijaDonatorActivity : AppCompatActivity() {
             txtRegEmail.setBackgroundResource(R.drawable.input_field_error)
             error = true
         }
-        else
-            txtRegEmail.setBackgroundResource(R.drawable.input_field)
+        else{
+            if(!TextUtils.isEmpty(donator.email) && android.util.Patterns.EMAIL_ADDRESS.matcher(donator.email).matches()){
+                txtRegEmail.setBackgroundResource(R.drawable.input_field)
+            }
+            else{
+                error = true
+                txtRegEmail.setBackgroundResource(R.drawable.input_field_error)
+            }
+        }
         if(donator.telefon.isNullOrBlank()){
             txtRegTelefon.setBackgroundResource(R.drawable.input_field_error)
             error = true
@@ -225,20 +233,44 @@ class RegistracijaDonatorActivity : AppCompatActivity() {
             txtRegJMBG.setBackgroundResource(R.drawable.input_field_error)
             error = true
         }
-        else
-            txtRegJMBG.setBackgroundResource(R.drawable.input_field)
+        else{
+            if(donator.jmbg!!.length == 13){
+                txtRegJMBG.setBackgroundResource(R.drawable.input_field)
+            }
+            else{
+                error = true
+                txtRegJMBG.setBackgroundResource(R.drawable.input_field_error)
+                txtRegJMBG.hint = "Tačno 13 karaktera."
+            }
+        }
         if(donator.password.isNullOrBlank()){
             txtRegPassword.setBackgroundResource(R.drawable.input_field_error)
             error = true
         }
-        else
-            txtRegPassword.setBackgroundResource(R.drawable.input_field)
+        else{
+            if(donator.password!!.length >= 5){
+                txtRegPassword.setBackgroundResource(R.drawable.input_field)
+            }
+            else{
+                error = true
+                txtRegPassword.setBackgroundResource(R.drawable.input_field_error)
+                txtRegPassword.hint = "Minimalno 5 karaktera."
+            }
+        }
         if(donator.confirmPassword.isNullOrBlank()){
             txtRegPasswordPotvrda.setBackgroundResource(R.drawable.input_field_error)
             error = true
         }
-        else
-            txtRegPasswordPotvrda.setBackgroundResource(R.drawable.input_field)
+        else{
+            if(donator.password!!.length >= 5 && donator.confirmPassword!! == donator.password){
+                txtRegPasswordPotvrda.setBackgroundResource(R.drawable.input_field)
+            }
+            else{
+                error = true
+                txtRegPasswordPotvrda.setBackgroundResource(R.drawable.input_field_error)
+                txtRegPasswordPotvrda.hint = "Lozinke se ne slažu."
+            }
+        }
         if(donator.datumRodjenja.isNullOrBlank()){
             txtRegDatumRodjenja.setBackgroundResource(R.drawable.input_field_error)
             error = true

@@ -3,6 +3,7 @@ package com.fit.ba.rukaljubavi
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -117,8 +118,15 @@ class RegistracijaBenefiktorActivity : AppCompatActivity() {
             txtRegEmail.setBackgroundResource(R.drawable.input_field_error)
             error = true
         }
-        else
-            txtRegEmail.setBackgroundResource(R.drawable.input_field)
+        else{
+            if(!TextUtils.isEmpty(benefiktor.email) && android.util.Patterns.EMAIL_ADDRESS.matcher(benefiktor.email).matches()){
+                txtRegEmail.setBackgroundResource(R.drawable.input_field)
+            }
+            else{
+                error = true
+                txtRegEmail.setBackgroundResource(R.drawable.input_field_error)
+            }
+        }
         if(benefiktor.telefon.isNullOrBlank()){
             txtRegTelefon.setBackgroundResource(R.drawable.input_field_error)
             error = true
@@ -129,14 +137,30 @@ class RegistracijaBenefiktorActivity : AppCompatActivity() {
             txtRegPassword.setBackgroundResource(R.drawable.input_field_error)
             error = true
         }
-        else
-            txtRegPassword.setBackgroundResource(R.drawable.input_field)
+        else{
+            if(benefiktor.password!!.length >= 5){
+                txtRegPassword.setBackgroundResource(R.drawable.input_field)
+            }
+            else{
+                error = true
+                txtRegPassword.setBackgroundResource(R.drawable.input_field_error)
+                txtRegPassword.hint = "Minimalno 5 karaktera."
+            }
+        }
         if(benefiktor.confirmPassword.isNullOrBlank()){
             txtRegPasswordPotvrda.setBackgroundResource(R.drawable.input_field_error)
             error = true
         }
-        else
-            txtRegPasswordPotvrda.setBackgroundResource(R.drawable.input_field)
+        else{
+            if(benefiktor.password!!.length >= 5 && benefiktor.confirmPassword!! == benefiktor.password){
+                txtRegPasswordPotvrda.setBackgroundResource(R.drawable.input_field)
+            }
+            else{
+                error = true
+                txtRegPasswordPotvrda.setBackgroundResource(R.drawable.input_field_error)
+                txtRegPasswordPotvrda.hint = "Lozinke se ne slažu."
+            }
+        }
         if(benefiktor.mjestoPrebivalistaId == -1){
             spnBenLokacija.setBackgroundResource(R.drawable.spiner_field_error)
             error = true
