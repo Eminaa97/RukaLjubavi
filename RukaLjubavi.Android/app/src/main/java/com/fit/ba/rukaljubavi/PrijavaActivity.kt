@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.fit.ba.rukaljubavi.Models.LogiraniUser
 import com.fit.ba.rukaljubavi.Requests.PrijavaRequest
 import com.fit.ba.rukaljubavi.Services.APIService
 import com.fit.ba.rukaljubavi.Services.PrijavaService
@@ -56,18 +57,26 @@ class PrijavaActivity : AppCompatActivity() {
             loading.startLoadingDialog()
 
             val requestCall = service.login(login)
-            requestCall.enqueue(object : Callback<Unit> {
-                override fun onFailure(call: Call<Unit>, t: Throwable) {
+            requestCall.enqueue(object : Callback<LogiraniUser> {
+                override fun onFailure(call: Call<LogiraniUser>, t: Throwable) {
                     loading.stopDialog()
                     Toast.makeText(this@PrijavaActivity, "Server error", Toast.LENGTH_SHORT).show()
                 }
 
-                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-                    loading.stopDialog()
+                override fun onResponse(call: Call<LogiraniUser>, response: Response<LogiraniUser>) {
                     if (response.isSuccessful) {
-                        val intent = Intent(this@PrijavaActivity, DonatorHomePageActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        val item = response.body()
+                        if(item!!.tipKorisnika == 1){
+                            val intent = Intent(this@PrijavaActivity, DonatorHomePageActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        if(item!!.tipKorisnika == 2){
+                            val intent = Intent(this@PrijavaActivity, BenefiktorHomePageActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        loading.stopDialog()
                     } else {
                         Toast.makeText(
                             this@PrijavaActivity,

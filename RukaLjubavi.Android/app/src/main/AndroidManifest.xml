@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DonatorProfilActivity"></activity>
+        <activity android:name=".BenefiktorHomePageActivity"></activity>
+        <activity android:name=".DonatorProfilActivity" />
         <activity android:name=".AlertDialog" />
         <activity android:name=".Services.AlertDialog" />
         <activity
