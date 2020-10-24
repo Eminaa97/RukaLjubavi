@@ -76,7 +76,6 @@ class PrijavaActivity : AppCompatActivity() {
                             startActivity(intent)
                             finish()
                         }
-                        loading.stopDialog()
                     } else {
                         Toast.makeText(
                             this@PrijavaActivity,
@@ -84,6 +83,7 @@ class PrijavaActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+                    loading.stopDialog()
                 }
             })
         }
