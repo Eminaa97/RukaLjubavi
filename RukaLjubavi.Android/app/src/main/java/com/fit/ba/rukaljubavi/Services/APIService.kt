@@ -10,6 +10,9 @@ object APIService {
 
     private val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
+    var loggedUserId: Int? = null
+    var loggedUserToken: String? = null
+
     private val okHttp = OkHttpClient.Builder()
         .addInterceptor(logger)
         .addInterceptor{ chain ->

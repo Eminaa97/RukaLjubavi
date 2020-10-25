@@ -16,7 +16,12 @@ class BenefiktorHomePageActivity : AppCompatActivity() {
         }
 
         btnLogout.setOnClickListener {
-            AlertDialog(this@BenefiktorHomePageActivity).startAlertDialog(PrijavaActivity::class.java)
+            OdjavaAlertDialog(this@BenefiktorHomePageActivity).startAlertDialog(PrijavaActivity::class.java)
+        }
+
+        btnMainProfile.setOnClickListener {
+            val intent = Intent(this,BenefiktorProfilActivity::class.java)
+            startActivity(intent)
         }
 
     }

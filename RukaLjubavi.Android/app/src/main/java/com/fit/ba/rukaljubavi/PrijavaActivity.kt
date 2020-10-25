@@ -1,6 +1,7 @@
 package com.fit.ba.rukaljubavi
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -35,7 +36,9 @@ class PrijavaActivity : AppCompatActivity() {
     private fun login() {
         var login = PrijavaRequest()
         login.email = txtPrUsername!!.text.toString()
+        //login.email = "test@test.com"
         login.password = txtPrPassword!!.text.toString()
+        //login.password = "test"
 
         var error: Boolean = false
 
@@ -65,17 +68,24 @@ class PrijavaActivity : AppCompatActivity() {
 
                 override fun onResponse(call: Call<LogiraniUser>, response: Response<LogiraniUser>) {
                     if (response.isSuccessful) {
+                        var editor: SharedPreferences.Editor = sharedPreferences!!.edit()
                         val item = response.body()
                         if(item!!.tipKorisnika == 1){
                             val intent = Intent(this@PrijavaActivity, DonatorHomePageActivity::class.java)
                             startActivity(intent)
                             finish()
+                            APIService.loggedUserId = item.donatorId
                         }
                         if(item!!.tipKorisnika == 2){
                             val intent = Intent(this@PrijavaActivity, BenefiktorHomePageActivity::class.java)
                             startActivity(intent)
                             finish()
+                            APIService.loggedUserId = item.benefiktorId
                         }
+                        editor.putString(Email, login.email)
+                        editor.putString(Password, login.password)
+                        editor.apply()
+                        APIService.loggedUserToken = item.token
                     } else {
                         Toast.makeText(
                             this@PrijavaActivity,

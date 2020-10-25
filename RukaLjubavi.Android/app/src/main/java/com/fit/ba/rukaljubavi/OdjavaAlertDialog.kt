@@ -3,13 +3,14 @@ package com.fit.ba.rukaljubavi
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import kotlinx.android.synthetic.main.activity_alert_dialog.*
 
-class AlertDialog(var activity: Activity) {
+class OdjavaAlertDialog(var activity: Activity) {
     var dialog: AlertDialog? = null
     fun<T> startAlertDialog(someClass: Class<T>?){
         var builder = AlertDialog.Builder(activity)
@@ -31,6 +32,8 @@ class AlertDialog(var activity: Activity) {
             val intent = Intent(activity,someClass)
             startActivity(activity,intent,null)
             activity.finish()
+            var editor: SharedPreferences.Editor = sharedPreferences!!.edit()
+            editor.clear().apply()
         }
     }
 }

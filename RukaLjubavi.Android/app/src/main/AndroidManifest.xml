@@ -11,10 +11,17 @@
         android:roundIcon="@mipmap/app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".BenefiktorProfilActivity"></activity>
+        <activity
+            android:name=".BenefiktoriListaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBar" />
         <activity
             android:name=".BenefiktorHomePageActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".DonatorProfilActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".DonatorProfilActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".DonatorKategorijeActivity"
             android:screenOrientation="portrait" />

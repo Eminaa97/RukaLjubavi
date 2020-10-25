@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_red"
-    tools:context=".DonatorProfilActivity">
+    tools:context=".BenefiktorProfilActivity">
 
     <TextView
         android:id="@+id/textView19"
@@ -15,7 +15,7 @@
         android:layout_marginLeft="35dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/regular"
-        android:text="Prebivalište"
+        android:text="Lokacija"
         android:textColor="@color/gray"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -66,13 +66,13 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/profile" />
+        app:srcCompat="@drawable/benefiktor_profile" />
 
     <TextView
-        android:id="@+id/txtImePrezime"
+        android:id="@+id/txtNazivKompanije"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/regular"
         android:textColor="@color/gray"
         android:textSize="20sp"
@@ -84,7 +84,7 @@
         tools:text="Ime Prezime" />
 
     <TextView
-        android:id="@+id/txtJMBG"
+        android:id="@+id/txtPDVBroj"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -95,7 +95,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtImePrezime"
+        app:layout_constraintTop_toBottomOf="@+id/txtNazivKompanije"
         tools:text="1234567891234" />
 
     <TextView
@@ -113,7 +113,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtJMBG" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPDVBroj" />
 
 
     <TextView
@@ -147,7 +147,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtJMBG"
+        app:layout_constraintTop_toBottomOf="@+id/txtPDVBroj"
         tools:text="test@test.com" />
 
     <TextView
