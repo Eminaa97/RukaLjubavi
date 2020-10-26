@@ -61,7 +61,7 @@ class SplashScreenActivity : AppCompatActivity() {
                                 APIService.loggedUserId = item.benefiktorId
                                 APIService.naziv = item.nazivKompanije
                             }
-                            APIService.loggedUserToken = item.token
+                            APIService.loggedUserToken += item.token
                         }
                     }
                 })

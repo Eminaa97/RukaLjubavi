@@ -85,7 +85,7 @@ class PrijavaActivity : AppCompatActivity() {
                         editor.putString(Email, login.email)
                         editor.putString(Password, login.password)
                         editor.apply()
-                        APIService.loggedUserToken = item.token
+                        APIService.loggedUserToken += item.token
                     } else {
                         Toast.makeText(
                             this@PrijavaActivity,

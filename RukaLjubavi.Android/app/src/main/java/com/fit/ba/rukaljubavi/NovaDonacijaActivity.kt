@@ -103,14 +103,6 @@ class NovaDonacijaActivity : AppCompatActivity() {
         }
         else
             txtKategorija.setBackgroundResource(R.drawable.spiner_field)
-        if(!previousActivity.equals("BenefiktorProfilActivity")) {
-            if(donacija.benefiktorId == null){
-                txtBenefiktor.setBackgroundResource(R.drawable.input_field_error)
-                error = true
-            }
-            else
-                txtBenefiktor.setBackgroundResource(R.drawable.input_field)
-        }
 
         if(!error) {
             val requestCall = service.send(APIService.loggedUserToken, donacija)
