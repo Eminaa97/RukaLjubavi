@@ -1,10 +1,12 @@
 package com.fit.ba.rukaljubavi
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.fit.ba.rukaljubavi.Models.Benefiktor
 import com.fit.ba.rukaljubavi.Models.Donator
+import com.fit.ba.rukaljubavi.Requests.BenefiktorInsertRequest
 import com.fit.ba.rukaljubavi.Services.APIService
 import com.fit.ba.rukaljubavi.Services.BenefiktorService
 import com.fit.ba.rukaljubavi.Services.DonatorService
@@ -29,11 +31,37 @@ class BenefiktorProfilActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_benefiktor_profil)
 
-        loadBenefiktor()
-
-        btnAzurirajPodatke.setOnClickListener {
-
+        var previousActivity = intent.getStringExtra("ACTIVITY")
+        if(previousActivity.equals("BenefiktoriListaActivity")){
+            btnBenefiktorProfil.text = "Doniraj"
+            benefiktor = intent.getSerializableExtra("BENEFIKTOR") as Benefiktor
+            initBenefiktorData()
+            btnBenefiktorProfil.setOnClickListener {
+                val intent = Intent(this, NovaDonacijaActivity::class.java)
+                intent.putExtra("BENEFIKTOR",benefiktor)
+                intent.putExtra("ACTIVITY","BenefiktorProfilActivity")
+                startActivity(intent)
+            }
         }
+        else {
+            loadBenefiktor()
+            btnBenefiktorProfil.setOnClickListener {
+
+            }
+        }
+    }
+
+    private fun initBenefiktorData(){
+        txtNazivKompanije.text = benefiktor!!.nazivKompanije
+        txtPDVBroj.text = benefiktor!!.pdvbroj
+        txtEmail.text = benefiktor!!.email
+        txtTelefon.text = benefiktor!!.telefon
+        txtAdresa.text = benefiktor!!.adresa
+        txtGrad.text = benefiktor!!.mjestoPrebivalista
+        var dan = benefiktor!!.datumRegistracije.substring(8,10)
+        var mjesec = benefiktor!!.datumRegistracije.substring(5,7)
+        var godina = benefiktor!!.datumRegistracije.substring(0,4)
+        txtFooter.text = "Korisnik aplikacije od: $dan.$mjesec.$godina"
     }
 
     private fun loadBenefiktor() {
@@ -49,16 +77,7 @@ class BenefiktorProfilActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Benefiktor>, response: Response<Benefiktor>) {
                 if(response.isSuccessful){
                     benefiktor = response.body()
-                    txtNazivKompanije.text = benefiktor!!.nazivKompanije
-                    txtPDVBroj.text = benefiktor!!.pdvbroj
-                    txtEmail.text = benefiktor!!.email
-                    txtTelefon.text = benefiktor!!.telefon
-                    txtAdresa.text = benefiktor!!.adresa
-                    txtGrad.text = benefiktor!!.mjestoPrebivalista
-                    var dan = benefiktor!!.datumRegistracije.substring(8,10)
-                    var mjesec = benefiktor!!.datumRegistracije.substring(5,7)
-                    var godina = benefiktor!!.datumRegistracije.substring(0,4)
-                    txtFooter.text = "Korisnik aplikacije od: $dan.$mjesec.$godina"
+                    initBenefiktorData()
                 }
                 loading.stopDialog()
             }

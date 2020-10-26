@@ -18,6 +18,7 @@ class DonatorHomePageActivity : AppCompatActivity()
 
         btnBenefiktori.setOnClickListener {
             val intent = Intent(this,BenefiktoriListaActivity::class.java)
+            intent.putExtra("ACTIVITY","DonatorHomePageActivity")
             startActivity(intent)
         }
 
@@ -27,6 +28,12 @@ class DonatorHomePageActivity : AppCompatActivity()
 
         btnMainProfile.setOnClickListener {
             val intent = Intent(this,DonatorProfilActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnNovaDonacija.setOnClickListener {
+            val intent = Intent(this,NovaDonacijaActivity::class.java)
+            intent.putExtra("ACTIVITY","DonatorHomePageActivity")
             startActivity(intent)
         }
     }

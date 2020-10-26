@@ -52,12 +52,14 @@ class SplashScreenActivity : AppCompatActivity() {
                                 startActivity(intent)
                                 finish()
                                 APIService.loggedUserId = item.donatorId
+                                APIService.naziv = """${item.ime} ${item.prezime}"""
                             }
                             if(item!!.tipKorisnika == 2){
                                 val intent = Intent(this@SplashScreenActivity, BenefiktorHomePageActivity::class.java)
                                 startActivity(intent)
                                 finish()
                                 APIService.loggedUserId = item.benefiktorId
+                                APIService.naziv = item.nazivKompanije
                             }
                             APIService.loggedUserToken = item.token
                         }

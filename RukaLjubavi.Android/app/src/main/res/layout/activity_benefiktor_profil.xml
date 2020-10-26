@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/aaa2" />
 
     <Button
-        android:id="@+id/btnAzurirajPodatke"
+        android:id="@+id/btnBenefiktorProfil"
         android:layout_width="162dp"
         android:layout_height="53dp"
         android:layout_marginTop="30dp"

@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.fit.ba.rukaljubavi.Helper.OnItemClickListener
 import com.fit.ba.rukaljubavi.Models.Benefiktor
 import com.fit.ba.rukaljubavi.Models.Donator
 import kotlinx.android.synthetic.main.benefiktori_lista_item.view.*
 
-class BenefiktoriListaRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BenefiktoriListaRecyclerAdapter(var clickListener: OnItemClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items: List<Benefiktor> = ArrayList()
 
@@ -25,7 +26,7 @@ class BenefiktoriListaRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHol
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
             is BenefiktorViewHolder ->{
-                holder.bind(items[position])
+                holder.bind(items[position], clickListener)
             }
         }
     }
@@ -41,11 +42,15 @@ class BenefiktoriListaRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHol
         val email = itemView.txtEmail
         val telefon = itemView.txtTelefon
 
-        fun bind(benefiktor: Benefiktor){
+        fun bind(benefiktor: Benefiktor, action: OnItemClickListener){
             nazivBenefiktora.text = """${benefiktor.nazivKompanije} | ${benefiktor.pdvbroj}"""
             grad.text = """${benefiktor.mjestoPrebivalista}, ${benefiktor.adresa}"""
             email.text = benefiktor.email
             telefon.text = benefiktor.telefon
+
+            itemView.setOnClickListener {
+                action.onItemClick(benefiktor, adapterPosition)
+            }
         }
     }
 }

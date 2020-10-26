@@ -36,9 +36,7 @@ class PrijavaActivity : AppCompatActivity() {
     private fun login() {
         var login = PrijavaRequest()
         login.email = txtPrUsername!!.text.toString()
-        //login.email = "test@test.com"
         login.password = txtPrPassword!!.text.toString()
-        //login.password = "test"
 
         var error: Boolean = false
 
@@ -75,12 +73,14 @@ class PrijavaActivity : AppCompatActivity() {
                             startActivity(intent)
                             finish()
                             APIService.loggedUserId = item.donatorId
+                            APIService.naziv = """${item.ime} ${item.prezime}"""
                         }
                         if(item!!.tipKorisnika == 2){
                             val intent = Intent(this@PrijavaActivity, BenefiktorHomePageActivity::class.java)
                             startActivity(intent)
                             finish()
                             APIService.loggedUserId = item.benefiktorId
+                            APIService.naziv = item.nazivKompanije
                         }
                         editor.putString(Email, login.email)
                         editor.putString(Password, login.password)

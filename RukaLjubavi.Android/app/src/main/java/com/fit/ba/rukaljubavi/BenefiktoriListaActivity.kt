@@ -1,9 +1,11 @@
 package com.fit.ba.rukaljubavi
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fit.ba.rukaljubavi.Helper.OnItemClickListener
 import com.fit.ba.rukaljubavi.Helper.TopSpancingItemDecoration
 import com.fit.ba.rukaljubavi.Models.Benefiktor
 import com.fit.ba.rukaljubavi.Services.APIService
@@ -14,15 +16,19 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BenefiktoriListaActivity : AppCompatActivity() {
+class BenefiktoriListaActivity : AppCompatActivity(), OnItemClickListener {
 
     private val service = APIService.buildService(BenefiktorService::class.java)
     private lateinit var myAdapter: BenefiktoriListaRecyclerAdapter
+    var previousActivity: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_benefiktori_lista)
         title = "Benefiktori"
+
+        previousActivity = intent.getStringExtra("ACTIVITY")
+
         initRecyclerView()
         load()
     }
@@ -42,10 +48,15 @@ class BenefiktoriListaActivity : AppCompatActivity() {
                 if(response.isSuccessful){
                     val list = response.body()!!
                     var items: MutableList<Benefiktor> = ArrayList()
-                    items.add(Benefiktor("Kompanija 1","10203040506708","email.mail@mail.com","023456789","Neka adresa 77","Mostar", "2020-10-20"))
+                    items.add(list)
+                    items.add(list)
+                    items.add(list)
+                    items.add(list)
+                    items.add(list)
                     items.add(list)
                     items.add(list)
                     myAdapter.submitList(items)
+                    //myAdapter.submitList(list)
                     myAdapter.notifyDataSetChanged()
                 }
                 else{
@@ -62,8 +73,23 @@ class BenefiktoriListaActivity : AppCompatActivity() {
             val topSpacingDecoration =
                 TopSpancingItemDecoration(30)
             addItemDecoration(topSpacingDecoration)
-            myAdapter = BenefiktoriListaRecyclerAdapter()
+            myAdapter = BenefiktoriListaRecyclerAdapter(this@BenefiktoriListaActivity)
             adapter = myAdapter
         }
+    }
+
+    override fun <T> onItemClick(item: T, position: Int) {
+        if(previousActivity.equals("NovaDonacijaActivity")){
+            val intent = Intent(this, NovaDonacijaActivity::class.java)
+            intent.putExtra("BENEFIKTOR",item as Benefiktor)
+            intent.putExtra("ACTIVITY","BenefiktoriListaActivity")
+            startActivity(intent)
+            finish()
+            return
+        }
+        val intent = Intent(this, BenefiktorProfilActivity::class.java)
+        intent.putExtra("BENEFIKTOR",item as Benefiktor)
+        intent.putExtra("ACTIVITY","BenefiktoriListaActivity")
+        startActivity(intent)
     }
 }

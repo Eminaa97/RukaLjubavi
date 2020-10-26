@@ -21,6 +21,7 @@ class BenefiktorHomePageActivity : AppCompatActivity() {
 
         btnMainProfile.setOnClickListener {
             val intent = Intent(this,BenefiktorProfilActivity::class.java)
+            intent.putExtra("ACTIVITY","BenefiktorHomePageActivity")
             startActivity(intent)
         }
 
