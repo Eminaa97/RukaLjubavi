@@ -53,6 +53,7 @@ class NovaDonacijaActivity : AppCompatActivity() {
                 val intent = Intent(this@NovaDonacijaActivity, BenefiktoriListaActivity::class.java)
                 intent.putExtra("ACTIVITY","NovaDonacijaActivity")
                 startActivity(intent)
+                finish()
             }
             if(previousActivity.equals("BenefiktoriListaActivity")) {
                 benefiktor = intent.getSerializableExtra("BENEFIKTOR") as Benefiktor

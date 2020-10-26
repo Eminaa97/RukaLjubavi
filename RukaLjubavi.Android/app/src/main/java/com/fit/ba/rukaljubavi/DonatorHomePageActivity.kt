@@ -3,13 +3,13 @@ package com.fit.ba.rukaljubavi
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_donator_home_page.*
 
 class DonatorHomePageActivity : AppCompatActivity()
 {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_donator_home_page)
 
         btnAbout.setOnClickListener {
             val intent = Intent(this,AboutActivity::class.java)

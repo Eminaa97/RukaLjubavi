@@ -44,6 +44,10 @@ namespace RukaLjubavi.Api.Services.Implementations
             {
                 q = q.Where(x => x.DonatorId == search.DonatorId);
             }
+            if (search.BenefiktorId.HasValue)
+            {
+                q = q.Where(x => x.BenefiktorId == search.BenefiktorId);
+            }
 
             return _mapper.Map<IList<DonacijaDto>>(q);
         }

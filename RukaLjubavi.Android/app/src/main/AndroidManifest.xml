@@ -11,13 +11,15 @@
         android:roundIcon="@mipmap/app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NovaDonacijaActivity"
+        <activity android:name=".NoviZahtjevZaDonacijomActivity"></activity>
+        <activity
+            android:name=".NovaDonacijaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBar"
-            />
-        <activity android:name=".BenefiktorProfilActivity"
-            android:screenOrientation="portrait"
-            />
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name=".BenefiktorProfilActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".BenefiktoriListaActivity"
             android:screenOrientation="portrait"
@@ -31,8 +33,12 @@
         <activity
             android:name=".DonatorKategorijeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".BenefiktorKategorijeActivity" />
-        <activity android:name=".PDVBrojPotvrdaActivity" />
+        <activity
+            android:name=".BenefiktorKategorijeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PDVBrojPotvrdaActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".RegistracijaIzborActivity"
             android:screenOrientation="portrait" />

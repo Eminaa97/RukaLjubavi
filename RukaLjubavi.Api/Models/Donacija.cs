@@ -9,17 +9,17 @@ namespace RukaLjubavi.Api.Models
         [Key]
         public int Id { get; set; }
         public string Opis { get; set; }
-        public int Kolicina { get; set; }
+        public int? Kolicina { get; set; }
         public bool IsPrihvacena { get; set; }
-        public DateTime DatumVrijeme { get; set; }
+        public DateTime? DatumVrijeme { get; set; }
 
         [ForeignKey("BenefiktorId,KategorijaId")]
         public virtual BenefiktorKategorija BenefiktorKategorije { get; set; }
-        public int BenefiktorId { get; set; }
-        public int KategorijaId { get; set; }
+        public int? BenefiktorId { get; set; }
+        public int? KategorijaId { get; set; }
 
         [ForeignKey(nameof(DonatorId))]
         public virtual Donator Donator { get; set; }
-        public int DonatorId { get; set; }
+        public int? DonatorId { get; set; }
     }
 }
