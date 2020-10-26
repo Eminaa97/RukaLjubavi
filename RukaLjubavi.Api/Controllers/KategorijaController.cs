@@ -22,9 +22,9 @@ namespace RukaLjubavi.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery]KategorijaSearchRequest searchRequest)
         {
-            return Ok(_kategorijaService.Get());
+            return Ok(_kategorijaService.Get(searchRequest));
         }
 
         [HttpGet("{Id}")]

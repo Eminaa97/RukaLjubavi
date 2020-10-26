@@ -36,10 +36,22 @@ namespace RukaLjubavi.Api.Controllers
             return Ok(_korisnikService.GetDonator(id));
         }
 
+        [HttpGet("donatori")]
+        public IActionResult GetDonatori()
+        {
+            return Ok(_korisnikService.GetDonatori());
+        }
+
         [HttpGet("benefiktori/{id}")]
         public IActionResult GetBenefiktor(int id)
         {
             return Ok(_korisnikService.GetBenefiktor(id));
+        }
+
+        [HttpGet("benefiktori")]
+        public IActionResult GetBenefiktori()
+        {
+            return Ok(_korisnikService.GetBenefiktori());
         }
 
         [HttpPost("donatori/register")]

@@ -134,7 +134,7 @@ class NovaDonacijaActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(
                             this@NovaDonacijaActivity,
-                            response.message(),
+                            "Benefiktoru trenutno nije potrebna odabrana kategorija.",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -147,7 +147,7 @@ class NovaDonacijaActivity : AppCompatActivity() {
     private fun loadKategorije() {
         var loading = LoadingDialog(this@NovaDonacijaActivity)
         loading.startLoadingDialog()
-        val requestCall = serviceKategorije.getAll()
+        val requestCall = serviceKategorije.getKategorijeByUser(null,benefiktor?.id)
         requestCall.enqueue(object : Callback<List<Kategorija>> {
             override fun onFailure(call: Call<List<Kategorija>>, t: Throwable) {
                 Toast.makeText(this@NovaDonacijaActivity,"Server error", Toast.LENGTH_SHORT).show()
@@ -158,7 +158,7 @@ class NovaDonacijaActivity : AppCompatActivity() {
                 if(response.isSuccessful){
                     var list = response.body()
                     kategorije = list!!.toMutableList()
-                    kategorije!!.add(0,Kategorija(-1,"Odaberite kategoriju"))
+                    kategorije!!.add(0,Kategorija(-1,"Dostupne kategorije za doniranje"))
                     var adapter = object : ArrayAdapter<Kategorija>(this@NovaDonacijaActivity,R.layout.spinner_list_item,kategorije!!){
                         override fun isEnabled(position: Int): Boolean {
                             return position != 0

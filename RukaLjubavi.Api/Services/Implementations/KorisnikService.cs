@@ -364,5 +364,23 @@ namespace RukaLjubavi.Api.Services
 
             return returns;
         }
+
+        public IList<DonatorDto> GetDonatori()
+        {
+            var list = _context.Donatori
+                .Include(x => x.Korisnik)
+                .ThenInclude(x => x.MjestoPrebivalista);
+
+            return _mapper.Map<IList<DonatorDto>>(list);
+        }
+
+        public IList<BenefiktorDto> GetBenefiktori()
+        {
+            var list = _context.Benefiktori
+                .Include(x => x.Korisnik)
+                .ThenInclude(x => x.MjestoPrebivalista);
+
+            return _mapper.Map<IList<BenefiktorDto>>(list);
+        }
     }
 }

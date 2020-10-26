@@ -37,26 +37,17 @@ class BenefiktoriListaActivity : AppCompatActivity(), OnItemClickListener {
         var loading = LoadingDialog(this@BenefiktoriListaActivity)
         loading.startLoadingDialog()
 
-        val requestCall = service.get(1)
-        requestCall.enqueue(object : Callback<Benefiktor> {
-            override fun onFailure(call: Call<Benefiktor>, t: Throwable) {
+        val requestCall = service.get()
+        requestCall.enqueue(object : Callback<List<Benefiktor>> {
+            override fun onFailure(call: Call<List<Benefiktor>>, t: Throwable) {
                 Toast.makeText(this@BenefiktoriListaActivity,"Error: ${t.toString()}", Toast.LENGTH_SHORT).show()
                 loading.stopDialog()
             }
 
-            override fun onResponse(call: Call<Benefiktor>, response: Response<Benefiktor>) {
+            override fun onResponse(call: Call<List<Benefiktor>>, response: Response<List<Benefiktor>>) {
                 if(response.isSuccessful){
                     val list = response.body()!!
-                    var items: MutableList<Benefiktor> = ArrayList()
-                    items.add(list)
-                    items.add(list)
-                    items.add(list)
-                    items.add(list)
-                    items.add(list)
-                    items.add(list)
-                    items.add(list)
-                    myAdapter.submitList(items)
-                    //myAdapter.submitList(list)
+                    myAdapter.submitList(list)
                     myAdapter.notifyDataSetChanged()
                 }
                 else{
