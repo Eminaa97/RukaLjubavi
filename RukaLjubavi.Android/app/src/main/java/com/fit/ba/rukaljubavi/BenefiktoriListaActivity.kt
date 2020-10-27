@@ -16,10 +16,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+public val serviceBenefiktori = APIService.buildService(BenefiktorService::class.java)
+public lateinit var myAdapter: BenefiktoriListaRecyclerAdapter
+
 class BenefiktoriListaActivity : AppCompatActivity(), OnItemClickListener {
 
-    private val service = APIService.buildService(BenefiktorService::class.java)
-    private lateinit var myAdapter: BenefiktoriListaRecyclerAdapter
     var previousActivity: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,13 +32,17 @@ class BenefiktoriListaActivity : AppCompatActivity(), OnItemClickListener {
 
         initRecyclerView()
         load()
+
+        btnFilter.setOnClickListener {
+            BenefiktoriFilterDialog(this@BenefiktoriListaActivity).startDialog()
+        }
     }
 
     private fun load(){
         var loading = LoadingDialog(this@BenefiktoriListaActivity)
         loading.startLoadingDialog()
 
-        val requestCall = service.get()
+        val requestCall = serviceBenefiktori.get(null, null)
         requestCall.enqueue(object : Callback<List<Benefiktor>> {
             override fun onFailure(call: Call<List<Benefiktor>>, t: Throwable) {
                 Toast.makeText(this@BenefiktoriListaActivity,"Error: ${t.toString()}", Toast.LENGTH_SHORT).show()

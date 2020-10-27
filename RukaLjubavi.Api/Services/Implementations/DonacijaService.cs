@@ -34,6 +34,8 @@ namespace RukaLjubavi.Api.Services.Implementations
                 .Include(x => x.Donator.MjestoRodjenja)
                 .Include(x => x.BenefiktorKategorije.Benefiktor)
                 .Include(x => x.BenefiktorKategorije.Kategorija)
+                .Include(x => x.BenefiktorKategorije.Benefiktor.Korisnik)
+                .Include(x => x.BenefiktorKategorije.Benefiktor.Korisnik.MjestoPrebivalista)
                 .Include(x => x.Donator).AsQueryable();
 
             if (search.IsPrihvacena != null)
@@ -46,7 +48,15 @@ namespace RukaLjubavi.Api.Services.Implementations
             }
             if (search.BenefiktorId.HasValue)
             {
-                q = q.Where(x => x.BenefiktorId == search.BenefiktorId);
+                q = q.Where(x => x.BenefiktorId == null);
+            }
+            if (search.isZahtjevZaDonatora != null)
+            {
+                q = q.Where(x => x.DonatorId == null);
+            }
+            if (search.isZahtjevZaBenefiktora != null)
+            {
+                q = q.Where(x => x.BenefiktorId == null);
             }
 
             return _mapper.Map<IList<DonacijaDto>>(q);

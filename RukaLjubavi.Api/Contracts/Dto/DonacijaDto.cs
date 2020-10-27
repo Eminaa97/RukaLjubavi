@@ -22,6 +22,7 @@ namespace RukaLjubavi.Api.Contracts.Dto
         public int BenefiktorId { get; set; }
         public string BenefiktorNazivKompanije { get; set; }
         public string BenefiktorPdvbroj { get; set; }
+        public string BenefiktorLokacija { get; set; }
         public string NazivKategorije { get; set; }
     }
 }

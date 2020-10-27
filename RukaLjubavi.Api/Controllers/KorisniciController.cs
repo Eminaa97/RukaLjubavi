@@ -49,9 +49,9 @@ namespace RukaLjubavi.Api.Controllers
         }
 
         [HttpGet("benefiktori")]
-        public IActionResult GetBenefiktori()
+        public IActionResult GetBenefiktori([FromQuery]BenefiktorSearchRequest searchRequest)
         {
-            return Ok(_korisnikService.GetBenefiktori());
+            return Ok(_korisnikService.GetBenefiktori(searchRequest));
         }
 
         [HttpPost("donatori/register")]

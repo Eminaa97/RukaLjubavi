@@ -95,9 +95,16 @@ class NoviZahtjevZaDonacijomActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                         val intent =
-                            Intent(this@NoviZahtjevZaDonacijomActivity, DonatorHomePageActivity::class.java)
+                            Intent(this@NoviZahtjevZaDonacijomActivity, BenefiktorHomePageActivity::class.java)
                         startActivity(intent)
                         finish()
+                    }
+                    else {
+                        Toast.makeText(
+                            this@NoviZahtjevZaDonacijomActivity,
+                            response.message(),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     loading.stopDialog()
                 }

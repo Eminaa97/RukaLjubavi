@@ -46,11 +46,13 @@ namespace RukaLjubavi.Api.Services
             {
                 var benefiktor = _context.Benefiktori.FirstOrDefault(x => x.KorisnikId == id);
                 returns.Id = benefiktor.Id;
+                returns.BrojDonacija = _context.Donacije.Count(x => x.BenefiktorId == benefiktor.Id);
             }
             else
             {
                 var donator = _context.Donatori.FirstOrDefault(x => x.KorisnikId == id);
                 returns.Id = donator.Id;
+                returns.BrojDonacija = _context.Donacije.Count(x => x.DonatorId == donator.Id);
             }
 
             return returns;
@@ -63,7 +65,11 @@ namespace RukaLjubavi.Api.Services
                 .ThenInclude(x => x.MjestoPrebivalista)
                 .FirstOrDefault(x => x.Id == donatorId);
 
-            return _mapper.Map<DonatorDto>(entity);
+            var returns = _mapper.Map<DonatorDto>(entity);
+
+            returns.BrojDonacija = _context.Donacije.Count(x => x.DonatorId == donatorId);
+
+            return returns;
         }
 
         public BenefiktorDto GetBenefiktor(int benefiktorId)
@@ -73,7 +79,11 @@ namespace RukaLjubavi.Api.Services
                 .ThenInclude(x => x.MjestoPrebivalista)
                 .FirstOrDefault(x => x.Id == benefiktorId);
 
-            return _mapper.Map<BenefiktorDto>(entity);
+            var returns = _mapper.Map<BenefiktorDto>(entity);
+
+            returns.BrojDonacija = _context.Donacije.Count(x => x.BenefiktorId == benefiktorId);
+
+            return returns;
         }
 
         public IList<UserDto> Get(UserSearchRequest search)
@@ -374,13 +384,23 @@ namespace RukaLjubavi.Api.Services
             return _mapper.Map<IList<DonatorDto>>(list);
         }
 
-        public IList<BenefiktorDto> GetBenefiktori()
+        public IList<BenefiktorDto> GetBenefiktori(BenefiktorSearchRequest searchRequest)
         {
-            var list = _context.Benefiktori
+            var query = _context.Benefiktori
                 .Include(x => x.Korisnik)
-                .ThenInclude(x => x.MjestoPrebivalista);
+                .ThenInclude(x => x.MjestoPrebivalista).AsQueryable();
 
-            return _mapper.Map<IList<BenefiktorDto>>(list);
+            if (searchRequest.LokacijaId.HasValue)
+            {
+                query = query.Where(x => x.Korisnik.MjestoPrebivalistaId == searchRequest.LokacijaId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchRequest?.nazivKompanije))
+            {
+                query = query.Where(x => x.NazivKompanije.ToLower().StartsWith(searchRequest.nazivKompanije.ToLower()));
+            }
+
+            return _mapper.Map<IList<BenefiktorDto>>(query);
         }
     }
 }

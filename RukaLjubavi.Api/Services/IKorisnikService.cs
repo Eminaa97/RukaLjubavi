@@ -12,7 +12,7 @@ namespace RukaLjubavi.Api.Services
         DonatorDto GetDonator(int donatorId);
         IList<DonatorDto> GetDonatori();
         BenefiktorDto GetBenefiktor(int benefiktorId);
-        IList<BenefiktorDto> GetBenefiktori();
+        IList<BenefiktorDto> GetBenefiktori(BenefiktorSearchRequest searchRequest);
         UserDto Insert(UserInsertRequest user);
         UserDto Update(int id, UserUpdateRequest user);
         AuthenticatedUser Login(UserLoginRequest user);

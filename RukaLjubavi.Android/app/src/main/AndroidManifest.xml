@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ZahtjeviBenefiktoraListaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBar" />
+        <activity
             android:name=".NoviZahtjevZaDonacijomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBar"
