@@ -35,7 +35,7 @@ namespace RukaLjubavi.Api.Mappers
             CreateMap<OcjenaDonacije, OcjenaDonacijeDto>()
                 .ForMember(x => x.DonatorIme, src => src.MapFrom(y => y.Donacija.Donator.Ime))
                 .ForMember(x => x.Kolicina, src => src.MapFrom(y => y.Donacija.Kolicina))
-                .ForMember(x => x.IsPrihvacena, src => src.MapFrom(y => y.Donacija.IsPrihvacena))
+                .ForMember(x => x.IsPrihvacena, src => src.MapFrom(y => y.Donacija.StatusDonacije))
                 .ForMember(x => x.DonatorPrezime, src => src.MapFrom(y => y.Donacija.Donator.Prezime))
                 .ForMember(x => x.DonatorJmbg, src => src.MapFrom(y => y.Donacija.Donator.Jmbg))
                 .ForMember(x => x.DonatorDatumRodjenja, src => src.MapFrom(y => y.Donacija.Donator.DatumRodjenja))

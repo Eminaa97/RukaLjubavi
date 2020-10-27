@@ -24,6 +24,21 @@ namespace RukaLjubavi.Api.Controllers
             return Ok(_korisnikService.Get(request));
         }
 
+        [HttpPost("resetpassword")]
+        [Authorize]
+        public IActionResult ResetPasword(PasswordResetRequest request)
+        {
+            return Ok(_korisnikService.ResetPasword(User.GetUserId(), request));
+        }
+
+        [HttpPatch("kategorije/update")]
+        [Authorize]
+        public IActionResult UpdateCategories(CategoryUpdateRequest request)
+        {
+            _korisnikService.UpdateCategories(User.GetUserId(), request);
+            return Ok();
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetKorisnik(int id)
         {
@@ -49,7 +64,7 @@ namespace RukaLjubavi.Api.Controllers
         }
 
         [HttpGet("benefiktori")]
-        public IActionResult GetBenefiktori([FromQuery]BenefiktorSearchRequest searchRequest)
+        public IActionResult GetBenefiktori([FromQuery] BenefiktorSearchRequest searchRequest)
         {
             return Ok(_korisnikService.GetBenefiktori(searchRequest));
         }
@@ -66,15 +81,15 @@ namespace RukaLjubavi.Api.Controllers
             return Ok(_korisnikService.Insert(request));
         }
 
-        [Authorize]
         [HttpPatch("donatori/update")]
+        [Authorize]
         public IActionResult Update([FromBody] DonatorUpdateRequest request)
         {
             return Ok(_korisnikService.Update(request.KorisnikId, request));
         }
 
-        [Authorize]
         [HttpPatch("benefiktori/update")]
+        [Authorize]
         public IActionResult Update([FromBody] BenefiktorUpdateRequest request)
         {
             return Ok(_korisnikService.Update(request.KorisnikId, request));

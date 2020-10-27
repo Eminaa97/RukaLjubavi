@@ -13,5 +13,6 @@ namespace RukaLjubavi.Api.Services
         IList<KategorijaDto> Get(KategorijaSearchRequest search);
         KategorijaDto Get(int id);
         KategorijaDto Insert(KategorijaInsertRequest user);
+
     }
 }

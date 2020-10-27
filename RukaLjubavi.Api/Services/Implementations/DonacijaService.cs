@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using RukaLjubavi.Api.Configuration;
 using RukaLjubavi.Api.Contracts.Dto;
 using RukaLjubavi.Api.Contracts.Requests;
 using RukaLjubavi.Api.Database;
@@ -9,7 +7,6 @@ using RukaLjubavi.Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace RukaLjubavi.Api.Services.Implementations
 {
@@ -38,9 +35,9 @@ namespace RukaLjubavi.Api.Services.Implementations
                 .Include(x => x.BenefiktorKategorije.Benefiktor.Korisnik.MjestoPrebivalista)
                 .Include(x => x.Donator).AsQueryable();
 
-            if (search.IsPrihvacena != null)
+            if (search.StatusDonacije.HasValue)
             {
-                q = q.Where(x => x.IsPrihvacena == search.IsPrihvacena);
+                q = q.Where(x => x.StatusDonacije == search.StatusDonacije);
             }
             if (search.DonatorId.HasValue)
             {
@@ -88,7 +85,7 @@ namespace RukaLjubavi.Api.Services.Implementations
         public DonacijaDto Prihvati(int id)
         {
             var entity = _context.Donacije.FirstOrDefault(x => x.Id == id);
-            entity.IsPrihvacena = true;
+            entity.StatusDonacije = StatusDonacije.Prihvacena;
             _context.SaveChanges();
 
             return _mapper.Map<DonacijaDto>(entity);
