@@ -278,7 +278,7 @@ namespace RukaLjubavi.Api.Services
 
             if (hash != entity.LozinkaHash)
             {
-                throw new Exception("Wrong username or password");
+                throw new Exception("Wrong password");
             }
             #endregion
 
@@ -328,7 +328,6 @@ namespace RukaLjubavi.Api.Services
                 return user;
             }
         }
-
 
         #region Authentication
         private string GenerateSalt()
@@ -401,6 +400,92 @@ namespace RukaLjubavi.Api.Services
             }
 
             return _mapper.Map<IList<BenefiktorDto>>(query);
+        }
+
+        public bool ResetPasword(int userId, PasswordResetRequest request)
+        {
+            if (request.NewPassword != request.NewPasswordConfirm)
+            {
+                return false;
+            }
+
+            var entity = _context.Korisnici.FirstOrDefault(a => a.Id == userId);
+            if (entity == null)
+            {
+                return false;
+            }
+
+            var hash = GenerateHash(entity.LozinkaSalt, request.OldPassword);
+            if (hash != entity.LozinkaHash)
+            {
+                return false;
+            }
+
+            var newHash = GenerateHash(entity.LozinkaSalt, request.NewPassword);
+            entity.LozinkaHash = newHash;
+
+            _context.Korisnici.Update(entity);
+            _context.SaveChanges();
+
+            return true;
+        }
+
+        public void UpdateCategories(int userId, CategoryUpdateRequest request)
+        {
+            var entity = _context.Korisnici.FirstOrDefault(a => a.Id == userId);
+
+            if (entity.TipKorisnika == TipKorisnika.Donator)
+            {
+                var donator = _context.Donatori.FirstOrDefault(x => x.KorisnikId == entity.Id);
+
+                var kategorije = _context.DonatorKategorije.Where(a => a.DonatorId == donator.Id).ToList();
+
+                foreach (var item in kategorije)
+                {
+                    if (!request.Kategorije.Any(a => a == item.KategorijaId))
+                    {
+                        _context.DonatorKategorije.Remove(item);
+                    }
+                }
+                foreach (var item in request.Kategorije)
+                {
+                    if (!_context.DonatorKategorije.Any(a => a.KategorijaId == item && a.DonatorId == donator.Id))
+                    {
+                        _context.DonatorKategorije.Add(new DonatorKategorija
+                        {
+                            KategorijaId = item,
+                            Donator = donator
+                        });
+                    }
+                }
+            }
+            else
+            {
+                var benefiktor = _context.Benefiktori.FirstOrDefault(x => x.KorisnikId == entity.Id);
+
+                var kategorije = _context.BenefiktorKategorije.Where(a => a.BenefiktorId == benefiktor.Id).ToList();
+
+                foreach (var item in kategorije)
+                {
+                    if (!request.Kategorije.Any(a => a == item.KategorijaId))
+                    {
+                        _context.BenefiktorKategorije.Remove(item);
+                    }
+                }
+
+                foreach (var item in request.Kategorije)
+                {
+                    if (!_context.BenefiktorKategorije.Any(a => a.KategorijaId == item && a.BenefiktorId == benefiktor.Id))
+                    {
+                        _context.BenefiktorKategorije.Add(new BenefiktorKategorija
+                        {
+                            KategorijaId = item,
+                            Benefiktor = benefiktor
+                        });
+                    }
+                }
+            }
+            _context.SaveChanges();
         }
     }
 }

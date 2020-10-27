@@ -1,8 +1,5 @@
 ﻿using RukaLjubavi.Api.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RukaLjubavi.Api.Contracts.Dto
 {
@@ -15,6 +12,7 @@ namespace RukaLjubavi.Api.Contracts.Dto
         public int PostivanjeDogovora { get; set; }
         public int KorisnikId { get; set; }
         public int Kolicina { get; set; }
+        public StatusDonacije StatusDonacije { get; set; }
         public bool IsPrihvacena { get; set; }
         public DateTime DatumVrijeme { get; set; }
         public string DonatorIme { get; set; }

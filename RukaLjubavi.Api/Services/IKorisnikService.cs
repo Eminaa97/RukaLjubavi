@@ -15,7 +15,8 @@ namespace RukaLjubavi.Api.Services
         IList<BenefiktorDto> GetBenefiktori(BenefiktorSearchRequest searchRequest);
         UserDto Insert(UserInsertRequest user);
         UserDto Update(int id, UserUpdateRequest user);
+        bool ResetPasword(int userId, PasswordResetRequest request);
         AuthenticatedUser Login(UserLoginRequest user);
-      
+        void UpdateCategories(int userId, CategoryUpdateRequest request);
     }
 }

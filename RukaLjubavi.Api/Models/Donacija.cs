@@ -3,14 +3,21 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RukaLjubavi.Api.Models
-{
+{ 
+    public enum StatusDonacije
+    {
+        Prihvacena,
+        U_toku,
+        U_Obradi,
+        Odbijena
+    }
     public class Donacija : IEntity
     {
         [Key]
         public int Id { get; set; }
         public string Opis { get; set; }
         public int? Kolicina { get; set; }
-        public bool IsPrihvacena { get; set; }
+        public StatusDonacije StatusDonacije { get; set; }
         public DateTime? DatumVrijeme { get; set; }
 
         [ForeignKey("BenefiktorId,KategorijaId")]
