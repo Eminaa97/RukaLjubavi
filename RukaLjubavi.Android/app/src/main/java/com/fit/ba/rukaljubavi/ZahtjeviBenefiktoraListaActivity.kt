@@ -12,14 +12,16 @@ import com.fit.ba.rukaljubavi.Services.APIService
 import com.fit.ba.rukaljubavi.Services.BenefiktorService
 import com.fit.ba.rukaljubavi.Services.DonacijaService
 import kotlinx.android.synthetic.main.activity_benefiktori_lista.*
+import kotlinx.android.synthetic.main.activity_benefiktori_lista.recycler_view
+import kotlinx.android.synthetic.main.activity_zahtjevi_benefiktora_lista.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ZahtjeviBenefiktoraListaActivity : AppCompatActivity(), OnItemClickListener {
+lateinit var myAdapterZahtjeviBenefiktoraLista: ZahtjeviBenefiktoraListaRecyclerAdapter
+val serviceDonacije = APIService.buildService(DonacijaService::class.java)
 
-    private val service = APIService.buildService(DonacijaService::class.java)
-    private lateinit var myAdapter: ZahtjeviBenefiktoraListaRecyclerAdapter
+class ZahtjeviBenefiktoraListaActivity : AppCompatActivity(), OnItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +30,10 @@ class ZahtjeviBenefiktoraListaActivity : AppCompatActivity(), OnItemClickListene
         title  = "Zahtjevi benefiktora"
         initRecyclerView()
         load()
+
+        btnFilter2.setOnClickListener {
+            ZahtjeviBenefiktoraFilterDialog(this@ZahtjeviBenefiktoraListaActivity).startDialog()
+        }
     }
 
     private fun initRecyclerView(){
@@ -36,8 +42,8 @@ class ZahtjeviBenefiktoraListaActivity : AppCompatActivity(), OnItemClickListene
             val topSpacingDecoration =
                 TopSpancingItemDecoration(30)
             addItemDecoration(topSpacingDecoration)
-            myAdapter = ZahtjeviBenefiktoraListaRecyclerAdapter(this@ZahtjeviBenefiktoraListaActivity)
-            adapter = myAdapter
+            myAdapterZahtjeviBenefiktoraLista = ZahtjeviBenefiktoraListaRecyclerAdapter(this@ZahtjeviBenefiktoraListaActivity)
+            adapter = myAdapterZahtjeviBenefiktoraLista
         }
     }
 
@@ -45,7 +51,7 @@ class ZahtjeviBenefiktoraListaActivity : AppCompatActivity(), OnItemClickListene
         var loading = LoadingDialog(this@ZahtjeviBenefiktoraListaActivity)
         loading.startLoadingDialog()
 
-        val requestCall = service.get(true,null)
+        val requestCall = serviceDonacije.get(true)
         requestCall.enqueue(object : Callback<List<Donacija>> {
             override fun onFailure(call: Call<List<Donacija>>, t: Throwable) {
                 Toast.makeText(this@ZahtjeviBenefiktoraListaActivity,"Error: ${t.toString()}", Toast.LENGTH_SHORT).show()
@@ -55,8 +61,8 @@ class ZahtjeviBenefiktoraListaActivity : AppCompatActivity(), OnItemClickListene
             override fun onResponse(call: Call<List<Donacija>>, response: Response<List<Donacija>>) {
                 if(response.isSuccessful){
                     val list = response.body()!!
-                    myAdapter.submitList(list)
-                    myAdapter.notifyDataSetChanged()
+                    myAdapterZahtjeviBenefiktoraLista.submitList(list)
+                    myAdapterZahtjeviBenefiktoraLista.notifyDataSetChanged()
                 }
                 else{
                     Toast.makeText(this@ZahtjeviBenefiktoraListaActivity,"Server error", Toast.LENGTH_SHORT).show()

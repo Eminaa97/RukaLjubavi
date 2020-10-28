@@ -6,10 +6,11 @@ namespace RukaLjubavi.Api.Models
 { 
     public enum StatusDonacije
     {
-        Prihvacena,
-        U_toku,
         U_Obradi,
-        Odbijena
+        Prihvacena,
+        Odbijena,
+        U_toku,
+        Zavrsena
     }
     public class Donacija : IEntity
     {

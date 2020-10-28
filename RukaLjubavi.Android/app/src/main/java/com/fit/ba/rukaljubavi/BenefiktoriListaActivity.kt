@@ -17,7 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 public val serviceBenefiktori = APIService.buildService(BenefiktorService::class.java)
-public lateinit var myAdapter: BenefiktoriListaRecyclerAdapter
+public lateinit var myAdapterBenefiktoriLista: BenefiktoriListaRecyclerAdapter
 
 class BenefiktoriListaActivity : AppCompatActivity(), OnItemClickListener {
 
@@ -52,8 +52,8 @@ class BenefiktoriListaActivity : AppCompatActivity(), OnItemClickListener {
             override fun onResponse(call: Call<List<Benefiktor>>, response: Response<List<Benefiktor>>) {
                 if(response.isSuccessful){
                     val list = response.body()!!
-                    myAdapter.submitList(list)
-                    myAdapter.notifyDataSetChanged()
+                    myAdapterBenefiktoriLista.submitList(list)
+                    myAdapterBenefiktoriLista.notifyDataSetChanged()
                 }
                 else{
                     Toast.makeText(this@BenefiktoriListaActivity,"Server error", Toast.LENGTH_SHORT).show()
@@ -69,8 +69,8 @@ class BenefiktoriListaActivity : AppCompatActivity(), OnItemClickListener {
             val topSpacingDecoration =
                 TopSpancingItemDecoration(30)
             addItemDecoration(topSpacingDecoration)
-            myAdapter = BenefiktoriListaRecyclerAdapter(this@BenefiktoriListaActivity)
-            adapter = myAdapter
+            myAdapterBenefiktoriLista = BenefiktoriListaRecyclerAdapter(this@BenefiktoriListaActivity)
+            adapter = myAdapterBenefiktoriLista
         }
     }
 

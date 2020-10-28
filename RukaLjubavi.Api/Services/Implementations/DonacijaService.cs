@@ -32,7 +32,6 @@ namespace RukaLjubavi.Api.Services.Implementations
                 .Include(x => x.BenefiktorKategorije.Benefiktor)
                 .Include(x => x.BenefiktorKategorije.Kategorija)
                 .Include(x => x.BenefiktorKategorije.Benefiktor.Korisnik)
-                .Include(x => x.BenefiktorKategorije.Benefiktor.Korisnik.MjestoPrebivalista)
                 .Include(x => x.Donator).AsQueryable();
 
             if (search.StatusDonacije.HasValue)
@@ -46,6 +45,18 @@ namespace RukaLjubavi.Api.Services.Implementations
             if (search.BenefiktorId.HasValue)
             {
                 q = q.Where(x => x.BenefiktorId == null);
+            }
+            if (search.LokacijaId.HasValue)
+            {
+                q = q.Where(x => x.BenefiktorKategorije.Benefiktor.Korisnik.MjestoPrebivalistaId == search.LokacijaId);
+            }
+            if (search.KategorijaId.HasValue)
+            {
+                q = q.Where(x => x.BenefiktorKategorije.KategorijaId == search.KategorijaId);
+            }
+            if (!string.IsNullOrWhiteSpace(search?.NazivKompanije))
+            {
+                q = q.Where(x => x.BenefiktorKategorije.Benefiktor.NazivKompanije.Contains(search.NazivKompanije));
             }
             if (search.isZahtjevZaDonatora != null)
             {
@@ -76,6 +87,7 @@ namespace RukaLjubavi.Api.Services.Implementations
         {
             var entity = _mapper.Map<Donacija>(donacija);
             entity.DatumVrijeme = DateTime.UtcNow;
+            entity.StatusDonacije = StatusDonacije.U_Obradi;
             _context.Donacije.Add(entity);
             _context.SaveChanges();
 
@@ -86,6 +98,15 @@ namespace RukaLjubavi.Api.Services.Implementations
         {
             var entity = _context.Donacije.FirstOrDefault(x => x.Id == id);
             entity.StatusDonacije = StatusDonacije.Prihvacena;
+            _context.SaveChanges();
+
+            return _mapper.Map<DonacijaDto>(entity);
+        }
+
+        public DonacijaDto PromjeniStatus(int id, StatusDonacije statusDonacije)
+        {
+            var entity = _context.Donacije.FirstOrDefault(x => x.Id == id);
+            entity.StatusDonacije = statusDonacije;
             _context.SaveChanges();
 
             return _mapper.Map<DonacijaDto>(entity);

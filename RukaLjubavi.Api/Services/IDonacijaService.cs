@@ -15,5 +15,6 @@ namespace RukaLjubavi.Api.Services
         DonacijaDto Get(int id);
         DonacijaDto Insert(DonacijaInsertRequest user);
         DonacijaDto Prihvati(int id);
+        DonacijaDto PromjeniStatus(int id, StatusDonacije statusDonacije);
     }
 }
