@@ -26,25 +26,52 @@ class AzurirajPodatkeActivity : AppCompatActivity() {
 
         btnUpdateLicniPodaci.setOnClickListener {
             if(previousActivity.equals("DonatorProfilActivity")){
-                val intent = Intent(this,RegistracijaDonatorActivity::class.java)
+                val intent = Intent(this,DonatorLicniPodaciAzurirajActivity::class.java)
                 intent.putExtra("ACTIVITY","AzurirajPodatkeActivity")
                 intent.putExtra("DONATOR", donator)
                 startActivity(intent)
             }
             else{
-                val intent = Intent(this,RegistracijaBenefiktorActivity::class.java)
+                val intent = Intent(this,BenefiktorLicniPodaciAzurirajActivity::class.java)
                 intent.putExtra("ACTIVITY","AzurirajPodatkeActivity")
                 intent.putExtra("BENEFIKTOR", benefiktor)
                 startActivity(intent)
             }
         }
 
-        btnUpdateLozinka.setOnClickListener {
+        btnBack5.setOnClickListener {
+            if(previousActivity.equals("DonatorProfilActivity")){
+                val intent = Intent(this,DonatorProfilActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            else{
+                val intent = Intent(this,BenefiktorProfilActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
 
+        btnUpdateLozinka.setOnClickListener {
+            val intent = Intent(this,LozinkaAzurirajActivity::class.java)
+            if(previousActivity.equals("DonatorProfilActivity")){
+                intent.putExtra("KORISNIK_ID", donator!!.korisnikId)
+            }
+            else{
+                intent.putExtra("KORISNIK_ID", benefiktor!!.korisnikId)
+            }
+            startActivity(intent)
         }
 
         btnUpdateKategorije.setOnClickListener {
-
+            val intent = Intent(this,AzurirajKategorijeActivity::class.java)
+            if(previousActivity.equals("DonatorProfilActivity")){
+                intent.putExtra("KORISNIK_ID", donator!!.korisnikId)
+            }
+            else{
+                intent.putExtra("KORISNIK_ID", benefiktor!!.korisnikId)
+            }
+            startActivity(intent)
         }
     }
 }

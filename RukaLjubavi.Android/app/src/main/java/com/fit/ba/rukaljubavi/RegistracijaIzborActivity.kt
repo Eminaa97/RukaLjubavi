@@ -18,11 +18,13 @@ class RegistracijaIzborActivity : AppCompatActivity() {
 
         btnRegistracijaDonator.setOnClickListener {
             val intent = Intent(this,RegistracijaDonatorActivity::class.java)
+            intent.putExtra("ACTIVITY","RegistracijaIzborActivity")
             startActivity(intent)
         }
 
         btnRegistracijaBenefiktor.setOnClickListener {
             val intent = Intent(this,RegistracijaBenefiktorActivity::class.java)
+            intent.putExtra("ACTIVITY","RegistracijaIzborActivity")
             startActivity(intent)
         }
     }

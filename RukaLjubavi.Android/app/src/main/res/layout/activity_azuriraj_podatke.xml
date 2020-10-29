@@ -10,10 +10,10 @@
         android:id="@+id/btnUpdateKategorije"
         android:layout_width="310dp"
         android:layout_height="50sp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/button"
         android:fontFamily="@font/regular"
-        android:text="Potrebne kategorije"
+        android:text="Kategorije"
         android:textAllCaps="false"
         android:textColor="#fff"
         android:textSize="22sp"
@@ -26,7 +26,7 @@
         android:id="@+id/btnUpdateLicniPodaci"
         android:layout_width="310dp"
         android:layout_height="50sp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="168dp"
         android:background="@drawable/button"
         android:fontFamily="@font/regular"
         android:text="Lični podaci"
@@ -38,21 +38,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnBack" />
 
-        <Button
-            android:id="@+id/btnUpdateLozinka"
-            android:layout_width="310dp"
-            android:layout_height="50sp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button"
-            android:fontFamily="@font/regular"
-            android:text="Lozinka"
-            android:textAllCaps="false"
-            android:textColor="#fff"
-            android:textSize="22sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.475"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnUpdateLicniPodaci" />
+    <Button
+        android:id="@+id/btnUpdateLozinka"
+        android:layout_width="310dp"
+        android:layout_height="50sp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/button"
+        android:fontFamily="@font/regular"
+        android:text="Lozinka"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnUpdateLicniPodaci" />
 
     <TextView
             android:id="@+id/textView3"

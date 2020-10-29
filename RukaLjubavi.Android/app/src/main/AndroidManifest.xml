@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AzurirajPodatkeActivity"></activity>
+        <activity android:name=".AzurirajKategorijeActivity"></activity>
+        <activity android:name=".LozinkaAzurirajActivity" />
+        <activity android:name=".BenefiktorLicniPodaciAzurirajActivity" />
+        <activity android:name=".DonatorLicniPodaciAzurirajActivity" />
+        <activity android:name=".AzurirajPodatkeActivity" />
         <activity android:name=".ZahtjeviBenefiktoraDetaljiActivity" />
         <activity
             android:name=".ZahtjeviBenefiktoraListaActivity"
