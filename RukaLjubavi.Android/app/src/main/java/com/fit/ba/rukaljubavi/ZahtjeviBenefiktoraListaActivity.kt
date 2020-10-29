@@ -1,5 +1,6 @@
 package com.fit.ba.rukaljubavi
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -73,6 +74,9 @@ class ZahtjeviBenefiktoraListaActivity : AppCompatActivity(), OnItemClickListene
     }
 
     override fun <T> onItemClick(item: T, position: Int) {
-        TODO("Not yet implemented")
+        val intent = Intent(this, ZahtjeviBenefiktoraDetaljiActivity::class.java)
+        intent.putExtra("DONACIJA",item as Donacija)
+        intent.putExtra("ACTIVITY","ZahtjeviBenefiktoraListaActivity")
+        startActivity(intent)
     }
 }

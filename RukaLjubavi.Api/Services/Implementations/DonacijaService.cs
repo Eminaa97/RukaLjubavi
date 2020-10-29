@@ -27,6 +27,7 @@ namespace RukaLjubavi.Api.Services.Implementations
         public IList<DonacijaDto> Get(DonacijaSearchRequest search)
         {
             var q = _context.Donacije
+                .Include(x => x.Donator.Korisnik)
                 .Include(x => x.BenefiktorKategorije)
                 .Include(x => x.Donator.MjestoRodjenja)
                 .Include(x => x.BenefiktorKategorije.Benefiktor)
@@ -46,9 +47,13 @@ namespace RukaLjubavi.Api.Services.Implementations
             {
                 q = q.Where(x => x.BenefiktorId == null);
             }
-            if (search.LokacijaId.HasValue)
+            if (search.LokacijaBenefiktorId.HasValue)
             {
-                q = q.Where(x => x.BenefiktorKategorije.Benefiktor.Korisnik.MjestoPrebivalistaId == search.LokacijaId);
+                q = q.Where(x => x.BenefiktorKategorije.Benefiktor.Korisnik.MjestoPrebivalistaId == search.LokacijaBenefiktorId);
+            }
+            if (search.LokacijaDonatorId.HasValue)
+            {
+                q = q.Where(x => x.Donator.Korisnik.MjestoPrebivalistaId == search.LokacijaDonatorId);
             }
             if (search.KategorijaId.HasValue)
             {
@@ -66,6 +71,7 @@ namespace RukaLjubavi.Api.Services.Implementations
             {
                 q = q.Where(x => x.BenefiktorId == null);
             }
+            q = q.OrderByDescending(x => x.Id);
 
             return _mapper.Map<IList<DonacijaDto>>(q);
         }
@@ -87,7 +93,14 @@ namespace RukaLjubavi.Api.Services.Implementations
         {
             var entity = _mapper.Map<Donacija>(donacija);
             entity.DatumVrijeme = DateTime.UtcNow;
-            entity.StatusDonacije = StatusDonacije.U_Obradi;
+            if(donacija.BenefiktorId != null && donacija.DonatorId != null)
+            {
+                entity.StatusDonacije = StatusDonacije.Na_cekanju;
+            }
+            else
+            {
+                entity.StatusDonacije = StatusDonacije.Aktivna;
+            }
             _context.Donacije.Add(entity);
             _context.SaveChanges();
 

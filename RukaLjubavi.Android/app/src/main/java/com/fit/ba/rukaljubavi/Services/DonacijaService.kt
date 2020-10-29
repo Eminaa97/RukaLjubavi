@@ -11,7 +11,8 @@ interface DonacijaService {
     fun get(@Query("isZahtjevZaDonatora") isZahtjevZaDonatora: Boolean? = null,
             @Query("KategorijaId") KategorijaId: Int? = null,
             @Query("NazivKompanije") NazivKompanije: String? = null,
-            @Query("LokacijaId") LokacijaId: Int? = null,
+            @Query("LokacijaBenefiktorId") LokacijaBenefiktorId: Int? = null,
+	    @Query("LokacijaDonatorId") LokacijaDonatorId: Int? = null,
             @Query("isZahtjevZaBenefiktora") isZahtjevZaBenefiktora: Boolean? = null): Call<List<Donacija>>
     @POST("Donacija")
     fun send(@Header("Authorization") authorization: String?, @Body newItem: DonacijaInsertRequest): Call<Unit>

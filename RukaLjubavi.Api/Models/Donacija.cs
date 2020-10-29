@@ -6,7 +6,8 @@ namespace RukaLjubavi.Api.Models
 { 
     public enum StatusDonacije
     {
-        U_Obradi,
+        Aktivna,
+        Na_cekanju,
         Prihvacena,
         Odbijena,
         U_toku,

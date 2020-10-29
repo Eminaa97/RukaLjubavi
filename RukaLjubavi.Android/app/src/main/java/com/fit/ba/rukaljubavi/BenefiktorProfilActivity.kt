@@ -46,7 +46,10 @@ class BenefiktorProfilActivity : AppCompatActivity() {
         else {
             loadBenefiktor()
             btnBenefiktorProfil.setOnClickListener {
-
+                val intent = Intent(this,AzurirajPodatkeActivity::class.java)
+                intent.putExtra("ACTIVITY","BenefiktorProfilActivity")
+                intent.putExtra("BENEFIKTOR", benefiktor)
+                startActivity(intent)
             }
         }
     }
@@ -58,6 +61,7 @@ class BenefiktorProfilActivity : AppCompatActivity() {
         txtTelefon.text = benefiktor!!.telefon
         txtAdresa.text = benefiktor!!.adresa
         txtGrad.text = benefiktor!!.mjestoPrebivalista
+        txtBrojDonacija.text = benefiktor!!.BrojDonacija.toString()
         var dan = benefiktor!!.datumRegistracije.substring(8,10)
         var mjesec = benefiktor!!.datumRegistracije.substring(5,7)
         var godina = benefiktor!!.datumRegistracije.substring(0,4)

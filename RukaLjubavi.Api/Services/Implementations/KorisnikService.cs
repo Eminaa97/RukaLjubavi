@@ -46,13 +46,13 @@ namespace RukaLjubavi.Api.Services
             {
                 var benefiktor = _context.Benefiktori.FirstOrDefault(x => x.KorisnikId == id);
                 returns.Id = benefiktor.Id;
-                returns.BrojDonacija = _context.Donacije.Count(x => x.BenefiktorId == benefiktor.Id);
+                returns.BrojDonacija = _context.Donacije.Count(x => x.BenefiktorId == benefiktor.Id && x.StatusDonacije == StatusDonacije.Zavrsena);
             }
             else
             {
                 var donator = _context.Donatori.FirstOrDefault(x => x.KorisnikId == id);
                 returns.Id = donator.Id;
-                returns.BrojDonacija = _context.Donacije.Count(x => x.DonatorId == donator.Id);
+                returns.BrojDonacija = _context.Donacije.Count(x => x.DonatorId == donator.Id && x.StatusDonacije == StatusDonacije.Zavrsena);
             }
 
             return returns;
@@ -208,54 +208,12 @@ namespace RukaLjubavi.Api.Services
                 donator.Ime = dir.Ime;
                 donator.Prezime = dir.Prezime;
                 _context.Update(donator);
-
-                var kategorije = _context.DonatorKategorije.Where(a => a.DonatorId == donator.Id).ToList();
-
-                foreach (var item in kategorije)
-                {
-                    if (!dir.Kategorije.Any(a => a == item.KategorijaId))
-                    {
-                        _context.DonatorKategorije.Remove(item);
-                    }
-                }
-                foreach (var item in dir.Kategorije)
-                {
-                    if (!_context.DonatorKategorije.Any(a => a.KategorijaId == item && a.DonatorId == donator.Id))
-                    {
-                        _context.DonatorKategorije.Add(new DonatorKategorija
-                        {
-                            KategorijaId = item,
-                            Donator = donator
-                        });
-                    }
-                }
             }
             else if (request is BenefiktorUpdateRequest bir)
             {
                 var benefiktor = _context.Benefiktori.FirstOrDefault(x => x.KorisnikId == bir.KorisnikId);
                 benefiktor.NazivKompanije = bir.NazivKompanije;
                 _context.Update(benefiktor);
-
-                var kategorije = _context.BenefiktorKategorije.Where(a => a.BenefiktorId == benefiktor.Id).ToList();
-
-                foreach (var item in kategorije)
-                {
-                    if (!bir.Kategorije.Any(a => a == item.KategorijaId))
-                    {
-                        _context.BenefiktorKategorije.Remove(item);
-                    }
-                }
-                foreach (var item in bir.Kategorije)
-                {
-                    if (!_context.BenefiktorKategorije.Any(a => a.KategorijaId == item && a.BenefiktorId == benefiktor.Id))
-                    {
-                        _context.BenefiktorKategorije.Add(new BenefiktorKategorija
-                        {
-                            KategorijaId = item,
-                            Benefiktor = benefiktor
-                        });
-                    }
-                }
             }
 
             _context.SaveChanges();

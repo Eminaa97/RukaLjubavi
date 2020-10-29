@@ -28,7 +28,10 @@ class DonatorProfilActivity : AppCompatActivity() {
         loadDonator()
 
         btnAzurirajPodatke.setOnClickListener {
-
+            val intent = Intent(this,AzurirajPodatkeActivity::class.java)
+            intent.putExtra("ACTIVITY","DonatorProfilActivity")
+            intent.putExtra("DONATOR", donator)
+            startActivity(intent)
         }
     }
 
@@ -51,6 +54,7 @@ class DonatorProfilActivity : AppCompatActivity() {
                     txtTelefon.text = donator!!.telefon
                     txtAdresa.text = donator!!.adresa
                     txtGrad.text = donator!!.mjestoPrebivalista
+                    txtBrojDonacija2.text = donator!!.BrojDonacija.toString()
                     var dan = donator!!.datumRegistracije.substring(8,10)
                     var mjesec = donator!!.datumRegistracije.substring(5,7)
                     var godina = donator!!.datumRegistracije.substring(0,4)

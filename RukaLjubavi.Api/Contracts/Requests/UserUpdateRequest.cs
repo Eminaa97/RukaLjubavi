@@ -11,9 +11,7 @@ namespace RukaLjubavi.Api.Contracts.Requests
         [Phone]
         public string Telefon { get; set; }
         public string Adresa { get; set; }
-        public bool IsVerifikovan { get; set; }
         public int MjestoPrebivalistaId { get; set; }
-        public IList<int> Kategorije { get; set; }
     }
     public class DonatorUpdateRequest : UserUpdateRequest
     {
