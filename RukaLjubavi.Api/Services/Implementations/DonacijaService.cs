@@ -94,6 +94,7 @@ namespace RukaLjubavi.Api.Services.Implementations
         {
             var entity = _mapper.Map<Donacija>(donacija);
             entity.DatumVrijeme = DateTime.UtcNow;
+            entity.NazivKategorije = _context.Kategorije.Where(x => x.Id == donacija.KategorijaId).SingleOrDefault().Naziv;
             if(donacija.BenefiktorId != null && donacija.DonatorId != null)
             {
                 entity.StatusDonacije = StatusDonacije.Na_cekanju;

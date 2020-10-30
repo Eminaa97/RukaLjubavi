@@ -19,13 +19,26 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
         title = "Detalji donacije"
         donacije = intent.getSerializableExtra("DONACIJA") as Donacija
 
+        var previousActivity = intent.getStringExtra("ACTIVITY")
+        if(previousActivity.equals("AktivneDonacijeActivity")){
+            btnDetaljiDoniraj.text = "Preuzmi"
+            btnDetaljiDonirajOdbij.visibility = View.GONE;
+        }
+
         if(donacije!!.donatorId != 0 && donacije!!.benefiktorId != 0){
             btnDetaljiDoniraj.visibility = View.GONE;
+            btnDetaljiDonirajOdbij.visibility = View.GONE;
         }
         else{
             btnDetaljiDoniraj.setOnClickListener {
 
             }
+        }
+
+        if(previousActivity.equals("ZahtjeviDonatoraActivity")){
+            btnDetaljiDoniraj.text = "Prihvati"
+            btnDetaljiDoniraj.visibility = View.VISIBLE;
+            btnDetaljiDonirajOdbij.visibility = View.VISIBLE;
         }
 
         if(donacije!!.donatorId != 0){

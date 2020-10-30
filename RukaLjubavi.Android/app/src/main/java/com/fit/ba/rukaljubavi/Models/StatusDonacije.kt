@@ -1,4 +1,4 @@
-package com.fit.ba.rukaljubavi.Services
+package com.fit.ba.rukaljubavi.Models
 
 enum class StatusDonacije {
     Aktivna,

@@ -26,6 +26,7 @@ namespace RukaLjubavi.Api.Models
         public virtual BenefiktorKategorija BenefiktorKategorije { get; set; }
         public int? BenefiktorId { get; set; }
         public int? KategorijaId { get; set; }
+        public string NazivKategorije { get; set; }
 
         [ForeignKey(nameof(DonatorId))]
         public virtual Donator Donator { get; set; }

@@ -39,5 +39,17 @@ class BenefiktorHomePageActivity : AppCompatActivity() {
             intent.putExtra("ACTIVITY","BenefiktorHomePageActivity")
             startActivity(intent)
         }
+
+        btnAktivneDonacije.setOnClickListener {
+            val intent = Intent(this,AktivneDonacijeActivity::class.java)
+            intent.putExtra("ACTIVITY","BenefiktorHomePageActivity")
+            startActivity(intent)
+        }
+
+        btnZahtjevi.setOnClickListener {
+            val intent = Intent(this,ZahtjeviDonatoraActivity::class.java)
+            intent.putExtra("ACTIVITY","BenefiktorHomePageActivity")
+            startActivity(intent)
+        }
     }
 }

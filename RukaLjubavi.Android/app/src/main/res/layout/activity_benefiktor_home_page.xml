@@ -148,7 +148,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/btnPrimljeneDonacije"
+                android:id="@+id/btnAktivneDonacije"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -195,7 +195,7 @@
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
                 app:cardElevation="6dp"
-                android:id="@+id/btnBenefiktori"
+                android:id="@+id/btnZahtjevi"
                 app:cardCornerRadius="12dp"
                 android:layout_margin="12dp"
                 android:foreground="?android:attr/selectableItemBackground"

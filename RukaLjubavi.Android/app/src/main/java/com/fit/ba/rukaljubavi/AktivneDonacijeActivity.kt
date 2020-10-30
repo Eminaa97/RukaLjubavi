@@ -9,64 +9,59 @@ import com.fit.ba.rukaljubavi.Helper.OnItemClickListener
 import com.fit.ba.rukaljubavi.Helper.TopSpancingItemDecoration
 import com.fit.ba.rukaljubavi.Models.Donacija
 import com.fit.ba.rukaljubavi.Services.APIService
-import com.fit.ba.rukaljubavi.Models.StatusDonacije
-import kotlinx.android.synthetic.main.activity_zahtjevi_benefiktora_lista.recycler_view
+import com.fit.ba.rukaljubavi.Services.DonacijaService
+import kotlinx.android.synthetic.main.activity_aktivne_donacije.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+lateinit var myAdapterAktivneDonacije: AktivneDonacijeRecyclerAdapter
 
-class VaseDonacijeActivity : AppCompatActivity(), OnItemClickListener {
-
-    var previousActivity: String? = null
-    lateinit var myAdapterZahtjeviVaseDonacije: VaseDonacijeRecyclerAdapter
-
+class AktivneDonacijeActivity : AppCompatActivity(), OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_vase_donacije)
+        setContentView(R.layout.activity_aktivne_donacije)
 
-        previousActivity = intent.getStringExtra("ACTIVITY")
-        title  = "Vaše donacije"
+        title = "Aktivne donacije"
+
         initRecyclerView()
         load()
+
+        btnFilter2.setOnClickListener {
+            //ZahtjeviBenefiktoraFilterDialog(this@AktivneDonacijeActivity).startDialog()
+        }
     }
 
     private fun initRecyclerView(){
         recycler_view.apply {
-            layoutManager = LinearLayoutManager(this@VaseDonacijeActivity)
+            layoutManager = LinearLayoutManager(this@AktivneDonacijeActivity)
             val topSpacingDecoration =
                 TopSpancingItemDecoration(30)
             addItemDecoration(topSpacingDecoration)
-            myAdapterZahtjeviVaseDonacije = VaseDonacijeRecyclerAdapter(this@VaseDonacijeActivity)
-            adapter = myAdapterZahtjeviVaseDonacije
+            myAdapterAktivneDonacije = AktivneDonacijeRecyclerAdapter(this@AktivneDonacijeActivity)
+            adapter = myAdapterAktivneDonacije
         }
     }
 
     private fun load(){
-        var loading = LoadingDialog(this@VaseDonacijeActivity)
+        var loading = LoadingDialog(this@AktivneDonacijeActivity)
         loading.startLoadingDialog()
 
-        val requestCall = if(previousActivity.equals("DonatorHomePageActivity")){
-            serviceDonacije.get(DonatorId = APIService.loggedUserId, StatusDonacije = StatusDonacije.Zavrsena)
-        }
-        else{
-            serviceDonacije.get(BenefiktorId = APIService.loggedUserId, StatusDonacije = StatusDonacije.Zavrsena)
-        }
-
+        val requestCall = serviceDonacije.get(isZahtjevZaBenefiktora = true)
         requestCall.enqueue(object : Callback<List<Donacija>> {
             override fun onFailure(call: Call<List<Donacija>>, t: Throwable) {
-                Toast.makeText(this@VaseDonacijeActivity,"Error: ${t.toString()}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AktivneDonacijeActivity,"Error: ${t.toString()}", Toast.LENGTH_SHORT).show()
                 loading.stopDialog()
             }
 
             override fun onResponse(call: Call<List<Donacija>>, response: Response<List<Donacija>>) {
                 if(response.isSuccessful){
                     val list = response.body()!!
-                    myAdapterZahtjeviVaseDonacije.submitList(list)
-                    myAdapterZahtjeviVaseDonacije.notifyDataSetChanged()
+                    myAdapterAktivneDonacije.submitList(list)
+                    myAdapterAktivneDonacije.notifyDataSetChanged()
                 }
                 else{
-                    Toast.makeText(this@VaseDonacijeActivity,"Server error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AktivneDonacijeActivity,"Server error", Toast.LENGTH_SHORT).show()
                 }
                 loading.stopDialog()
             }
@@ -76,7 +71,7 @@ class VaseDonacijeActivity : AppCompatActivity(), OnItemClickListener {
     override fun <T> onItemClick(item: T, position: Int) {
         val intent = Intent(this, DonacijaDetaljiActivity::class.java)
         intent.putExtra("DONACIJA",item as Donacija)
-        intent.putExtra("ACTIVITY","VaseDonacijeActivity")
+        intent.putExtra("ACTIVITY","AktivneDonacijeActivity")
         startActivity(intent)
     }
 }
