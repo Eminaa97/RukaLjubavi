@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RukaLjubavi.Api.Contracts.Requests;
+using RukaLjubavi.Api.Models;
 using RukaLjubavi.Api.Services;
 
 namespace RukaLjubavi.Api.Controllers
@@ -40,6 +41,13 @@ namespace RukaLjubavi.Api.Controllers
         public IActionResult Prihvati(int id)
         {
             return Ok(_donacijaService.Prihvati(id));
+        }
+
+        [Authorize]
+        [HttpPost("PromjeniStatus/{id}")]
+        public IActionResult PromjeniStatus(int id, StatusDonacije statusDonacije)
+        {
+            return Ok(_donacijaService.PromjeniStatus(id, statusDonacije));
         }
     }
 }

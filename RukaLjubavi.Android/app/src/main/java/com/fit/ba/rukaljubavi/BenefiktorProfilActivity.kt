@@ -1,16 +1,26 @@
 package com.fit.ba.rukaljubavi
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.fit.ba.rukaljubavi.Helper.TopSpancingItemDecoration
 import com.fit.ba.rukaljubavi.Models.Benefiktor
 import com.fit.ba.rukaljubavi.Models.Donator
+import com.fit.ba.rukaljubavi.Models.Kategorija
 import com.fit.ba.rukaljubavi.Requests.BenefiktorInsertRequest
 import com.fit.ba.rukaljubavi.Services.APIService
 import com.fit.ba.rukaljubavi.Services.BenefiktorService
 import com.fit.ba.rukaljubavi.Services.DonatorService
+import com.fit.ba.rukaljubavi.Services.KategorijaService
 import kotlinx.android.synthetic.main.activity_benefiktor_profil.*
+import kotlinx.android.synthetic.main.activity_benefiktori_lista.*
 import kotlinx.android.synthetic.main.activity_donator_profil.*
 import kotlinx.android.synthetic.main.activity_donator_profil.btnAzurirajPodatke
 import kotlinx.android.synthetic.main.activity_donator_profil.txtAdresa
@@ -25,6 +35,8 @@ import retrofit2.Response
 class BenefiktorProfilActivity : AppCompatActivity() {
 
     private val service = APIService.buildService(BenefiktorService::class.java)
+    private val serviceKategorije = APIService.buildService(KategorijaService::class.java)
+    public lateinit var myAdapter: ProfilKategorijeRecyclerAdapter
     var benefiktor: Benefiktor? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +63,37 @@ class BenefiktorProfilActivity : AppCompatActivity() {
                 intent.putExtra("BENEFIKTOR", benefiktor)
                 startActivity(intent)
             }
+        }
+        initRecyclerView()
+        loadKategorije()
+    }
+
+    private fun loadKategorije() {
+        var loading = LoadingDialog(this@BenefiktorProfilActivity)
+        loading.startLoadingDialog()
+        val requestCall = serviceKategorije.getKategorijeByUser(null,benefiktor?.id)
+        requestCall.enqueue(object : Callback<List<Kategorija>> {
+            override fun onFailure(call: Call<List<Kategorija>>, t: Throwable) {
+                Toast.makeText(this@BenefiktorProfilActivity,"Server error", Toast.LENGTH_SHORT).show()
+                loading.stopDialog()
+            }
+
+            override fun onResponse(call: Call<List<Kategorija>>, response: Response<List<Kategorija>>) {
+                if(response.isSuccessful){
+                    var list = response.body()
+                    myAdapter.submitList(list!!)
+                    myAdapter.notifyDataSetChanged()
+                }
+                loading.stopDialog()
+            }
+        })
+    }
+
+    private fun initRecyclerView(){
+        recyclerViewKategorije.apply {
+            layoutManager = LinearLayoutManager(this@BenefiktorProfilActivity, LinearLayoutManager.HORIZONTAL, false)
+            myAdapter = ProfilKategorijeRecyclerAdapter()
+            adapter = myAdapter
         }
     }
 

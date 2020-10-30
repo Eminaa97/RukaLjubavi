@@ -33,6 +33,7 @@ namespace RukaLjubavi.Api.Services.Implementations
                 .Include(x => x.BenefiktorKategorije.Benefiktor)
                 .Include(x => x.BenefiktorKategorije.Kategorija)
                 .Include(x => x.BenefiktorKategorije.Benefiktor.Korisnik)
+                .Include(x => x.BenefiktorKategorije.Benefiktor.Korisnik.MjestoPrebivalista)
                 .Include(x => x.Donator).AsQueryable();
 
             if (search.StatusDonacije.HasValue)
@@ -45,7 +46,7 @@ namespace RukaLjubavi.Api.Services.Implementations
             }
             if (search.BenefiktorId.HasValue)
             {
-                q = q.Where(x => x.BenefiktorId == null);
+                q = q.Where(x => x.BenefiktorId == search.BenefiktorId);
             }
             if (search.LokacijaBenefiktorId.HasValue)
             {

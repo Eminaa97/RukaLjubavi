@@ -12,5 +12,6 @@ namespace RukaLjubavi.Api.Models
 
         [ForeignKey(nameof(KategorijaId))]
         public Kategorija Kategorija { get; set; }
+        public bool isPotrebnaKategorija { get; set; }
     }
 }

@@ -67,7 +67,7 @@ namespace RukaLjubavi.Api.Services
 
             var returns = _mapper.Map<DonatorDto>(entity);
 
-            returns.BrojDonacija = _context.Donacije.Count(x => x.DonatorId == donatorId);
+            returns.BrojDonacija = _context.Donacije.Count(x => x.DonatorId == donatorId && x.StatusDonacije == StatusDonacije.Zavrsena);
 
             return returns;
         }
@@ -81,7 +81,7 @@ namespace RukaLjubavi.Api.Services
 
             var returns = _mapper.Map<BenefiktorDto>(entity);
 
-            returns.BrojDonacija = _context.Donacije.Count(x => x.BenefiktorId == benefiktorId);
+            returns.BrojDonacija = _context.Donacije.Count(x => x.BenefiktorId == benefiktorId && x.StatusDonacije == StatusDonacije.Zavrsena);
 
             return returns;
         }
@@ -172,7 +172,8 @@ namespace RukaLjubavi.Api.Services
                     _context.DonatorKategorije.Add(new DonatorKategorija
                     {
                         KategorijaId = item,
-                        Donator = req
+                        Donator = req,
+                        isPotrebnaKategorija = true
                     });
                 }
             }
@@ -187,7 +188,8 @@ namespace RukaLjubavi.Api.Services
                     _context.BenefiktorKategorije.Add(new BenefiktorKategorija
                     {
                         KategorijaId = item,
-                        Benefiktor = req
+                        Benefiktor = req,
+                        isPotrebnaKategorija = true
                     });
                 }
             }
@@ -402,7 +404,7 @@ namespace RukaLjubavi.Api.Services
                 {
                     if (!request.Kategorije.Any(a => a == item.KategorijaId))
                     {
-                        _context.DonatorKategorije.Remove(item);
+                        item.isPotrebnaKategorija = false;
                     }
                 }
                 foreach (var item in request.Kategorije)
@@ -412,7 +414,8 @@ namespace RukaLjubavi.Api.Services
                         _context.DonatorKategorije.Add(new DonatorKategorija
                         {
                             KategorijaId = item,
-                            Donator = donator
+                            Donator = donator,
+                            isPotrebnaKategorija = true
                         });
                     }
                 }
@@ -427,7 +430,7 @@ namespace RukaLjubavi.Api.Services
                 {
                     if (!request.Kategorije.Any(a => a == item.KategorijaId))
                     {
-                        _context.BenefiktorKategorije.Remove(item);
+                        item.isPotrebnaKategorija = false;
                     }
                 }
 
@@ -438,7 +441,8 @@ namespace RukaLjubavi.Api.Services
                         _context.BenefiktorKategorije.Add(new BenefiktorKategorija
                         {
                             KategorijaId = item,
-                            Benefiktor = benefiktor
+                            Benefiktor = benefiktor,
+                            isPotrebnaKategorija = true
                         });
                     }
                 }

@@ -32,6 +32,7 @@ namespace RukaLjubavi.Api.Services.Implementations
                 var q = _context.DonatorKategorije.AsQueryable();
 
                 q = q.Where(x => x.DonatorId == search.DonatorId);
+                q = q.Where(x => x.isPotrebnaKategorija == true);
 
                 return _mapper.Map<IList<KategorijaDto>>(q.Select(x => x.Kategorija));
             }
@@ -40,6 +41,7 @@ namespace RukaLjubavi.Api.Services.Implementations
                 var q = _context.BenefiktorKategorije.AsQueryable();
 
                 q = q.Where(x => x.BenefiktorId == search.BenefiktorId);
+                q = q.Where(x => x.isPotrebnaKategorija == true);
 
                 return _mapper.Map<IList<KategorijaDto>>(q.Select(x => x.Kategorija));
             }

@@ -190,6 +190,7 @@ class DonatorLicniPodaciAzurirajActivity : AppCompatActivity() {
         spinnerMjestoPrebivalista!!.adapter = adapter
         var index: Int = getIndex(spinnerMjestoPrebivalista!!, donator!!.mjestoPrebivalista)
         spinnerMjestoPrebivalista!!.setSelection(index)
+        donatorRequest.mjestoPrebivalistaId = donator!!.mjestoPrebivalistaId
     }
 
     private fun getIndex(spinner: Spinner, myString: String): Int {

@@ -4,6 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_benefiktor_home_page.*
+import kotlinx.android.synthetic.main.activity_benefiktor_home_page.btnAbout
+import kotlinx.android.synthetic.main.activity_benefiktor_home_page.btnLogout
+import kotlinx.android.synthetic.main.activity_benefiktor_home_page.btnMainProfile
 
 class BenefiktorHomePageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,5 +34,10 @@ class BenefiktorHomePageActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        btnVaseDonacije.setOnClickListener {
+            val intent = Intent(this,VaseDonacijeActivity::class.java)
+            intent.putExtra("ACTIVITY","BenefiktorHomePageActivity")
+            startActivity(intent)
+        }
     }
 }

@@ -11,12 +11,29 @@
         android:roundIcon="@mipmap/app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AzurirajKategorijeActivity"></activity>
-        <activity android:name=".LozinkaAzurirajActivity" />
-        <activity android:name=".BenefiktorLicniPodaciAzurirajActivity" />
-        <activity android:name=".DonatorLicniPodaciAzurirajActivity" />
-        <activity android:name=".AzurirajPodatkeActivity" />
-        <activity android:name=".ZahtjeviBenefiktoraDetaljiActivity" />
+        <activity
+            android:name=".VaseDonacijeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBar"/>
+        <activity android:name=".DonacijaDetaljiActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBar"
+            />
+        <activity android:name=".AzurirajKategorijeActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".LozinkaAzurirajActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".BenefiktorLicniPodaciAzurirajActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".DonatorLicniPodaciAzurirajActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".AzurirajPodatkeActivity"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".ZahtjeviBenefiktoraListaActivity"
             android:screenOrientation="portrait"

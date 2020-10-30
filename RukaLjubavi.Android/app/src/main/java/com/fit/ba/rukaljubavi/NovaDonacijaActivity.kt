@@ -134,7 +134,7 @@ class NovaDonacijaActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(
                             this@NovaDonacijaActivity,
-                            "Benefiktoru trenutno nije potrebna odabrana kategorija.",
+                            response.message(),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
