@@ -71,7 +71,7 @@ class BenefiktorProfilActivity : AppCompatActivity() {
     private fun loadKategorije() {
         var loading = LoadingDialog(this@BenefiktorProfilActivity)
         loading.startLoadingDialog()
-        val requestCall = serviceKategorije.getKategorijeByUser(null,benefiktor?.id)
+        val requestCall = serviceKategorije.getKategorijeByUser(null, APIService.loggedUserId)
         requestCall.enqueue(object : Callback<List<Kategorija>> {
             override fun onFailure(call: Call<List<Kategorija>>, t: Throwable) {
                 Toast.makeText(this@BenefiktorProfilActivity,"Server error", Toast.LENGTH_SHORT).show()

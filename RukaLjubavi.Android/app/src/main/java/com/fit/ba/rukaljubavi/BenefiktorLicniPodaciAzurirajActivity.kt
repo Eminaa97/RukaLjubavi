@@ -57,8 +57,6 @@ class BenefiktorLicniPodaciAzurirajActivity : AppCompatActivity() {
         }
 
         btnBack4.setOnClickListener {
-            val intent = Intent(this,AzurirajPodatkeActivity::class.java)
-            startActivity(intent)
             finish()
         }
 
@@ -134,8 +132,6 @@ class BenefiktorLicniPodaciAzurirajActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                 if(response.isSuccessful){
                     Toast.makeText(this@BenefiktorLicniPodaciAzurirajActivity,"Uspješno ažuriranje.", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this@BenefiktorLicniPodaciAzurirajActivity,BenefiktorProfilActivity::class.java)
-                    startActivity(intent)
                     finish()
                 }
                 else{

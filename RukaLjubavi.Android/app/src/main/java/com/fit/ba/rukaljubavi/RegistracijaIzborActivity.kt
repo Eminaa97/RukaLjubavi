@@ -11,8 +11,6 @@ class RegistracijaIzborActivity : AppCompatActivity() {
         setContentView(R.layout.activity_registracija_izbor)
 
         btnBack.setOnClickListener{
-            val intent = Intent(this,PrijavaActivity::class.java)
-            startActivity(intent)
             finish()
         }
 

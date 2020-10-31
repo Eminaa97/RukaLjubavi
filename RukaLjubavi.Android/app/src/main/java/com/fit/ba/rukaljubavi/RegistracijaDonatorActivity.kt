@@ -47,8 +47,6 @@ class RegistracijaDonatorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_registracija_donator)
 
         btnBack4.setOnClickListener {
-            val intent = Intent(this,RegistracijaIzborActivity::class.java)
-            startActivity(intent)
             finish()
         }
 

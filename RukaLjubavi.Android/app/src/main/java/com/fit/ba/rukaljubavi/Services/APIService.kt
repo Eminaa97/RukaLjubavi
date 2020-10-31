@@ -12,7 +12,7 @@ object APIService {
 
     var loggedUserId: Int? = null
     var naziv: String? = null
-    var loggedUserToken: String = "Bearer "
+    var loggedUserToken: String = ""
 
     private val okHttp = OkHttpClient.Builder()
         .addInterceptor(logger)

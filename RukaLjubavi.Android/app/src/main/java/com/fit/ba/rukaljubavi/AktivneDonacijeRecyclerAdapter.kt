@@ -44,7 +44,7 @@ class AktivneDonacijeRecyclerAdapter(var clickListener: OnItemClickListener): Re
         fun bind(donacija: Donacija, action: OnItemClickListener) {
 
             head.text = donacija!!.nazivKategorije
-            sub.text = donacija!!.donatorIme + " " + donacija!!.donatorPrezime
+            sub.text = donacija!!.donatorIme + " " + donacija!!.donatorPrezime + ", " + donacija.donatorPrebivaliste
             side.text = donacija!!.kolicina.toString()
 
             itemView.setOnClickListener {

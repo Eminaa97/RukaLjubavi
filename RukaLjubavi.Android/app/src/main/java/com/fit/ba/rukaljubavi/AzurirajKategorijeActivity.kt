@@ -64,8 +64,6 @@ class AzurirajKategorijeActivity : AppCompatActivity() {
         }
 
         btnBack71.setOnClickListener {
-            val intent = Intent(this,AzurirajPodatkeActivity::class.java)
-            startActivity(intent)
             finish()
         }
 
@@ -86,6 +84,7 @@ class AzurirajKategorijeActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                 if(response.isSuccessful){
                     Toast.makeText(this@AzurirajKategorijeActivity,"Uspješno ažuriranje.", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
                 else{
                     Toast.makeText(this@AzurirajKategorijeActivity,response.message(), Toast.LENGTH_SHORT).show()

@@ -24,7 +24,7 @@ var Password: String = "password"
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    var fileName: String = "login"
+    var fileName: String = "loginData"
     private val service = APIService.buildService(PrijavaService::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,12 +61,13 @@ class SplashScreenActivity : AppCompatActivity() {
                                 APIService.loggedUserId = item.benefiktorId
                                 APIService.naziv = item.nazivKompanije
                             }
-                            APIService.loggedUserToken += item.token
+                            APIService.loggedUserToken = "Bearer " + item.token
                         }
                     }
                 })
             }
             else{
+                sharedPreferences!!.edit().clear().apply()
                 val intent = Intent(this,PrijavaActivity::class.java)
                 startActivity(intent)
                 finish()

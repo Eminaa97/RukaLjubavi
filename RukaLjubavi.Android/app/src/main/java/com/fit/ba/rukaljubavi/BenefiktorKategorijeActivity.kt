@@ -33,8 +33,6 @@ class BenefiktorKategorijeActivity : AppCompatActivity() {
         benefiktor = intent.getSerializableExtra("NEW_BENEFIKTOR") as BenefiktorInsertRequest
 
         btnBack3.setOnClickListener {
-            val intent = Intent(this,RegistracijaBenefiktorActivity::class.java)
-            startActivity(intent)
             finish()
         }
 

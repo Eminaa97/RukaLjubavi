@@ -57,6 +57,9 @@ class AktivneDonacijeActivity : AppCompatActivity(), OnItemClickListener {
             override fun onResponse(call: Call<List<Donacija>>, response: Response<List<Donacija>>) {
                 if(response.isSuccessful){
                     val list = response.body()!!
+                    if(list.isEmpty()){
+                        Toast.makeText(this@AktivneDonacijeActivity,"Nemate aktivnih donacija.", Toast.LENGTH_SHORT).show()
+                    }
                     myAdapterAktivneDonacije.submitList(list)
                     myAdapterAktivneDonacije.notifyDataSetChanged()
                 }

@@ -40,16 +40,7 @@ class AzurirajPodatkeActivity : AppCompatActivity() {
         }
 
         btnBack5.setOnClickListener {
-            if(previousActivity.equals("DonatorProfilActivity")){
-                val intent = Intent(this,DonatorProfilActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-            else{
-                val intent = Intent(this,BenefiktorProfilActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
+            finish()
         }
 
         btnUpdateLozinka.setOnClickListener {

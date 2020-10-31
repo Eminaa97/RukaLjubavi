@@ -45,7 +45,7 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
 
         if(!previousActivity.equals("VaseDonacijeActivity")){
             btnDetaljiDoniraj.setOnClickListener {
-                //preuzmiDonaciju()
+                preuzmiDonaciju()
             }
         }
 
@@ -55,7 +55,7 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
             btnDetaljiDonirajOdbij.visibility = View.VISIBLE;
 
             btnDetaljiDonirajOdbij.setOnClickListener {
-               // odbijDonaciju()
+                odbijDonaciju()
             }
         }
 
@@ -144,7 +144,7 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(
                         this@DonacijaDetaljiActivity,
-                        response.message(),
+                        "Oznacili ste da vam kategorija donacije nije potrebna.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

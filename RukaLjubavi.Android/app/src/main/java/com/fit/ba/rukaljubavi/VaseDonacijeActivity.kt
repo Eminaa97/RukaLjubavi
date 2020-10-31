@@ -47,10 +47,10 @@ class VaseDonacijeActivity : AppCompatActivity(), OnItemClickListener {
         loading.startLoadingDialog()
 
         val requestCall = if(previousActivity.equals("DonatorHomePageActivity")){
-            serviceDonacije.get(DonatorId = APIService.loggedUserId, StatusDonacije = StatusDonacije.Zavrsena)
+            serviceDonacije.get(DonatorId = APIService.loggedUserId)
         }
         else{
-            serviceDonacije.get(BenefiktorId = APIService.loggedUserId, StatusDonacije = StatusDonacije.Zavrsena)
+            serviceDonacije.get(BenefiktorId = APIService.loggedUserId)
         }
 
         requestCall.enqueue(object : Callback<List<Donacija>> {
@@ -62,6 +62,9 @@ class VaseDonacijeActivity : AppCompatActivity(), OnItemClickListener {
             override fun onResponse(call: Call<List<Donacija>>, response: Response<List<Donacija>>) {
                 if(response.isSuccessful){
                     val list = response.body()!!
+                    if(list.isEmpty()){
+                        Toast.makeText(this@VaseDonacijeActivity,"Nemate nijednu donaciju.", Toast.LENGTH_SHORT).show()
+                    }
                     myAdapterZahtjeviVaseDonacije.submitList(list)
                     myAdapterZahtjeviVaseDonacije.notifyDataSetChanged()
                 }

@@ -37,8 +37,6 @@ class DonatorKategorijeActivity : AppCompatActivity(){
         donator = intent.getSerializableExtra("NEW_DONATOR") as DonatorInsertRequest
 
         btnBack3.setOnClickListener {
-            val intent = Intent(this,RegistracijaDonatorActivity::class.java)
-            startActivity(intent)
             finish()
         }
 

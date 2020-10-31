@@ -24,8 +24,6 @@ class PDVBrojPotvrdaActivity : AppCompatActivity() {
         var benefiktor = intent.getSerializableExtra("NEW_BENEFIKTOR") as BenefiktorInsertRequest
 
         btnBack2.setOnClickListener {
-            val intent = Intent(this,BenefiktorKategorijeActivity::class.java)
-            startActivity(intent)
             finish()
         }
 

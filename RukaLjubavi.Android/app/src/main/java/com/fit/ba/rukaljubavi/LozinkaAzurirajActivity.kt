@@ -30,8 +30,6 @@ class LozinkaAzurirajActivity : AppCompatActivity() {
         userId = intent.getIntExtra("KORISNIK_ID", 0)
 
         btnBack4.setOnClickListener {
-            val intent = Intent(this,AzurirajPodatkeActivity::class.java)
-            startActivity(intent)
             finish()
         }
 
@@ -102,6 +100,7 @@ class LozinkaAzurirajActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                 if(response.isSuccessful){
                     Toast.makeText(this@LozinkaAzurirajActivity,"Uspješno ažuriranje.", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
                 else{
                     Toast.makeText(this@LozinkaAzurirajActivity,response.message(), Toast.LENGTH_SHORT).show()

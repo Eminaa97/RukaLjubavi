@@ -13,6 +13,7 @@ class Donacija(
     var benefiktorId: Int,
     var benefiktorNazivKompanije: String,
     var benefiktorLokacija: String,
+    var donatorPrebivaliste: String,
     var nazivKategorije: String,
     var status: String
 ) : Serializable {

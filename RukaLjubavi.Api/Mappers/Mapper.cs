@@ -22,6 +22,7 @@ namespace RukaLjubavi.Api.Mappers
                 .ForMember(x => x.DonatorJmbg, src => src.MapFrom(y => y.Donator.Jmbg))
                 .ForMember(x => x.DonatorDatumRodjenja, src => src.MapFrom(y => y.Donator.DatumRodjenja))
                 .ForMember(x => x.DonatorMjestoRodjenja, src => src.MapFrom(y => y.Donator.MjestoRodjenja.Naziv))
+                .ForMember(x => x.DonatorPrebivaliste, src => src.MapFrom(y => y.Donator.Korisnik.MjestoPrebivalista.Naziv))
                 .ForMember(x => x.BenefiktorId, src => src.MapFrom(y => y.BenefiktorKategorije.Benefiktor.Id))
                 .ForMember(x => x.BenefiktorNazivKompanije, src => src.MapFrom(y => y.BenefiktorKategorije.Benefiktor.NazivKompanije))
                 .ForMember(x => x.BenefiktorPdvbroj, src => src.MapFrom(y => y.BenefiktorKategorije.Benefiktor.Pdvbroj))

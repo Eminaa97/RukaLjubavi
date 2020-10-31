@@ -19,6 +19,7 @@ namespace RukaLjubavi.Api.Contracts.Dto
         public string DonatorJmbg { get; set; }
         public DateTime DonatorDatumRodjenja { get; set; }
         public string DonatorMjestoRodjenja { get; set; }
+        public string DonatorPrebivaliste { get; set; }
         public int BenefiktorId { get; set; }
         public string BenefiktorNazivKompanije { get; set; }
         public string BenefiktorPdvbroj { get; set; }

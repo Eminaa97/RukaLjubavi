@@ -30,6 +30,7 @@ namespace RukaLjubavi.Api.Services.Implementations
                 .Include(x => x.Donator.Korisnik)
                 .Include(x => x.BenefiktorKategorije)
                 .Include(x => x.Donator.MjestoRodjenja)
+                .Include(x => x.Donator.Korisnik.MjestoPrebivalista)
                 .Include(x => x.BenefiktorKategorije.Benefiktor)
                 .Include(x => x.BenefiktorKategorije.Kategorija)
                 .Include(x => x.BenefiktorKategorije.Benefiktor.Korisnik)
