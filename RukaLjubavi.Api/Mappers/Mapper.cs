@@ -27,7 +27,6 @@ namespace RukaLjubavi.Api.Mappers
                 .ForMember(x => x.BenefiktorPdvbroj, src => src.MapFrom(y => y.BenefiktorKategorije.Benefiktor.Pdvbroj))
                 .ForMember(x => x.BenefiktorLokacija, src => src.MapFrom(y => y.BenefiktorKategorije.Benefiktor.Korisnik.MjestoPrebivalista.Naziv))
                 .ForMember(x => x.NazivKategorije, src => src.MapFrom(y => y.NazivKategorije))
-                .ForMember(x => x.NazivKategorije, src => src.MapFrom(y => y.BenefiktorKategorije.Kategorija.Naziv))
                 .ForMember(x => x.Status, src => src.MapFrom(y => y.StatusDonacije.ToString()))
                 .ReverseMap();
             CreateMap<DonacijaInsertRequest, Donacija>();

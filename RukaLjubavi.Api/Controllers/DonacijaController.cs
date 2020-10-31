@@ -38,9 +38,9 @@ namespace RukaLjubavi.Api.Controllers
 
         [Authorize]
         [HttpPost("prihvatiDonaciju/{id}")]
-        public IActionResult Prihvati(int id)
+        public IActionResult Prihvati(int id, int userId)
         {
-            return Ok(_donacijaService.Prihvati(id));
+            return Ok(_donacijaService.Prihvati(id, userId));
         }
 
         [Authorize]

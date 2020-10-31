@@ -39,6 +39,7 @@ class VaseDonacijeRecyclerAdapter(var clickListener: OnItemClickListener): Recyc
         val nazivBenefiktora = itemView.txtNaziv
         val grad = itemView.txtGrad
         val kategorija = itemView.txtKategorija
+        val status = itemView.txtStatus
 
         fun bind(donacija: Donacija, action: OnItemClickListener){
 
@@ -48,6 +49,7 @@ class VaseDonacijeRecyclerAdapter(var clickListener: OnItemClickListener): Recyc
             var mjesec = donacija!!.datumVrijeme.substring(5,7)
             var godina = donacija!!.datumVrijeme.substring(0,4)
             kategorija.text = "$dan.$mjesec.$godina"
+            status.text = donacija!!.status
 
             itemView.setOnClickListener {
                 action.onItemClick(donacija, adapterPosition)

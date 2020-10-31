@@ -109,9 +109,17 @@ namespace RukaLjubavi.Api.Services.Implementations
             return _mapper.Map<DonacijaDto>(entity);
         }
 
-        public DonacijaDto Prihvati(int id)
+        public DonacijaDto Prihvati(int id, int userId)
         {
             var entity = _context.Donacije.FirstOrDefault(x => x.Id == id);
+            if(entity.DonatorId == null)
+            {
+                entity.DonatorId = userId;
+            }
+            if (entity.BenefiktorId == null)
+            {
+                entity.BenefiktorId = userId;
+            }
             entity.StatusDonacije = StatusDonacije.Prihvacena;
             _context.SaveChanges();
 
