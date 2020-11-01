@@ -23,17 +23,17 @@ import kotlinx.android.synthetic.main.activity_zahtjevi_benefiktora_lista.recycl
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 
 class VaseDonacijeActivity : AppCompatActivity(), OnItemClickListener {
 
     var previousActivity: String? = null
     lateinit var myAdapterZahtjeviVaseDonacije: VaseDonacijeRecyclerAdapter
-    private val serviceKategorije = APIService.buildService(KategorijaService::class.java)
     var dialog: AlertDialog? = null
-    var kategorije: MutableList<Kategorija>? = arrayListOf()
+    var kategorije: MutableList<DonacijaStatus>? = arrayListOf()
     var spinner: Spinner? = null
-    var kategorijaId: Int? = null
+    var status: StatusDonacije? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,37 +51,33 @@ class VaseDonacijeActivity : AppCompatActivity(), OnItemClickListener {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                var k = p0!!.getItemAtPosition(p2) as Kategorija
-                kategorijaId = k.id
-                if(k.id == -1)
-                    kategorijaId = null
+                var s = p0!!.getItemAtPosition(p2) as DonacijaStatus
+                status = s.status
+                if(s.status == null)
+                    status = null
                 load()
             }
         }
     }
 
-    private fun loadKategorije() {
-        var loading = LoadingDialog(this@VaseDonacijeActivity)
-        loading.startLoadingDialog()
-        val requestCall = serviceKategorije.getAll()
-        requestCall.enqueue(object : Callback<List<Kategorija>> {
-            override fun onFailure(call: Call<List<Kategorija>>, t: Throwable) {
-                Toast.makeText(this@VaseDonacijeActivity,"Server error", Toast.LENGTH_SHORT).show()
-                loading.stopDialog()
-            }
+    class DonacijaStatus(val status: StatusDonacije?, val text: String){
+        override fun toString(): String {
+            return text
+        }
+    }
 
-            override fun onResponse(call: Call<List<Kategorija>>, response: Response<List<Kategorija>>) {
-                if(response.isSuccessful){
-                    var list = response.body()
-                    kategorije = list!!.toMutableList()
-                    kategorije!!.add(0, Kategorija(-1,"Status"))
-                    var adapter = ArrayAdapter<Kategorija>(this@VaseDonacijeActivity,R.layout.layout_spinner_item,kategorije!!)
-                    adapter.setDropDownViewResource(R.layout.spinner_item)
-                    spinner!!.adapter = adapter
-                }
-                loading.stopDialog()
-            }
-        })
+    private fun loadKategorije() {
+        kategorije!!.add(0, DonacijaStatus(null,"Status"))
+        kategorije!!.add(1, DonacijaStatus(StatusDonacije.Aktivna,"Aktivna"))
+        kategorije!!.add(2, DonacijaStatus(StatusDonacije.Na_cekanju,"Na_cekanju"))
+        kategorije!!.add(3, DonacijaStatus(StatusDonacije.Prihvacena,"Prihvacena"))
+        kategorije!!.add(4, DonacijaStatus(StatusDonacije.Odbijena,"Odbijena"))
+        kategorije!!.add(5, DonacijaStatus(StatusDonacije.U_toku,"U_toku"))
+        kategorije!!.add(6, DonacijaStatus(StatusDonacije.Zavrsena,"Zavrsena"))
+
+        var adapter = ArrayAdapter<DonacijaStatus>(this@VaseDonacijeActivity,R.layout.layout_spinner_item,kategorije!!)
+        adapter.setDropDownViewResource(R.layout.spinner_item)
+        spinner!!.adapter = adapter
     }
 
     private fun initRecyclerView(){
@@ -100,10 +96,10 @@ class VaseDonacijeActivity : AppCompatActivity(), OnItemClickListener {
         loading.startLoadingDialog()
 
         val requestCall = if(previousActivity.equals("DonatorHomePageActivity")){
-            serviceDonacije.get(DonatorId = APIService.loggedUserId, KategorijaId = kategorijaId)
+            serviceDonacije.get(DonatorId = APIService.loggedUserId, StatusDonacije = status)
         }
         else{
-            serviceDonacije.get(BenefiktorId = APIService.loggedUserId, KategorijaId = kategorijaId)
+            serviceDonacije.get(BenefiktorId = APIService.loggedUserId, StatusDonacije = status)
         }
 
         requestCall.enqueue(object : Callback<List<Donacija>> {

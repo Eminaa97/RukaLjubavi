@@ -38,12 +38,13 @@ class BenefiktorProfilActivity : AppCompatActivity() {
     private val serviceKategorije = APIService.buildService(KategorijaService::class.java)
     public lateinit var myAdapter: ProfilKategorijeRecyclerAdapter
     var benefiktor: Benefiktor? = null
+    var previousActivity: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_benefiktor_profil)
 
-        var previousActivity = intent.getStringExtra("ACTIVITY")
+        previousActivity = intent.getStringExtra("ACTIVITY")
         if(previousActivity.equals("BenefiktoriListaActivity")){
             btnBenefiktorProfil.text = "Doniraj"
             benefiktor = intent.getSerializableExtra("BENEFIKTOR") as Benefiktor
@@ -71,7 +72,11 @@ class BenefiktorProfilActivity : AppCompatActivity() {
     private fun loadKategorije() {
         var loading = LoadingDialog(this@BenefiktorProfilActivity)
         loading.startLoadingDialog()
-        val requestCall = serviceKategorije.getKategorijeByUser(null, APIService.loggedUserId)
+        val requestCall = if(previousActivity.equals("BenefiktoriListaActivity"))
+            serviceKategorije.getKategorijeByUser(null, benefiktor!!.id)
+        else{
+            serviceKategorije.getKategorijeByUser(null, APIService.loggedUserId)
+        }
         requestCall.enqueue(object : Callback<List<Kategorija>> {
             override fun onFailure(call: Call<List<Kategorija>>, t: Throwable) {
                 Toast.makeText(this@BenefiktorProfilActivity,"Server error", Toast.LENGTH_SHORT).show()
