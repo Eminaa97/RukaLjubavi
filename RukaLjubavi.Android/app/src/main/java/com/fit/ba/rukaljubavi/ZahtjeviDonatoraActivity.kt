@@ -10,6 +10,8 @@ import com.fit.ba.rukaljubavi.Helper.TopSpancingItemDecoration
 import com.fit.ba.rukaljubavi.Models.Donacija
 import com.fit.ba.rukaljubavi.Models.StatusDonacije
 import kotlinx.android.synthetic.main.activity_aktivne_donacije.*
+import kotlinx.android.synthetic.main.activity_aktivne_donacije.recycler_view
+import kotlinx.android.synthetic.main.activity_zahtjevi_donatora.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,6 +25,10 @@ class ZahtjeviDonatoraActivity : AppCompatActivity(), OnItemClickListener {
         initRecyclerView()
         load()
         title = "Zahtjevi donatora"
+
+        btnFilterZahtjeviDonatora.setOnClickListener {
+            ZahtjeviDonatoraFilterDialog(this@ZahtjeviDonatoraActivity).startDialog()
+        }
     }
 
     private fun initRecyclerView(){

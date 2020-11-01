@@ -43,14 +43,10 @@ class VaseDonacijeRecyclerAdapter(var clickListener: OnItemClickListener): Recyc
 
         fun bind(donacija: Donacija, action: OnItemClickListener){
 
-            if(donacija.donatorIme.isNullOrBlank()){
-                nazivBenefiktora.text = ""
-            }
-            else{
-                nazivBenefiktora.text = donacija.donatorIme+" "+donacija.donatorPrezime+", "+donacija.nazivKategorije
-            }
+            nazivBenefiktora.text = donacija.nazivKategorije
+
             if(donacija.benefiktorNazivKompanije.isNullOrBlank()){
-                grad.text = ""
+                grad.text = donacija.donatorIme+" "+donacija.donatorPrezime
             }
             else{
                 grad.text = donacija.benefiktorNazivKompanije + ", "+donacija.benefiktorLokacija

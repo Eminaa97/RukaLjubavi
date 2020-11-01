@@ -59,7 +59,7 @@ namespace RukaLjubavi.Api.Services.Implementations
             }
             if (search.KategorijaId.HasValue)
             {
-                q = q.Where(x => x.BenefiktorKategorije.KategorijaId == search.KategorijaId);
+                q = q.Where(x => x.KategorijaId == search.KategorijaId);
             }
             if (!string.IsNullOrWhiteSpace(search?.NazivKompanije))
             {

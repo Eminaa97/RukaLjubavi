@@ -7,7 +7,7 @@
     tools:context=".ZahtjeviDonatoraActivity">
 
     <Button
-        android:id="@+id/btnFilter2"
+        android:id="@+id/btnFilterZahtjeviDonatora"
         android:layout_width="0dp"
         android:layout_height="53dp"
         android:layout_marginStart="10dp"

@@ -28,7 +28,7 @@ class AktivneDonacijeActivity : AppCompatActivity(), OnItemClickListener {
         load()
 
         btnFilter2.setOnClickListener {
-            //ZahtjeviBenefiktoraFilterDialog(this@AktivneDonacijeActivity).startDialog()
+            AktivneDonacijeFilterDialog(this@AktivneDonacijeActivity).startDialog()
         }
     }
 
