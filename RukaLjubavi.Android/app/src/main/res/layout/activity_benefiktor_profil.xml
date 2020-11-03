@@ -11,6 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/btnCall2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/aaa"
+            app:layout_constraintEnd_toEndOf="@+id/txtTelefon"
+            app:layout_constraintHorizontal_bias="0.448"
+            app:layout_constraintStart_toStartOf="@+id/txtTelefon"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            app:layout_constraintVertical_bias="0.625"
+            app:srcCompat="@drawable/phone" />
+
         <TextView
             android:id="@+id/textView23"
             android:layout_width="100dp"
@@ -252,7 +264,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view"
-        tools:text="test@test.com" />
+        tools:text="061123456" />
 
     <TextView
         android:id="@+id/txtGrad"

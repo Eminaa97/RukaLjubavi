@@ -60,20 +60,20 @@ class VaseDonacijeActivity : AppCompatActivity(), OnItemClickListener {
         }
     }
 
-    class DonacijaStatus(val status: StatusDonacije?, val text: String){
+    class DonacijaStatus(val index: Int?,val status: StatusDonacije?, val text: String){
         override fun toString(): String {
             return text
         }
     }
 
     private fun loadKategorije() {
-        kategorije!!.add(0, DonacijaStatus(null,"Status"))
-        kategorije!!.add(1, DonacijaStatus(StatusDonacije.Aktivna,"Aktivna"))
-        kategorije!!.add(2, DonacijaStatus(StatusDonacije.Na_cekanju,"Na_cekanju"))
-        kategorije!!.add(3, DonacijaStatus(StatusDonacije.Prihvacena,"Prihvacena"))
-        kategorije!!.add(4, DonacijaStatus(StatusDonacije.Odbijena,"Odbijena"))
-        kategorije!!.add(5, DonacijaStatus(StatusDonacije.U_toku,"U_toku"))
-        kategorije!!.add(6, DonacijaStatus(StatusDonacije.Zavrsena,"Zavrsena"))
+        kategorije!!.add(0, DonacijaStatus(0,null,"Status"))
+        kategorije!!.add(1, DonacijaStatus(1,StatusDonacije.Aktivna,"Aktivna"))
+        kategorije!!.add(2, DonacijaStatus(2,StatusDonacije.Na_cekanju,"Na_cekanju"))
+        kategorije!!.add(3, DonacijaStatus(3,StatusDonacije.Prihvacena,"Prihvacena"))
+        kategorije!!.add(4, DonacijaStatus(4,StatusDonacije.Odbijena,"Odbijena"))
+        kategorije!!.add(5, DonacijaStatus(5,StatusDonacije.U_toku,"U_toku"))
+        kategorije!!.add(6, DonacijaStatus(6,StatusDonacije.Zavrsena,"Zavrsena"))
 
         var adapter = ArrayAdapter<DonacijaStatus>(this@VaseDonacijeActivity,R.layout.layout_spinner_item,kategorije!!)
         adapter.setDropDownViewResource(R.layout.spinner_item)

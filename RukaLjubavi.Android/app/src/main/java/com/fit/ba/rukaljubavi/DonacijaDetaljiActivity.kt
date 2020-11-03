@@ -72,6 +72,26 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
             txtBenefiktor.setText("")
         }
 
+        if(APIService.loggedUserType == 2) {
+            txtDonator.setOnClickListener {
+                val intent = Intent(this, DonatorProfilActivity::class.java)
+                intent.putExtra("ACTIVITY", "DonacijaDetaljiActivity")
+                intent.putExtra("DONATOR_ID", donacije!!.donatorId)
+                startActivity(intent)
+            }
+
+            if(donacije!!.status.equals(StatusDonacije.Prihvacena.name) ||
+                donacije!!.status.equals(StatusDonacije.Zavrsena.name) ||
+                donacije!!.status.equals(StatusDonacije.U_toku.name)){
+
+                btnDetaljiDoniraj.visibility = View.VISIBLE;
+                btnDetaljiDoniraj.text = "Promjeni status"
+                btnDetaljiDoniraj.setOnClickListener {
+                    PromjeniStatusDialog(this@DonacijaDetaljiActivity, donacijaId = donacije!!.id, trenutniStatus = donacije!!.status).startPromjeniStatusDialog()
+                }
+            }
+        }
+
         txtKategorija.setText(donacije!!.nazivKategorije)
         txtStatus.setText(donacije!!.status)
         txtOpis.setText(donacije!!.opis)

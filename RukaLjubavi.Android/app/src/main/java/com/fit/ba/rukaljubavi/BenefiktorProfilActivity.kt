@@ -2,6 +2,7 @@ package com.fit.ba.rukaljubavi
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -67,6 +68,13 @@ class BenefiktorProfilActivity : AppCompatActivity() {
         }
         initRecyclerView()
         loadKategorije()
+
+        btnCall2.setOnClickListener {
+            var s = "tel:" + txtTelefon.text
+            val intent: Intent = Intent(Intent.ACTION_CALL)
+            intent.data = Uri.parse(s)
+            startActivity(intent)
+        }
     }
 
     private fun loadKategorije() {

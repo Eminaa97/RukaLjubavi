@@ -76,6 +76,9 @@ class VaseDonacijeRecyclerAdapter(var clickListener: OnItemClickListener): Recyc
             if(donacija!!.status.equals(StatusDonacije.Prihvacena.name)){
                 status.setTextColor(Color.parseColor("#008000"))
             }
+            if(donacija!!.status.equals(StatusDonacije.Zavrsena.name)){
+                status.setTextColor(Color.parseColor("#008000"))
+            }
             if(donacija!!.status.equals(StatusDonacije.Odbijena.name)){
                 status.setTextColor(Color.parseColor("#FF0000"))
             }
