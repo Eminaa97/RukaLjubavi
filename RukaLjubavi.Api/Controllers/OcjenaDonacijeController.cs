@@ -37,5 +37,12 @@ namespace RukaLjubavi.Api.Controllers
             return Ok(_ocjenaDonacijeService.Insert(request));
         }
 
+        [Authorize]
+        [HttpPatch("{id}")]
+        public IActionResult Update(int id,[FromBody] OcjenaDonacijeInsertRequest request)
+        {
+            return Ok(_ocjenaDonacijeService.Update(id,request));
+        }
+
     }
 }

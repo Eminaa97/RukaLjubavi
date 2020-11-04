@@ -12,5 +12,6 @@ namespace RukaLjubavi.Api.Services
         public IList<OcjenaDonacijeDto> Get(OcjenaDonacijeSearchRequest search);
         public OcjenaDonacijeDto Get(int id);
         public OcjenaDonacijeDto Insert(OcjenaDonacijeInsertRequest user);
+        public OcjenaDonacijeDto Update(int id, OcjenaDonacijeInsertRequest user);
     }
 }

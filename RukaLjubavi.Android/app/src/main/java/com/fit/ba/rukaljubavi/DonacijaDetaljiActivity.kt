@@ -5,8 +5,10 @@ import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.core.view.marginTop
 import com.fit.ba.rukaljubavi.Models.Donacija
 import com.fit.ba.rukaljubavi.Models.StatusDonacije
 import com.fit.ba.rukaljubavi.Services.APIService
@@ -90,6 +92,20 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
                     PromjeniStatusDialog(this@DonacijaDetaljiActivity, donacijaId = donacije!!.id, trenutniStatus = donacije!!.status).startPromjeniStatusDialog()
                 }
             }
+        }
+
+        if(donacije!!.status.equals(StatusDonacije.Zavrsena.name)){
+            btnRatingDialog.setOnClickListener {
+                RatingDialog(this@DonacijaDetaljiActivity, donacije!!.id).loadDialog()
+            }
+        }
+        else{
+            btnRatingDialog.visibility = View.GONE;
+            txtOcjenaDon.visibility = View.GONE;
+            val param1 = txtDonator.layoutParams as ViewGroup.MarginLayoutParams
+            val param2 = textView35.layoutParams as ViewGroup.MarginLayoutParams
+            param1.setMargins(35,20,0,0)
+            param2.setMargins(0,20,35,0)
         }
 
         txtKategorija.setText(donacije!!.nazivKategorije)

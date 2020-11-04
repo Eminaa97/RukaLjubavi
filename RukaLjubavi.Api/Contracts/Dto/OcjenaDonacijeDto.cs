@@ -11,17 +11,9 @@ namespace RukaLjubavi.Api.Contracts.Dto
         public int BrzinaDostavljanja { get; set; }
         public int PostivanjeDogovora { get; set; }
         public int KorisnikId { get; set; }
-        public int Kolicina { get; set; }
-        public StatusDonacije StatusDonacije { get; set; }
-        public bool IsPrihvacena { get; set; }
-        public DateTime DatumVrijeme { get; set; }
+        public TipKorisnika Ocjenjivac { get; set; }
         public string DonatorIme { get; set; }
         public string DonatorPrezime { get; set; }
-        public string DonatorJmbg { get; set; }
-        public DateTime DonatorDatumRodjenja { get; set; }
-        public string DonatorMjestoRodjenja { get; set; }
         public string BenefiktorNazivKompanije { get; set; }
-        public string BenefiktorPdvbroj { get; set; }
-        public string NazivKategorije { get; set; }
     }
 }

@@ -86,6 +86,7 @@ class PrijavaActivity : AppCompatActivity() {
                         editor.putString(Password, login.password)
                         editor.apply()
                         APIService.loggedUserType = item.tipKorisnika
+                        APIService.loggedId = item.id
                         APIService.loggedUserToken = "Bearer " + item.token
                     } else {
                         Toast.makeText(

@@ -69,12 +69,6 @@ class BenefiktorProfilActivity : AppCompatActivity() {
         initRecyclerView()
         loadKategorije()
 
-        btnCall2.setOnClickListener {
-            var s = "tel:" + txtTelefon.text
-            val intent: Intent = Intent(Intent.ACTION_CALL)
-            intent.data = Uri.parse(s)
-            startActivity(intent)
-        }
     }
 
     private fun loadKategorije() {
@@ -117,7 +111,7 @@ class BenefiktorProfilActivity : AppCompatActivity() {
         txtTelefon.text = benefiktor!!.telefon
         txtAdresa.text = benefiktor!!.adresa
         txtGrad.text = benefiktor!!.mjestoPrebivalista
-        txtBrojDonacija.text = benefiktor!!.BrojDonacija.toString()
+        txtBrojDonacija.text = benefiktor!!.brojDonacija.toString()
         var dan = benefiktor!!.datumRegistracije.substring(8,10)
         var mjesec = benefiktor!!.datumRegistracije.substring(5,7)
         var godina = benefiktor!!.datumRegistracije.substring(0,4)

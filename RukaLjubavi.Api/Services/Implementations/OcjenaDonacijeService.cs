@@ -82,5 +82,14 @@ namespace RukaLjubavi.Api.Services.Implementations
             return _mapper.Map<OcjenaDonacijeDto>(entity);
         }
 
+        public OcjenaDonacijeDto Update(int id, OcjenaDonacijeInsertRequest request)
+        {
+            var entity = _context.OcjeneDonacija.Find(id);
+            _mapper.Map(request, entity);
+
+            _context.SaveChanges();
+
+            return _mapper.Map<OcjenaDonacijeDto>(entity);
+        }
     }
 }

@@ -3,7 +3,9 @@ package com.fit.ba.rukaljubavi
 import android.app.Activity
 import android.app.AlertDialog
 import android.view.View
+import android.content.Intent
 import android.widget.*
+import androidx.core.content.ContextCompat.startActivity
 import com.fit.ba.rukaljubavi.Models.Donacija
 import com.fit.ba.rukaljubavi.Models.StatusDonacije
 import com.fit.ba.rukaljubavi.Services.APIService
@@ -93,6 +95,10 @@ class PromjeniStatusDialog(var activity: Activity, var donacijaId: Int, var tren
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                 if(response.isSuccessful){
                     Toast.makeText(activity,"Status promjenjen.", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(activity,VaseDonacijeActivity::class.java)
+                    intent.putExtra("ACTIVITY","BenefiktorHomePageActivity")
+                    startActivity(activity,intent,null)
+                    activity.finish()
                 }
                 else{
                     Toast.makeText(activity,"Server error", Toast.LENGTH_SHORT).show()

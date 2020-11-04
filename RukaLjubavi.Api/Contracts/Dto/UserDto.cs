@@ -16,6 +16,9 @@ namespace RukaLjubavi.Api.Dto
         public int MjestoPrebivalistaId { get; set; }
         public TipKorisnika TipKorisnika { get; set; }
         public int BrojDonacija { get; set; }
+        public float OcjenaPovjerljivost { get; set; }
+        public float OcjenaBrzinaDostavljanja { get; set; }
+        public float OcjenaPostivanjeDogovora { get; set; }
     }
     public class DonatorDto : UserDto
     {

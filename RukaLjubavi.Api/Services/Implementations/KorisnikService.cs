@@ -47,12 +47,18 @@ namespace RukaLjubavi.Api.Services
                 var benefiktor = _context.Benefiktori.FirstOrDefault(x => x.KorisnikId == id);
                 returns.Id = benefiktor.Id;
                 returns.BrojDonacija = _context.Donacije.Count(x => x.BenefiktorId == benefiktor.Id && x.StatusDonacije == StatusDonacije.Zavrsena);
+                returns.OcjenaPovjerljivost = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != benefiktor.KorisnikId).Average(x => x.Povjerljivost);
+                returns.OcjenaBrzinaDostavljanja = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != benefiktor.KorisnikId).Average(x => x.BrzinaDostavljanja);
+                returns.OcjenaPostivanjeDogovora = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != benefiktor.KorisnikId).Average(x => x.PostivanjeDogovora);
             }
             else
             {
                 var donator = _context.Donatori.FirstOrDefault(x => x.KorisnikId == id);
                 returns.Id = donator.Id;
                 returns.BrojDonacija = _context.Donacije.Count(x => x.DonatorId == donator.Id && x.StatusDonacije == StatusDonacije.Zavrsena);
+                returns.OcjenaPovjerljivost = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != donator.KorisnikId).Average(x => x.Povjerljivost);
+                returns.OcjenaBrzinaDostavljanja = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != donator.KorisnikId).Average(x => x.BrzinaDostavljanja);
+                returns.OcjenaPostivanjeDogovora = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != donator.KorisnikId).Average(x => x.PostivanjeDogovora);
             }
 
             return returns;
@@ -60,28 +66,34 @@ namespace RukaLjubavi.Api.Services
 
         public DonatorDto GetDonator(int donatorId)
         {
-            var entity = _context.Donatori
+            var donator = _context.Donatori
                 .Include(x => x.Korisnik)
                 .ThenInclude(x => x.MjestoPrebivalista)
                 .FirstOrDefault(x => x.Id == donatorId);
 
-            var returns = _mapper.Map<DonatorDto>(entity);
+            var returns = _mapper.Map<DonatorDto>(donator);
 
             returns.BrojDonacija = _context.Donacije.Count(x => x.DonatorId == donatorId && x.StatusDonacije == StatusDonacije.Zavrsena);
+            returns.OcjenaPovjerljivost = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != donator.KorisnikId).Average(x => x.Povjerljivost);
+            returns.OcjenaBrzinaDostavljanja = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != donator.KorisnikId).Average(x => x.BrzinaDostavljanja);
+            returns.OcjenaPostivanjeDogovora = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != donator.KorisnikId).Average(x => x.PostivanjeDogovora);
 
             return returns;
         }
 
         public BenefiktorDto GetBenefiktor(int benefiktorId)
         {
-            var entity = _context.Benefiktori
+            var benefiktor = _context.Benefiktori
                 .Include(x => x.Korisnik)
                 .ThenInclude(x => x.MjestoPrebivalista)
                 .FirstOrDefault(x => x.Id == benefiktorId);
 
-            var returns = _mapper.Map<BenefiktorDto>(entity);
+            var returns = _mapper.Map<BenefiktorDto>(benefiktor);
 
             returns.BrojDonacija = _context.Donacije.Count(x => x.BenefiktorId == benefiktorId && x.StatusDonacije == StatusDonacije.Zavrsena);
+            returns.OcjenaPovjerljivost = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != benefiktor.KorisnikId).Average(x => x.Povjerljivost);
+            returns.OcjenaBrzinaDostavljanja = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != benefiktor.KorisnikId).Average(x => x.BrzinaDostavljanja);
+            returns.OcjenaPostivanjeDogovora = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != benefiktor.KorisnikId).Average(x => x.PostivanjeDogovora);
 
             return returns;
         }

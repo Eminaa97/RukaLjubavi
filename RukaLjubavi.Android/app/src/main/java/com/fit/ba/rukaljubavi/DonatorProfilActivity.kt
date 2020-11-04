@@ -49,12 +49,6 @@ class DonatorProfilActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btnCall.setOnClickListener {
-            var s = "tel:" + txtTelefon.text
-            val intent: Intent = Intent(Intent.ACTION_CALL)
-            intent.data = Uri.parse(s)
-            startActivity(intent)
-        }
     }
 
     private fun loadDonator() {
@@ -76,7 +70,7 @@ class DonatorProfilActivity : AppCompatActivity() {
                     txtTelefon.text = donator!!.telefon
                     txtAdresa.text = donator!!.adresa
                     txtGrad.text = donator!!.mjestoPrebivalista
-                    txtBrojDonacija2.text = donator!!.BrojDonacija.toString()
+                    txtBrojDonacija2.text = donator!!.brojDonacija.toString()
                     var dan = donator!!.datumRegistracije.substring(8,10)
                     var mjesec = donator!!.datumRegistracije.substring(5,7)
                     var godina = donator!!.datumRegistracije.substring(0,4)

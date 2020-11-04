@@ -10,6 +10,7 @@ object APIService {
 
     private val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
+    var loggedId: Int? = null
     var loggedUserId: Int? = null
     var loggedUserType: Int? = null
     var naziv: String? = null

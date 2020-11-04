@@ -11,7 +11,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <TextView
+        <View
+            android:id="@+id/aaa7"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#c0c0c0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtBrojDonacija3" />
+
+        <TextView
         android:id="@+id/txtBrojDonacija2"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -94,24 +108,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/aaa2" />
 
-    <Button
-        android:id="@+id/btnAzurirajPodatke"
-        android:layout_width="162dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/button"
-        android:fontFamily="@font/regular"
-        android:text="Ažuriraj podatke"
-        android:textAllCaps="false"
-        android:textColor="#fff"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/aaa6" />
 
+        <Button
+            android:id="@+id/btnAzurirajPodatke"
+            android:layout_width="162dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/regular"
+            android:text="Ažuriraj podatke"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/aaa7" />
 
-    <View
+        <View
         android:id="@+id/aaa6"
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -286,7 +300,24 @@
         app:layout_constraintTop_toBottomOf="@+id/aaa2"
         tools:text="test@test.com" />
 
-    <View
+        <TextView
+            android:id="@+id/txtBrojDonacija3"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginRight="35dp"
+            android:fontFamily="@font/regular"
+            android:gravity="end"
+            android:textColor="@color/gray"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/aaa6"
+            tools:text="test@test.com" />
+
+        <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -345,6 +376,23 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtAdresa" />
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/regular"
+            android:text="Povjerljivost"
+            android:textColor="@color/gray"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/aaa6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

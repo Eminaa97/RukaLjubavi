@@ -5,7 +5,6 @@ namespace RukaLjubavi.Api.Contracts.Requests
 {
     public class OcjenaDonacijeInsertRequest
     {
-        public int Id { get; set; }
         public string Komentar { get; set; }
         [Range(1, 5)]
         public int? Povjerljivost { get; set; }
