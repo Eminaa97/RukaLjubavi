@@ -9,6 +9,7 @@ import android.os.Handler
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.core.view.WindowCompat
 import com.fit.ba.rukaljubavi.Models.LogiraniUser
 import com.fit.ba.rukaljubavi.Requests.PrijavaRequest
 import com.fit.ba.rukaljubavi.Services.APIService
@@ -30,51 +31,49 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 
         sharedPreferences = getSharedPreferences(fileName, Context.MODE_PRIVATE)
 
-        val r = Runnable {
-            if(sharedPreferences!!.contains(Email)){
-                var login = PrijavaRequest()
-                login.email = sharedPreferences!!.getString(Email,"NAN")
-                login.password = sharedPreferences!!.getString(Password,"NAN")
-                val requestCall = service.login(login)
-                requestCall.enqueue(object : Callback<LogiraniUser> {
-                    override fun onFailure(call: Call<LogiraniUser>, t: Throwable) {
-                    }
+        if (sharedPreferences!!.contains(Email)) {
+            var login = PrijavaRequest()
+            login.email = sharedPreferences!!.getString(Email, "NAN")
+            login.password = sharedPreferences!!.getString(Password, "NAN")
+            val requestCall = service.login(login)
+            requestCall.enqueue(object : Callback<LogiraniUser> {
+                override fun onFailure(call: Call<LogiraniUser>, t: Throwable) {
+                }
 
-                    override fun onResponse(call: Call<LogiraniUser>, response: Response<LogiraniUser>) {
-                        if (response.isSuccessful) {
-                            val item = response.body()
-                            if(item!!.tipKorisnika == 1){
-                                val intent = Intent(this@SplashScreenActivity, DonatorHomePageActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                                APIService.loggedUserId = item.donatorId
-                                APIService.naziv = """${item.ime} ${item.prezime}"""
-                            }
-                            if(item!!.tipKorisnika == 2){
-                                val intent = Intent(this@SplashScreenActivity, BenefiktorHomePageActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                                APIService.loggedUserId = item.benefiktorId
-                                APIService.naziv = item.nazivKompanije
-                            }
-                            APIService.loggedUserType = item.tipKorisnika
-                            APIService.loggedId = item.id
-                            APIService.loggedUserToken = "Bearer " + item.token
+                override fun onResponse(call: Call<LogiraniUser>, response: Response<LogiraniUser>) {
+                    if (response.isSuccessful) {
+                        val item = response.body()
+                        if (item!!.tipKorisnika == 1) {
+                            val intent = Intent(this@SplashScreenActivity, DonatorHomePageActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                            APIService.loggedUserId = item.donatorId
+                            APIService.naziv = """${item.ime} ${item.prezime}"""
                         }
+                        if (item!!.tipKorisnika == 2) {
+                            val intent = Intent(this@SplashScreenActivity, BenefiktorHomePageActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                            APIService.loggedUserId = item.benefiktorId
+                            APIService.naziv = item.nazivKompanije
+                        }
+                        APIService.loggedUserType = item.tipKorisnika
+                        APIService.loggedId = item.id
+                        APIService.loggedUserToken = "Bearer " + item.token
                     }
-                })
-            }
-            else{
+                }
+            })
+        } else {
+            @Suppress("DEPRECATION")
+            Handler().postDelayed({
                 sharedPreferences!!.edit().clear().apply()
-                val intent = Intent(this,PrijavaActivity::class.java)
+                val intent = Intent(this, PrijavaActivity::class.java)
                 startActivity(intent)
                 finish()
-            }
+            }, 2000)
         }
-        Handler().postDelayed(r, 2000)
     }
 }

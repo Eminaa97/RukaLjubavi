@@ -15,4 +15,11 @@
         <item name="colorAccent">@color/red</item>
     </style>
 
+    <style name="whiteStatusBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorPrimaryDark">#fff</item>
+        <item name="colorAccent">@color/red</item>
+    </style>
+
 </resources>

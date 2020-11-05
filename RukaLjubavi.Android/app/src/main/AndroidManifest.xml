@@ -30,19 +30,24 @@
             android:theme="@style/ActionBar" />
         <activity
             android:name=".AzurirajKategorijeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/whiteStatusBar"/>
         <activity
             android:name=".LozinkaAzurirajActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/whiteStatusBar"/>
         <activity
             android:name=".BenefiktorLicniPodaciAzurirajActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/whiteStatusBar"/>
         <activity
             android:name=".DonatorLicniPodaciAzurirajActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/whiteStatusBar"/>
         <activity
             android:name=".AzurirajPodatkeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/whiteStatusBar"/>
         <activity
             android:name=".ZahtjeviBenefiktoraListaActivity"
             android:screenOrientation="portrait"
@@ -72,31 +77,39 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".DonatorKategorijeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/whiteStatusBar"/>
         <activity
             android:name=".BenefiktorKategorijeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/whiteStatusBar"/>
         <activity
             android:name=".PDVBrojPotvrdaActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/whiteStatusBar"/>
         <activity
             android:name=".RegistracijaIzborActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/whiteStatusBar"/>
         <activity
             android:name=".RegistracijaBenefiktorActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible" />
+            android:windowSoftInputMode="stateVisible"
+            android:theme="@style/whiteStatusBar"/>
         <activity
             android:name=".RegistracijaDonatorActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible" />
+            android:windowSoftInputMode="stateVisible"
+            android:theme="@style/whiteStatusBar"/>
         <activity
             android:name=".PrijavaActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible" />
+            android:windowSoftInputMode="stateVisible"
+            android:theme="@style/whiteStatusBar"/>
         <activity
             android:name=".SplashScreenActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/whiteStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -105,7 +118,8 @@
         </activity>
         <activity
             android:name=".AboutActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/whiteStatusBar"/>
         <activity
             android:name=".DonatorHomePageActivity"
             android:screenOrientation="portrait" />
