@@ -56,6 +56,9 @@ class PDVBrojPotvrdaActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }
+                else{
+                    Toast.makeText(this@PDVBrojPotvrdaActivity,"Nepostojeći PDV broj.", Toast.LENGTH_SHORT).show()
+                }
                 loading.stopDialog()
             }
         })

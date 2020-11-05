@@ -45,7 +45,7 @@ class ZahtjeviDonatoraRecyclerAdapter(var clickListener: OnItemClickListener): R
 
             head.text = donacija!!.nazivKategorije
             sub.text = donacija!!.donatorIme + " " + donacija!!.donatorPrezime + ", "+donacija!!.donatorPrebivaliste
-            side.text = donacija!!.kolicina.toString()
+            side.text = if(donacija!!.kolicina != 0) donacija!!.kolicina.toString() else "N/A"
 
             itemView.setOnClickListener {
                 action.onItemClick(donacija, adapterPosition)

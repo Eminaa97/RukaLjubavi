@@ -64,13 +64,13 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
             txtDonator.setText("""${donacije!!.donatorIme} ${donacije!!.donatorPrezime}""")
         }
         else{
-            txtDonator.setText("")
+            txtDonator.setText("N/A")
         }
         if(donacije!!.benefiktorId != 0){
             txtBenefiktor.setText(donacije!!.benefiktorNazivKompanije)
         }
         else{
-            txtBenefiktor.setText("")
+            txtBenefiktor.setText("N/A")
         }
 
         if(APIService.loggedUserType == 2) {

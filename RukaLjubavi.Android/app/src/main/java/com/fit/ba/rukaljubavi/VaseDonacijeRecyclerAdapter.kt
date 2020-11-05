@@ -55,13 +55,13 @@ class VaseDonacijeRecyclerAdapter(var clickListener: OnItemClickListener): Recyc
                 if(!donacija.benefiktorNazivKompanije.isNullOrBlank())
                     grad.text = donacija.benefiktorNazivKompanije + ", "+donacija.benefiktorLokacija
                 else
-                    grad.text = ""
+                    grad.text = "N/A"
             }
             else{
                 if(!donacija.donatorIme.isNullOrBlank())
-                    grad.text = donacija.donatorIme+" "+donacija.donatorPrezime
+                    grad.text = donacija.donatorIme+" "+donacija.donatorPrezime + ", " + donacija.donatorPrebivaliste
                 else
-                    grad.text = ""
+                    grad.text = "N/A"
             }
 
             var dan = donacija!!.datumVrijeme.substring(8,10)
