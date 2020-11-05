@@ -14,7 +14,7 @@ import com.fit.ba.rukaljubavi.Services.APIService
 import com.fit.ba.rukaljubavi.Services.DonatorService
 import com.fit.ba.rukaljubavi.Services.KategorijaService
 import kotlinx.android.synthetic.main.activity_donacija_detalji.*
-import kotlinx.android.synthetic.main.activity_donator_profil.*
+import kotlinx.android.synthetic.main.activity_donator_profil_1.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +28,7 @@ class DonatorProfilActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_donator_profil)
+        setContentView(R.layout.activity_donator_profil_1)
 
         previousActivity = intent.getStringExtra("ACTIVITY")
         if(previousActivity.equals("DonacijaDetaljiActivity")){
@@ -70,6 +70,9 @@ class DonatorProfilActivity : AppCompatActivity() {
                     txtTelefon.text = donator!!.telefon
                     txtAdresa.text = donator!!.adresa
                     txtGrad.text = donator!!.mjestoPrebivalista
+                    ratingBarPovjerljivost.rating = donator!!.ocjenaPovjerljivost
+                    ratingBarBrzinaDost.rating = donator!!.ocjenaBrzinaDostavljanja
+                    ratingBarPostivanjeDog.rating = donator!!.ocjenaPostivanjeDogovora
                     txtBrojDonacija2.text = donator!!.brojDonacija.toString()
                     var dan = donator!!.datumRegistracije.substring(8,10)
                     var mjesec = donator!!.datumRegistracije.substring(5,7)

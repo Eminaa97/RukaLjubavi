@@ -348,11 +348,21 @@ namespace RukaLjubavi.Api.Services
 
         public IList<DonatorDto> GetDonatori()
         {
-            var list = _context.Donatori
+            var query = _context.Donatori
                 .Include(x => x.Korisnik)
                 .ThenInclude(x => x.MjestoPrebivalista);
 
-            return _mapper.Map<IList<DonatorDto>>(list);
+            var returns = _mapper.Map<List<DonatorDto>>(query);
+
+            foreach (var item in returns)
+            {
+                item.BrojDonacija = _context.Donacije.Count(x => x.DonatorId == item.Id && x.StatusDonacije == StatusDonacije.Zavrsena);
+                item.OcjenaPovjerljivost = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != item.KorisnikId).Average(x => x.Povjerljivost);
+                item.OcjenaBrzinaDostavljanja = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != item.KorisnikId).Average(x => x.BrzinaDostavljanja);
+                item.OcjenaPostivanjeDogovora = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != item.KorisnikId).Average(x => x.PostivanjeDogovora);
+            }
+
+            return returns;
         }
 
         public IList<BenefiktorDto> GetBenefiktori(BenefiktorSearchRequest searchRequest)
@@ -371,7 +381,17 @@ namespace RukaLjubavi.Api.Services
                 query = query.Where(x => x.NazivKompanije.ToLower().StartsWith(searchRequest.nazivKompanije.ToLower()));
             }
 
-            return _mapper.Map<IList<BenefiktorDto>>(query);
+            var returns = _mapper.Map<List<BenefiktorDto>>(query);
+
+            foreach (var item in returns)
+            {
+                item.BrojDonacija = _context.Donacije.Count(x => x.BenefiktorId == item.Id && x.StatusDonacije == StatusDonacije.Zavrsena);
+                item.OcjenaPovjerljivost = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != item.KorisnikId).Average(x => x.Povjerljivost);
+                item.OcjenaBrzinaDostavljanja = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != item.KorisnikId).Average(x => x.BrzinaDostavljanja);
+                item.OcjenaPostivanjeDogovora = (float)_context.OcjeneDonacija.Where(x => x.KorisnikId != item.KorisnikId).Average(x => x.PostivanjeDogovora);
+            }
+
+            return returns;
         }
 
         public bool ResetPasword(int userId, PasswordResetRequest request)

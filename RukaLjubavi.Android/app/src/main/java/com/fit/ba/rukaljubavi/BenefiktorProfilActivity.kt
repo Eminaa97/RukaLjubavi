@@ -22,13 +22,6 @@ import com.fit.ba.rukaljubavi.Services.DonatorService
 import com.fit.ba.rukaljubavi.Services.KategorijaService
 import kotlinx.android.synthetic.main.activity_benefiktor_profil.*
 import kotlinx.android.synthetic.main.activity_benefiktori_lista.*
-import kotlinx.android.synthetic.main.activity_donator_profil.*
-import kotlinx.android.synthetic.main.activity_donator_profil.btnAzurirajPodatke
-import kotlinx.android.synthetic.main.activity_donator_profil.txtAdresa
-import kotlinx.android.synthetic.main.activity_donator_profil.txtEmail
-import kotlinx.android.synthetic.main.activity_donator_profil.txtFooter
-import kotlinx.android.synthetic.main.activity_donator_profil.txtGrad
-import kotlinx.android.synthetic.main.activity_donator_profil.txtTelefon
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -44,6 +37,8 @@ class BenefiktorProfilActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_benefiktor_profil)
+
+        window.setBackgroundDrawableResource(R.drawable.background_red)
 
         previousActivity = intent.getStringExtra("ACTIVITY")
         if(previousActivity.equals("BenefiktoriListaActivity")){
@@ -111,6 +106,9 @@ class BenefiktorProfilActivity : AppCompatActivity() {
         txtTelefon.text = benefiktor!!.telefon
         txtAdresa.text = benefiktor!!.adresa
         txtGrad.text = benefiktor!!.mjestoPrebivalista
+        ratingBarPovjerljivost3.rating = benefiktor!!.ocjenaPovjerljivost
+        ratingBarBrzinaDost4.rating = benefiktor!!.ocjenaBrzinaDostavljanja
+        ratingBarPostivanjeDogovora4.rating = benefiktor!!.ocjenaPostivanjeDogovora
         txtBrojDonacija.text = benefiktor!!.brojDonacija.toString()
         var dan = benefiktor!!.datumRegistracije.substring(8,10)
         var mjesec = benefiktor!!.datumRegistracije.substring(5,7)

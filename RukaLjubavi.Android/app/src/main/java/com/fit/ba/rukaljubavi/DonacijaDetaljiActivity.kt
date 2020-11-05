@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_donacija_detalji.txtBenefiktor
 import kotlinx.android.synthetic.main.activity_donacija_detalji.txtDonator
 import kotlinx.android.synthetic.main.activity_donacija_detalji.txtKategorija
 import kotlinx.android.synthetic.main.activity_donacija_detalji.txtOpis
-import kotlinx.android.synthetic.main.activity_donator_profil.*
 import kotlinx.android.synthetic.main.activity_nova_donacija.*
 import retrofit2.Call
 import retrofit2.Callback
