@@ -8,6 +8,4 @@ BACKEND: REST API C# ASP.NET Core :: https://s93.wrd.app.fit.ba/swagger/index.ht
 
 FRONTEND: Android app using kotlin in Android studio :: https://play.google.com/store/apps/details?id=com.fit.ba.rukaljubavi
 
-© Emina Mesić, Ajdin Ćatić
-
-Faculty of Information Technology, University Džemal Bijedić of Mostar
+© Faculty of Information Technology, University Džemal Bijedić of Mostar
