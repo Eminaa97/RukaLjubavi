@@ -320,17 +320,6 @@
         </GridLayout>
 
         <TextView
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:fontFamily="@font/regular"
-            android:text="© Emina Mesić, Ajdin Ćatić"
-            android:gravity="center_horizontal"
-            >
-        </TextView>
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"

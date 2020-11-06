@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.activity_splash_screen.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.concurrent.timerTask
 
 var sharedPreferences: SharedPreferences? = null
 var Email: String = "username"
@@ -25,6 +27,7 @@ var Password: String = "password"
 
 class SplashScreenActivity : AppCompatActivity() {
 
+    private val handler : Handler = Handler()
     var fileName: String = "loginData"
     private val service = APIService.buildService(PrijavaService::class.java)
 
@@ -67,10 +70,9 @@ class SplashScreenActivity : AppCompatActivity() {
                 }
             })
         } else {
-            @Suppress("DEPRECATION")
-            Handler().postDelayed({
+            Timer().schedule(timerTask {
                 sharedPreferences!!.edit().clear().apply()
-                val intent = Intent(this, PrijavaActivity::class.java)
+                val intent = Intent(this@SplashScreenActivity, PrijavaActivity::class.java)
                 startActivity(intent)
                 finish()
             }, 2000)
