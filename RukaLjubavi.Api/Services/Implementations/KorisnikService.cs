@@ -204,6 +204,9 @@ namespace RukaLjubavi.Api.Services
                         isPotrebnaKategorija = true
                     });
                 }
+
+                // exception for testing purpose, functionality will be added
+                throw new Exception("Wrong PDV number");
             }
 
             _context.SaveChanges();
