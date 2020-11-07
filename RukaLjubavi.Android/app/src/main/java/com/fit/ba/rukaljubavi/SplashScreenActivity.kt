@@ -27,7 +27,6 @@ var Password: String = "password"
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    private val handler : Handler = Handler()
     var fileName: String = "loginData"
     private val service = APIService.buildService(PrijavaService::class.java)
 

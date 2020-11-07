@@ -63,17 +63,20 @@
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".BenefiktorProfilActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/homePage" />
         <activity
             android:name=".BenefiktoriListaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBar" />
         <activity
             android:name=".BenefiktorHomePageActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/homePage"/>
         <activity
             android:name=".DonatorProfilActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/homePage"/>
         <activity
             android:name=".DonatorKategorijeActivity"
             android:screenOrientation="portrait"
@@ -121,7 +124,8 @@
             android:theme="@style/whiteStatusBar"/>
         <activity
             android:name=".DonatorHomePageActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/homePage"/>
     </application>
 
 </manifest>

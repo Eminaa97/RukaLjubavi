@@ -324,7 +324,7 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:fontFamily="@font/regular"
-            android:text="Faculty of Information Technology Mostar"
+            android:text="© Faculty of Information Technology Mostar"
             android:gravity="center_horizontal"
             android:layout_marginBottom="13dp"
             >

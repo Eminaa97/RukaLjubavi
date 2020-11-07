@@ -22,4 +22,11 @@
         <item name="colorAccent">@color/red</item>
     </style>
 
+    <style name="homePage" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorPrimaryDark">@color/bg_red</item>
+        <item name="colorAccent">@color/red</item>
+    </style>
+
 </resources>
