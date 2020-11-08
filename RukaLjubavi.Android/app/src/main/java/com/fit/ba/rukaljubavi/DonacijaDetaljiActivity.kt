@@ -27,6 +27,7 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
 
     val service = APIService.buildService(DonacijaService::class.java)
     var donacije: Donacija? = null
+    var previousActivity: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,7 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
         btnDetaljiDonirajOdbij.visibility = View.GONE;
         btnDetaljiDoniraj.visibility = View.GONE;
 
-        var previousActivity = intent.getStringExtra("ACTIVITY")
+        previousActivity = intent.getStringExtra("ACTIVITY")
         if(previousActivity.equals("AktivneDonacijeActivity") || previousActivity.equals("ZahtjeviBenefiktoraListaActivity")){
             btnDetaljiDoniraj.text = "Preuzmi"
             btnDetaljiDoniraj.visibility = View.VISIBLE;
@@ -195,7 +196,25 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Toast.makeText(this@DonacijaDetaljiActivity, "Donacija prihvaćena.", Toast.LENGTH_SHORT).show()
 
-                    if(APIService.loggedUserType == 1){
+                    if(previousActivity == "ZahtjeviDonatoraActivity"){
+                        val requestCall = serviceDonacije.get(StatusDonacije = StatusDonacije.Na_cekanju)
+                        requestCall.enqueue(object : Callback<List<Donacija>> {
+                            override fun onFailure(call: Call<List<Donacija>>, t: Throwable) {
+                                Toast.makeText(this@DonacijaDetaljiActivity,"Error: ${t.toString()}", Toast.LENGTH_SHORT).show()
+                            }
+
+                            override fun onResponse(call: Call<List<Donacija>>, response: Response<List<Donacija>>) {
+                                if(response.isSuccessful){
+                                    val list = response.body()!!
+                                    myAdapterZahtjeviDonatora.submitList(list)
+                                    myAdapterZahtjeviDonatora.notifyDataSetChanged()
+                                    finish()
+                                    loading.stopDialog()
+                                }
+                            }
+                        })
+                    }
+                    else if(previousActivity == "ZahtjeviBenefiktoraListaActivity"){
                         val requestCall = serviceDonacije.get(isZahtjevZaDonatora = true)
                         requestCall.enqueue(object : Callback<List<Donacija>> {
                             override fun onFailure(call: Call<List<Donacija>>, t: Throwable) {
@@ -213,7 +232,7 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
                             }
                         })
                     }
-                    else{
+                    else if(previousActivity == "AktivneDonacijeActivity"){
                         val requestCall = serviceDonacije.get(isZahtjevZaBenefiktora = true)
                         requestCall.enqueue(object : Callback<List<Donacija>> {
                             override fun onFailure(call: Call<List<Donacija>>, t: Throwable) {
@@ -231,7 +250,6 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
                             }
                         })
                     }
-
                 } else {
                     Toast.makeText(
                         this@DonacijaDetaljiActivity,
