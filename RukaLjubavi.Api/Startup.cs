@@ -99,10 +99,12 @@ namespace RukaLjubavi.Api
             services.AddScoped<INotifikacijaService, NotifikacijaService>();
             services.AddScoped<IDonacijaService, DonacijaService>();
             services.AddScoped<IOcjenaDonacijeService, OcjenaDonacijeService>();
+            services.AddScoped<IEmailService, EmailService>();
 
 
             // Configuration
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
+            services.Configure<EmailSettings>(Configuration.GetSection(nameof(EmailSettings)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
