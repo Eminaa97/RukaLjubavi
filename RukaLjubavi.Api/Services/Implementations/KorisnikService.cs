@@ -23,6 +23,7 @@ namespace RukaLjubavi.Api.Services
         protected readonly RukaLjubaviDbContext _context;
         private readonly IMapper _mapper;
         private readonly IOptions<AppSettings> _options;
+        private readonly IEmailService _emailService;
 
         public KorisnikService(
             RukaLjubaviDbContext context,
@@ -210,7 +211,10 @@ namespace RukaLjubavi.Api.Services
             }
 
             _context.SaveChanges();
-
+            _emailService.Send(entity.Email, "Successfully registrated!", @$"Postovani,
+Uspjesno ste se registrovali kao {entity.TipKorisnika}. 
+Hvala vam na ukazanom povjerenju.
+Vasa Ruka Ljubavi");
             return GetRegistrationOrUpdateUser(entity.Id);
         }
 
