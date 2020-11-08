@@ -56,6 +56,9 @@ class ZahtjeviDonatoraActivity : AppCompatActivity(), OnItemClickListener {
             override fun onResponse(call: Call<List<Donacija>>, response: Response<List<Donacija>>) {
                 if(response.isSuccessful){
                     val list = response.body()!!
+                    if(list.isEmpty()){
+                        Toast.makeText(this@ZahtjeviDonatoraActivity,"Nemate zahtjeva.", Toast.LENGTH_SHORT).show()
+                    }
                     myAdapterZahtjeviDonatora.submitList(list)
                     myAdapterZahtjeviDonatora.notifyDataSetChanged()
                 }

@@ -95,15 +95,23 @@ class PromjeniStatusDialog(var activity: Activity, var donacijaId: Int, var tren
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                 if(response.isSuccessful){
                     Toast.makeText(activity,"Status promjenjen.", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(activity,VaseDonacijeActivity::class.java)
-                    intent.putExtra("ACTIVITY","BenefiktorHomePageActivity")
-                    startActivity(activity,intent,null)
-                    activity.finish()
+                    val requestCall = serviceDonacije.get(BenefiktorId = APIService.loggedUserId, StatusDonacije = null)
+                    requestCall.enqueue(object : Callback<List<Donacija>> {
+                        override fun onFailure(call: Call<List<Donacija>>, t: Throwable) {
+                            Toast.makeText(activity,"Error: ${t.toString()}", Toast.LENGTH_SHORT).show()
+                        }
+
+                        override fun onResponse(call: Call<List<Donacija>>, response: Response<List<Donacija>>) {
+                            if(response.isSuccessful){
+                                val list = response.body()!!
+                                myAdapterZahtjeviVaseDonacije.submitList(list)
+                                myAdapterZahtjeviVaseDonacije.notifyDataSetChanged()
+                                activity.finish()
+                                loading.stopDialog()
+                            }
+                        }
+                    })
                 }
-                else{
-                    Toast.makeText(activity,"Server error", Toast.LENGTH_SHORT).show()
-                }
-                loading.stopDialog()
             }
         })
     }

@@ -147,15 +147,30 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
                         "Donacija odbijena.",
                         Toast.LENGTH_SHORT
                     ).show()
-                    finish()
+                    val requestCall = serviceDonacije.get(StatusDonacije = StatusDonacije.Na_cekanju)
+                    requestCall.enqueue(object : Callback<List<Donacija>> {
+                        override fun onFailure(call: Call<List<Donacija>>, t: Throwable) {
+                            Toast.makeText(this@DonacijaDetaljiActivity,"Error: ${t.toString()}", Toast.LENGTH_SHORT).show()
+                        }
+
+                        override fun onResponse(call: Call<List<Donacija>>, response: Response<List<Donacija>>) {
+                            if(response.isSuccessful){
+                                val list = response.body()!!
+                                myAdapterZahtjeviDonatora.submitList(list)
+                                myAdapterZahtjeviDonatora.notifyDataSetChanged()
+                                finish()
+                                loading.stopDialog()
+                            }
+                        }
+                    })
                 } else {
                     Toast.makeText(
                         this@DonacijaDetaljiActivity,
                         response.message(),
                         Toast.LENGTH_SHORT
                     ).show()
+                    loading.stopDialog()
                 }
-                loading.stopDialog()
             }
         })
     }
@@ -178,20 +193,53 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(
-                        this@DonacijaDetaljiActivity,
-                        "Donacija prihvaćena.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    finish()
+                    Toast.makeText(this@DonacijaDetaljiActivity, "Donacija prihvaćena.", Toast.LENGTH_SHORT).show()
+
+                    if(APIService.loggedUserType == 1){
+                        val requestCall = serviceDonacije.get(isZahtjevZaDonatora = true)
+                        requestCall.enqueue(object : Callback<List<Donacija>> {
+                            override fun onFailure(call: Call<List<Donacija>>, t: Throwable) {
+                                Toast.makeText(this@DonacijaDetaljiActivity,"Error: ${t.toString()}", Toast.LENGTH_SHORT).show()
+                            }
+
+                            override fun onResponse(call: Call<List<Donacija>>, response: Response<List<Donacija>>) {
+                                if(response.isSuccessful){
+                                    val list = response.body()!!
+                                    myAdapterZahtjeviBenefiktoraLista.submitList(list)
+                                    myAdapterZahtjeviBenefiktoraLista.notifyDataSetChanged()
+                                    finish()
+                                    loading.stopDialog()
+                                }
+                            }
+                        })
+                    }
+                    else{
+                        val requestCall = serviceDonacije.get(isZahtjevZaBenefiktora = true)
+                        requestCall.enqueue(object : Callback<List<Donacija>> {
+                            override fun onFailure(call: Call<List<Donacija>>, t: Throwable) {
+                                Toast.makeText(this@DonacijaDetaljiActivity,"Error: ${t.toString()}", Toast.LENGTH_SHORT).show()
+                            }
+
+                            override fun onResponse(call: Call<List<Donacija>>, response: Response<List<Donacija>>) {
+                                if(response.isSuccessful){
+                                    val list = response.body()!!
+                                    myAdapterAktivneDonacije.submitList(list)
+                                    myAdapterAktivneDonacije.notifyDataSetChanged()
+                                    finish()
+                                    loading.stopDialog()
+                                }
+                            }
+                        })
+                    }
+
                 } else {
                     Toast.makeText(
                         this@DonacijaDetaljiActivity,
                         "Oznacili ste da vam kategorija donacije nije potrebna.",
                         Toast.LENGTH_SHORT
                     ).show()
+                    loading.stopDialog()
                 }
-                loading.stopDialog()
             }
         })
     }

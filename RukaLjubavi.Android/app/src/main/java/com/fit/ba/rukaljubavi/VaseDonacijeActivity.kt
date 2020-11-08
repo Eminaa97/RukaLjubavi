@@ -25,11 +25,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
+lateinit var myAdapterZahtjeviVaseDonacije: VaseDonacijeRecyclerAdapter
 
 class VaseDonacijeActivity : AppCompatActivity(), OnItemClickListener {
 
     var previousActivity: String? = null
-    lateinit var myAdapterZahtjeviVaseDonacije: VaseDonacijeRecyclerAdapter
     var dialog: AlertDialog? = null
     var kategorije: MutableList<DonacijaStatus>? = arrayListOf()
     var spinner: Spinner? = null
