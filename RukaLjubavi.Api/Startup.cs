@@ -10,11 +10,12 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RukaLjubavi.Api.Configuration;
 using RukaLjubavi.Api.Database;
+using RukaLjubavi.Api.Hubs;
 using RukaLjubavi.Api.Middleware;
 using RukaLjubavi.Api.Services;
+using RukaLjubavi.Api.Services.Implementations;
 using System.Text;
 using System;
-using RukaLjubavi.Api.Services.Implementations;
 
 namespace RukaLjubavi.Api
 {
@@ -87,6 +88,9 @@ namespace RukaLjubavi.Api
                    };
                });
 
+            // SignalR
+            services.AddSignalR();
+
             // Database access
             services.AddDbContext<RukaLjubaviDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("RukaLjubaviPleskDb")).EnableSensitiveDataLogging());
@@ -113,7 +117,6 @@ namespace RukaLjubavi.Api
                 app.UseDeveloperExceptionPage();
             }
 
-
             app.UseSwagger();
             app.UseSwaggerUI(config =>
             {
@@ -127,6 +130,7 @@ namespace RukaLjubavi.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<NotificationHub>("/notifications");
             });
         }
     }

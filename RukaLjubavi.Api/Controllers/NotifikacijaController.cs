@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using RukaLjubavi.Api.Contracts.Requests;
+using RukaLjubavi.Api.Hubs;
 using RukaLjubavi.Api.Services;
 
 namespace RukaLjubavi.Api.Controllers
@@ -10,10 +12,15 @@ namespace RukaLjubavi.Api.Controllers
     public class NotifikacijaController : ControllerBase
     {
         private readonly INotifikacijaService _notifikacijaService;
+        private readonly IHubContext<NotificationHub> _hubContext;
 
-        public NotifikacijaController(INotifikacijaService notifikacijaService)
+        public NotifikacijaController(
+            INotifikacijaService notifikacijaService, 
+            IHubContext<NotificationHub> hubContext
+            )
         {
             _notifikacijaService = notifikacijaService;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -32,7 +39,18 @@ namespace RukaLjubavi.Api.Controllers
         [HttpPost]
         public IActionResult Insert(NotifikacijaInsertRequest request)
         {
-            return Ok(_notifikacijaService.Insert(request));
+            var notificationResponse = _notifikacijaService.Insert(request);
+
+            lock (NotificationHub.ConnectedUsers)
+            {
+                if (NotificationHub.ConnectedUsers.ContainsKey(notificationResponse.KorisnikId.ToString()))
+                {
+                    var connectionId = NotificationHub.ConnectedUsers[notificationResponse.KorisnikId.ToString()];
+                    _hubContext.Clients.Client(connectionId).SendAsync("OnNotificationReceived", notificationResponse);
+                }
+            }
+
+            return Ok(notificationResponse);
         }
 
         [Authorize]

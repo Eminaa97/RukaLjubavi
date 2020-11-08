@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using RukaLjubavi.Api.Contracts.Dto;
 using RukaLjubavi.Api.Contracts.Requests;
 using RukaLjubavi.Api.Database;
+using RukaLjubavi.Api.Hubs;
 using RukaLjubavi.Api.Models;
 using System;
 using System.Collections.Generic;
@@ -14,14 +16,17 @@ namespace RukaLjubavi.Api.Services.Implementations
     {
         protected readonly RukaLjubaviDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IHubContext<NotificationHub> _hubContext;
 
         public DonacijaService(
             RukaLjubaviDbContext context,
-            IMapper mapper
+            IMapper mapper,
+            IHubContext<NotificationHub> hubContext
             )
         {
             _context = context;
             _mapper = mapper;
+            _hubContext = hubContext;
         }
 
         public IList<DonacijaDto> Get(DonacijaSearchRequest search)
@@ -95,8 +100,9 @@ namespace RukaLjubavi.Api.Services.Implementations
         {
             var entity = _mapper.Map<Donacija>(donacija);
             entity.DatumVrijeme = DateTime.UtcNow;
-            entity.NazivKategorije = _context.Kategorije.Where(x => x.Id == donacija.KategorijaId).SingleOrDefault().Naziv;
-            if(donacija.BenefiktorId != null && donacija.DonatorId != null)
+            entity.NazivKategorije = _context.Kategorije.Where(x => x.Id == donacija.KategorijaId).FirstOrDefault().Naziv;
+
+            if (donacija.BenefiktorId != null && donacija.DonatorId != null)
             {
                 entity.StatusDonacije = StatusDonacije.Na_cekanju;
             }
@@ -107,13 +113,38 @@ namespace RukaLjubavi.Api.Services.Implementations
             _context.Donacije.Add(entity);
             _context.SaveChanges();
 
+            if (donacija.BenefiktorId != null && donacija.DonatorId != null)
+            {
+                var korisnik = _context.Donacije.Where(a => a.Id == entity.Id)
+                    .Include(a => a.Donator)
+                    .FirstOrDefault();
+
+                var newNotification = new Notifikacija
+                {
+                    KorisnikId = korisnik.Donator.KorisnikId,
+                    DatumSlanja = DateTime.UtcNow,
+                    Sadrzaj = $"Donator {korisnik.Donator.Ime} {korisnik.Donator.Prezime} salje donaciju {entity.Opis}!"
+                };
+                _context.Add(newNotification);
+                _context.SaveChanges();
+
+                lock (NotificationHub.ConnectedUsers)
+                {
+                    if (NotificationHub.ConnectedUsers.ContainsKey(korisnik.Donator.KorisnikId.ToString()))
+                    {
+                        var userConnection = NotificationHub.ConnectedUsers[korisnik.Donator.KorisnikId.ToString()];
+                        _hubContext.Clients.Client(userConnection).SendAsync("OnNotificationReceived", newNotification);
+                    }
+                }
+            }
+
             return _mapper.Map<DonacijaDto>(entity);
         }
 
         public DonacijaDto Prihvati(int id, int userId)
         {
             var entity = _context.Donacije.FirstOrDefault(x => x.Id == id);
-            if(entity.DonatorId == null)
+            if (entity.DonatorId == null)
             {
                 entity.DonatorId = userId;
             }
@@ -131,7 +162,29 @@ namespace RukaLjubavi.Api.Services.Implementations
         {
             var entity = _context.Donacije.FirstOrDefault(x => x.Id == id);
             entity.StatusDonacije = statusDonacije;
+            _context.Update(entity);
+
+            var korisnik = _context.Donacije.Where(a => a.Id == entity.Id)
+                    .Include(a => a.Donator)
+                    .FirstOrDefault();
+
+            var newNotification = new Notifikacija
+            {
+                KorisnikId = korisnik.Donator.KorisnikId,
+                DatumSlanja = DateTime.UtcNow,
+                Sadrzaj = $"Donacija {korisnik.Opis} oznacena kao {korisnik.StatusDonacije}!"
+            };
+            _context.Add(newNotification);
             _context.SaveChanges();
+
+            lock (NotificationHub.ConnectedUsers)
+            {
+                if (NotificationHub.ConnectedUsers.ContainsKey(korisnik.Donator.KorisnikId.ToString()))
+                {
+                    var userConnection = NotificationHub.ConnectedUsers[korisnik.Donator.KorisnikId.ToString()];
+                    _hubContext.Clients.Client(userConnection).SendAsync("OnNotificationReceived", newNotification);
+                }
+            }
 
             return _mapper.Map<DonacijaDto>(entity);
         }
