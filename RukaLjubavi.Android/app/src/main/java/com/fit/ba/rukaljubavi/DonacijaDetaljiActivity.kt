@@ -94,13 +94,21 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
         }
 
         if(donacije!!.status.equals(StatusDonacije.Zavrsena.name)){
-            btnRatingDialog.setOnClickListener {
+            btnRatingDialogVasaOcjena.setOnClickListener {
                 RatingDialog(this@DonacijaDetaljiActivity, donacije!!.id).loadDialog()
+            }
+            if(APIService.loggedUserType == 1){
+                txtOcjenaDon2.text = "Ocjena benefiktora"
+            }
+            btnRatingDialogOcjena.setOnClickListener {
+                RatingDialog(this@DonacijaDetaljiActivity, donacije!!.id, false).loadDialog()
             }
         }
         else{
-            btnRatingDialog.visibility = View.GONE;
+            btnRatingDialogVasaOcjena.visibility = View.GONE;
+            btnRatingDialogOcjena.visibility = View.GONE;
             txtOcjenaDon.visibility = View.GONE;
+            txtOcjenaDon2.visibility = View.GONE;
             val param1 = txtDonator.layoutParams as ViewGroup.MarginLayoutParams
             val param2 = textView35.layoutParams as ViewGroup.MarginLayoutParams
             param1.setMargins(35,20,0,0)

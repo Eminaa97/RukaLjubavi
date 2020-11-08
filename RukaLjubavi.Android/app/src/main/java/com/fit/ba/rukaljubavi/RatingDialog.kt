@@ -2,6 +2,8 @@ package com.fit.ba.rukaljubavi
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.opengl.Visibility
+import android.view.View
 import android.widget.*
 import com.fit.ba.rukaljubavi.Models.Kategorija
 import com.fit.ba.rukaljubavi.Models.OcjenaDonacije
@@ -13,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RatingDialog(var activity: Activity, var donacijaId: Int) {
+class RatingDialog(var activity: Activity, var donacijaId: Int, var isVasaDonacija: Boolean = true) {
 
     private val service = APIService.buildService(OcjenaDonacijeService::class.java)
     var dialog: AlertDialog? = null
@@ -34,7 +36,7 @@ class RatingDialog(var activity: Activity, var donacijaId: Int) {
         dialog = builder.create()
         dialog!!.show()
 
-        loadPostojecaOcjena()
+        loadOcjena()
 
         var btnOcijeni = dialogView.findViewById<TextView>(R.id.btnOcijeni)
         var btnOdustani = dialogView.findViewById<TextView>(R.id.btnOdustani)
@@ -43,24 +45,38 @@ class RatingDialog(var activity: Activity, var donacijaId: Int) {
         ratingBarPostizanjeDogovora = dialogView.findViewById<RatingBar>(R.id.ratingBarPostizanjeDogovora)
         txtOpis = dialogView.findViewById<EditText>(R.id.txtOpis)
 
-        ocjenaDonacije!!.donacijaId = donacijaId
-        ocjenaDonacije!!.ocjenjivacTipKorisnika = APIService!!.loggedUserType
-        ocjenaDonacije!!.korisnikId = APIService!!.loggedId
+
+        if(isVasaDonacija) {
+            ocjenaDonacije!!.donacijaId = donacijaId
+            ocjenaDonacije!!.ocjenjivacTipKorisnika = APIService!!.loggedUserType
+            ocjenaDonacije!!.korisnikId = APIService!!.loggedId
+
+            btnOcijeni.setOnClickListener {
+                ocijeni()
+            }
+        }
+        else{
+            ratingBarPovjerljivost!!.setIsIndicator(true)
+            ratingBarBrzinaDostavljanja!!.setIsIndicator(true)
+            ratingBarPostizanjeDogovora!!.setIsIndicator(true)
+            btnOcijeni.visibility = View.GONE
+            btnOdustani.text = "Nazad"
+            txtOpis!!.isFocusable = false
+        }
 
         btnOdustani.setOnClickListener {
             dialog!!.dismiss()
         }
-
-        btnOcijeni.setOnClickListener {
-            ocijeni()
-        }
     }
 
-    private fun loadPostojecaOcjena() {
+    private fun loadOcjena() {
         var loading = LoadingDialog(activity)
         loading.startLoadingDialog()
 
-        val requestCall = service.getAll(KorisnikId = APIService!!.loggedId, DonacijaId = donacijaId)
+        val requestCall = if(isVasaDonacija)
+            service.getAll(KorisnikId = APIService!!.loggedId, DonacijaId = donacijaId, isVasaDonacija = true)
+        else
+            service.getAll(KorisnikId = APIService!!.loggedId, DonacijaId = donacijaId, isVasaDonacija = false)
         requestCall.enqueue(object : Callback<List<OcjenaDonacije>> {
             override fun onFailure(call: Call<List<OcjenaDonacije>>, t: Throwable) {
                 Toast.makeText(activity,"Server error", Toast.LENGTH_SHORT).show()
@@ -77,6 +93,12 @@ class RatingDialog(var activity: Activity, var donacijaId: Int) {
                         ratingBarPovjerljivost!!.rating = list.last().povjerljivost.toFloat()
                         ratingBarBrzinaDostavljanja!!.rating = list.last().brzinaDostavljanja.toFloat()
                         ratingBarPostizanjeDogovora!!.rating = list.last().postivanjeDogovora.toFloat()
+                    }
+                    else{
+                        if(!isVasaDonacija) {
+                            dialog!!.dismiss()
+                            Toast.makeText(activity, "Korisnik nije ocjenio donaciju.", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
                 loading.stopDialog()

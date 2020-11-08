@@ -10,7 +10,7 @@ import retrofit2.http.*
 
 interface OcjenaDonacijeService {
     @GET("OcjenaDonacije")
-    fun getAll(@Query("KorisnikId") KorisnikId: Int?, @Query("DonacijaId") DonacijaId: Int): Call<List<OcjenaDonacije>>
+    fun getAll(@Query("KorisnikId") KorisnikId: Int?, @Query("DonacijaId") DonacijaId: Int, @Query("isVasaDonacija") isVasaDonacija: Boolean): Call<List<OcjenaDonacije>>
     @POST("OcjenaDonacije")
     fun send(@Header("Authorization") authorization: String?, @Body newItem: OcjenaDonacijeInsertRequest): Call<Unit>
     @PATCH("OcjenaDonacije/{id}")

@@ -35,25 +35,17 @@ namespace RukaLjubavi.Api.Services.Implementations
                 .Include(x => x.Donacija.BenefiktorKategorije.Benefiktor)
                 .AsQueryable();
 
-            if (search.BrzinaDostavljanja != null)
-            {
-                q = q.Where(x => x.BrzinaDostavljanja == search.BrzinaDostavljanja);
-            }
             if (search.DonacijaId != null)
             {
                 q = q.Where(x => x.DonacijaId == search.DonacijaId);
             }
-            if (search.KorisnikId != null)
+            if (search.KorisnikId != null && search.isVasaDonacija == true)
             {
-                q = q.Where(x => x.KorisnikId== search.KorisnikId);
+                q = q.Where(x => x.KorisnikId == search.KorisnikId);
             }
-            if (search.PostivanjeDogovora != null)
+            if (search.isVasaDonacija == false)
             {
-                q = q.Where(x => x.PostivanjeDogovora == search.PostivanjeDogovora);
-            }
-            if (search.Povjerljivost != null)
-            {
-                q = q.Where(x => x.Povjerljivost == search.Povjerljivost);
+                q = q.Where(x => x.KorisnikId != search.KorisnikId);
             }
 
             return _mapper.Map<IList<OcjenaDonacijeDto>>(q);
