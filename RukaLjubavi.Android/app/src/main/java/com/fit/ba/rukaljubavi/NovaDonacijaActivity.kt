@@ -9,15 +9,11 @@ import android.text.InputType
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.fit.ba.rukaljubavi.Models.Benefiktor
-import com.fit.ba.rukaljubavi.Models.Grad
-import com.fit.ba.rukaljubavi.Models.Kategorija
+import com.fit.ba.rukaljubavi.Models.*
 import com.fit.ba.rukaljubavi.Requests.BenefiktorInsertRequest
 import com.fit.ba.rukaljubavi.Requests.DonacijaInsertRequest
-import com.fit.ba.rukaljubavi.Services.APIService
-import com.fit.ba.rukaljubavi.Services.BenefiktorService
-import com.fit.ba.rukaljubavi.Services.DonacijaService
-import com.fit.ba.rukaljubavi.Services.KategorijaService
+import com.fit.ba.rukaljubavi.Services.*
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_nova_donacija.*
 import kotlinx.android.synthetic.main.activity_registracija_benefiktor.*
 import kotlinx.android.synthetic.main.activity_registracija_donator.*
@@ -131,6 +127,10 @@ class NovaDonacijaActivity : AppCompatActivity() {
                             Intent(this@NovaDonacijaActivity, DonatorHomePageActivity::class.java)
                         startActivity(intent)
                         finish()
+
+                        FirebaseRetrofitInstance.sendNotification(
+                            PushNotification(Notification("Ruka Ljubavi", "Korisnik ${APIService.naziv} je dodao novu donaciju.", BenefiktorHomePageActivity::class.java.name),
+                                TOPIC))
                     } else {
                         Toast.makeText(
                             this@NovaDonacijaActivity,

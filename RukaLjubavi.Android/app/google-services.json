@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "588241956395",
+    "firebase_url": "https://rukaljubavi-notification.firebaseio.com",
+    "project_id": "rukaljubavi-notification",
+    "storage_bucket": "rukaljubavi-notification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588241956395:android:b6077620a024f2b2af846e",
+        "android_client_info": {
+          "package_name": "com.fit.ba.rukaljubavi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588241956395-3qj1l6se7iciuvq2sqh00tapdg678out.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7uyTIlGIHKlnTJD-SbCqqjgomBGdh8Xo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588241956395-3qj1l6se7iciuvq2sqh00tapdg678out.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

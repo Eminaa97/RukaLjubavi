@@ -3,6 +3,7 @@ package com.fit.ba.rukaljubavi
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_benefiktor_home_page.*
 import kotlinx.android.synthetic.main.activity_benefiktor_home_page.btnAbout
 import kotlinx.android.synthetic.main.activity_benefiktor_home_page.btnLogout
@@ -13,6 +14,8 @@ class BenefiktorHomePageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_benefiktor_home_page)
 
+        FirebaseMessaging.getInstance().subscribeToTopic("benefiktor")
+
         btnAbout.setOnClickListener {
             val intent = Intent(this,AboutActivity::class.java)
             startActivity(intent)
@@ -20,6 +23,7 @@ class BenefiktorHomePageActivity : AppCompatActivity() {
 
         btnLogout.setOnClickListener {
             OdjavaAlertDialog(this@BenefiktorHomePageActivity).startAlertDialog(PrijavaActivity::class.java)
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("benefiktor")
         }
 
         btnMainProfile.setOnClickListener {
