@@ -3,7 +3,11 @@ package com.fit.ba.rukaljubavi
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.fit.ba.rukaljubavi.Services.TOPIC
+import android.widget.Toast
+import com.fit.ba.rukaljubavi.Models.Notification
+import com.fit.ba.rukaljubavi.Models.PushNotification
+import com.fit.ba.rukaljubavi.Services.APIService
+import com.fit.ba.rukaljubavi.Services.FirebaseRetrofitInstance
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_donator_home_page.*
 
@@ -13,7 +17,7 @@ class DonatorHomePageActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_donator_home_page)
 
-        FirebaseMessaging.getInstance().subscribeToTopic("donator")
+        FirebaseMessaging.getInstance().subscribeToTopic(sharedPreferences!!.getString("TOPIC", "NAN")!!)
 
         btnAbout.setOnClickListener {
             val intent = Intent(this,AboutActivity::class.java)
@@ -28,7 +32,7 @@ class DonatorHomePageActivity : AppCompatActivity()
 
         btnLogout.setOnClickListener {
             OdjavaAlertDialog(this@DonatorHomePageActivity).startAlertDialog(PrijavaActivity::class.java)
-            FirebaseMessaging.getInstance().unsubscribeFromTopic("donator")
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(sharedPreferences!!.getString("TOPIC", "NAN")!!)
         }
 
         btnMainProfile.setOnClickListener {

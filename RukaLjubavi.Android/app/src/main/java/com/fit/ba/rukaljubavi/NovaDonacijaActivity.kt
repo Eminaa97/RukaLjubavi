@@ -129,8 +129,8 @@ class NovaDonacijaActivity : AppCompatActivity() {
                         finish()
 
                         FirebaseRetrofitInstance.sendNotification(
-                            PushNotification(Notification("Ruka Ljubavi", "Korisnik ${APIService.naziv} je dodao novu donaciju.", BenefiktorHomePageActivity::class.java.name),
-                                TOPIC))
+                            PushNotification(Notification("Ruka Ljubavi", "Donator ${APIService.naziv} je dodao novu donaciju.", BenefiktorHomePageActivity::class.java.name),
+                                "/topics/benefiktor"))
                     } else {
                         Toast.makeText(
                             this@NovaDonacijaActivity,

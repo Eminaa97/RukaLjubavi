@@ -7,9 +7,12 @@ import android.content.Intent
 import android.widget.*
 import androidx.core.content.ContextCompat.startActivity
 import com.fit.ba.rukaljubavi.Models.Donacija
+import com.fit.ba.rukaljubavi.Models.Notification
+import com.fit.ba.rukaljubavi.Models.PushNotification
 import com.fit.ba.rukaljubavi.Models.StatusDonacije
 import com.fit.ba.rukaljubavi.Services.APIService
 import com.fit.ba.rukaljubavi.Services.DonacijaService
+import com.fit.ba.rukaljubavi.Services.FirebaseRetrofitInstance
 import com.fit.ba.rukaljubavi.Services.KategorijaService
 import kotlinx.android.synthetic.main.activity_vase_donacije.*
 import retrofit2.Call
@@ -108,6 +111,11 @@ class PromjeniStatusDialog(var activity: Activity, var donacijaId: Int, var tren
                                 myAdapterZahtjeviVaseDonacije.notifyDataSetChanged()
                                 activity.finish()
                                 loading.stopDialog()
+                                FirebaseRetrofitInstance.sendNotification(
+                                    PushNotification(
+                                        Notification("Ruka Ljubavi", "Korisnik ${APIService.naziv} je promjenio status donacije.", DonatorHomePageActivity::class.java.name),
+                                        "/topics/donator")
+                                )
                             }
                         }
                     })

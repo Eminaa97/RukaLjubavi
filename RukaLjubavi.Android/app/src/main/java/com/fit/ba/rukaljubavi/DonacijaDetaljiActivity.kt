@@ -10,9 +10,12 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.view.marginTop
 import com.fit.ba.rukaljubavi.Models.Donacija
+import com.fit.ba.rukaljubavi.Models.Notification
+import com.fit.ba.rukaljubavi.Models.PushNotification
 import com.fit.ba.rukaljubavi.Models.StatusDonacije
 import com.fit.ba.rukaljubavi.Services.APIService
 import com.fit.ba.rukaljubavi.Services.DonacijaService
+import com.fit.ba.rukaljubavi.Services.FirebaseRetrofitInstance
 import kotlinx.android.synthetic.main.activity_donacija_detalji.*
 import kotlinx.android.synthetic.main.activity_donacija_detalji.txtBenefiktor
 import kotlinx.android.synthetic.main.activity_donacija_detalji.txtDonator
@@ -161,6 +164,12 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
                                 myAdapterZahtjeviDonatora.notifyDataSetChanged()
                                 finish()
                                 loading.stopDialog()
+
+                                FirebaseRetrofitInstance.sendNotification(
+                                    PushNotification(
+                                        Notification("Ruka Ljubavi", "Benefiktor ${APIService.naziv} je odbio vašu donaciju kategorije ${donacije!!.nazivKategorije}.", DonatorHomePageActivity::class.java.name),
+                                        "/topics/donator")
+                                )
                             }
                         }
                     })
@@ -210,6 +219,12 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
                                     myAdapterZahtjeviDonatora.notifyDataSetChanged()
                                     finish()
                                     loading.stopDialog()
+
+                                    FirebaseRetrofitInstance.sendNotification(
+                                        PushNotification(
+                                            Notification("Ruka Ljubavi", "Benefiktor ${APIService.naziv} je prihvatio vašu donaciju kategorije ${donacije!!.nazivKategorije}.", DonatorHomePageActivity::class.java.name),
+                                            "/topics/donator")
+                                    )
                                 }
                             }
                         })
@@ -228,6 +243,12 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
                                     myAdapterZahtjeviBenefiktoraLista.notifyDataSetChanged()
                                     finish()
                                     loading.stopDialog()
+
+                                    FirebaseRetrofitInstance.sendNotification(
+                                        PushNotification(
+                                            Notification("Ruka Ljubavi", "Donator ${APIService.naziv} je preuzeo vašu donaciju kategorije ${donacije!!.nazivKategorije}.", BenefiktorHomePageActivity::class.java.name),
+                                            "/topics/benefiktor")
+                                    )
                                 }
                             }
                         })
@@ -246,6 +267,12 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
                                     myAdapterAktivneDonacije.notifyDataSetChanged()
                                     finish()
                                     loading.stopDialog()
+
+                                    FirebaseRetrofitInstance.sendNotification(
+                                        PushNotification(
+                                            Notification("Ruka Ljubavi", "Benefiktor ${APIService.naziv} je preuzeo vašu donaciju kategorije ${donacije!!.nazivKategorije}.", BenefiktorHomePageActivity::class.java.name),
+                                            "/topics/donator")
+                                    )
                                 }
                             }
                         })

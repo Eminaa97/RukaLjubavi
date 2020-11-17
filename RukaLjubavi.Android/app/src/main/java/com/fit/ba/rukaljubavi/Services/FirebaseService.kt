@@ -18,7 +18,6 @@ import com.google.firebase.messaging.RemoteMessage
 import kotlin.random.Random
 
 private const val CHANNEL_ID = "my_channel"
-var TOPIC = "/topics/benefiktor"
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class FirebaseService : FirebaseMessagingService() {

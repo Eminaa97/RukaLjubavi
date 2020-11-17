@@ -74,6 +74,7 @@ class PrijavaActivity : AppCompatActivity() {
                             finish()
                             APIService.loggedUserId = item.donatorId
                             APIService.naziv = """${item.ime} ${item.prezime}"""
+                            editor.putString("TOPIC", "donator")
                         }
                         if(item!!.tipKorisnika == 2){
                             val intent = Intent(this@PrijavaActivity, BenefiktorHomePageActivity::class.java)
@@ -81,6 +82,7 @@ class PrijavaActivity : AppCompatActivity() {
                             finish()
                             APIService.loggedUserId = item.benefiktorId
                             APIService.naziv = item.nazivKompanije
+                            editor.putString("TOPIC", "benefiktor")
                         }
                         editor.putString(Email, login.email)
                         editor.putString(Password, login.password)

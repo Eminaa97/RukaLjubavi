@@ -24,10 +24,10 @@ import kotlin.concurrent.timerTask
 var sharedPreferences: SharedPreferences? = null
 var Email: String = "username"
 var Password: String = "password"
+var fileName: String = "loginData1"
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    var fileName: String = "loginData"
     private val service = APIService.buildService(PrijavaService::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {

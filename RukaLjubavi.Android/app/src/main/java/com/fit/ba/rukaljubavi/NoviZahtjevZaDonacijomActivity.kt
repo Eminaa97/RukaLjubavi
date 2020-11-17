@@ -10,9 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.fit.ba.rukaljubavi.Models.Kategorija
+import com.fit.ba.rukaljubavi.Models.Notification
+import com.fit.ba.rukaljubavi.Models.PushNotification
 import com.fit.ba.rukaljubavi.Requests.DonacijaInsertRequest
 import com.fit.ba.rukaljubavi.Services.APIService
 import com.fit.ba.rukaljubavi.Services.DonacijaService
+import com.fit.ba.rukaljubavi.Services.FirebaseRetrofitInstance
 import com.fit.ba.rukaljubavi.Services.KategorijaService
 import kotlinx.android.synthetic.main.activity_nova_donacija.*
 import retrofit2.Call
@@ -26,6 +29,7 @@ class NoviZahtjevZaDonacijomActivity : AppCompatActivity() {
     var kategorije: MutableList<Kategorija>? = arrayListOf()
     var spinner: Spinner? = null
     var donacija: DonacijaInsertRequest = DonacijaInsertRequest()
+    var kategorijaText: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +49,7 @@ class NoviZahtjevZaDonacijomActivity : AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 var kategorija = p0!!.getItemAtPosition(p2) as Kategorija
                 donacija.kategorijaId = kategorija.id
+                kategorijaText = kategorija.naziv
             }
         }
 
@@ -98,6 +103,11 @@ class NoviZahtjevZaDonacijomActivity : AppCompatActivity() {
                             Intent(this@NoviZahtjevZaDonacijomActivity, BenefiktorHomePageActivity::class.java)
                         startActivity(intent)
                         finish()
+                        FirebaseRetrofitInstance.sendNotification(
+                            PushNotification(
+                                Notification("Ruka Ljubavi", "Benefiktor ${APIService.naziv} zahtjeva donaciju kategorije: ${kategorijaText}.", DonatorHomePageActivity::class.java.name),
+                                "/topics/donator")
+                        )
                     }
                     else {
                         Toast.makeText(
