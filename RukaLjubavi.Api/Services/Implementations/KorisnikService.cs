@@ -207,14 +207,16 @@ namespace RukaLjubavi.Api.Services
                 }
 
                 // exception for testing purpose, functionality will be added
-                throw new Exception("Wrong PDV number");
+                var pdv = _context.PdvBroj.FirstOrDefault(x => x.PDVBroj == bir.Pdvbroj);
+                if (pdv == null)
+                    throw new Exception("Wrong PDV number");
             }
 
             _context.SaveChanges();
-            _emailService.Send(entity.Email, "Successfully registrated!", @$"Postovani,
-Uspjesno ste se registrovali kao {entity.TipKorisnika}. 
-Hvala vam na ukazanom povjerenju.
-Vasa Ruka Ljubavi");
+            //_emailService.Send(entity.Email, "Successfully registrated!", @$"Postovani,
+            //Uspjesno ste se registrovali kao {entity.TipKorisnika}. 
+            //Hvala vam na ukazanom povjerenju.
+            //Vasa Ruka Ljubavi");
             return GetRegistrationOrUpdateUser(entity.Id);
         }
 
@@ -288,7 +290,7 @@ Vasa Ruka Ljubavi");
 
                 user.BenefiktorId = benefiktor.Id;
                 user.NazivKompanije = benefiktor.NazivKompanije;
-                user.Pdvbroj = benefiktor.Pdvbroj;
+                user.Pdvbroj = benefiktor.PDVbroj;
 
                 return user;
             }

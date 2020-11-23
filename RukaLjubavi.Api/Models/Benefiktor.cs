@@ -8,7 +8,7 @@ namespace RukaLjubavi.Api.Models
         [Key]
         public int Id { get; set; }
         public string NazivKompanije { get; set; }
-        public string Pdvbroj { get; set; }
+        public string PDVbroj { get; set; }
 
         [ForeignKey(nameof(KorisnikId))]
         public Korisnik Korisnik { get; set; }

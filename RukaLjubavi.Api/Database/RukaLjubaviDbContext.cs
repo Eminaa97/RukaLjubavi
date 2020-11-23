@@ -36,5 +36,6 @@ namespace RukaLjubavi.Api.Database
         public DbSet<DonatorKategorija> DonatorKategorije { get; set; }
         public DbSet<BenefiktorKategorija> BenefiktorKategorije { get; set; }
         public DbSet<OcjenaDonacije> OcjeneDonacija { get; set; }
+        public DbSet<PdvBroj> PdvBroj { get; set; }
     }
 }
