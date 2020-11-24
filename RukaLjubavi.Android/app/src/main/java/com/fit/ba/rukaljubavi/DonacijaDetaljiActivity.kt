@@ -165,11 +165,11 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
                                 finish()
                                 loading.stopDialog()
 
-                                FirebaseRetrofitInstance.sendNotification(
-                                    PushNotification(
-                                        Notification("Ruka Ljubavi", "Benefiktor ${APIService.naziv} je odbio vašu donaciju kategorije ${donacije!!.nazivKategorije}.", DonatorHomePageActivity::class.java.name),
-                                        "/topics/donator")
-                                )
+                                //FirebaseRetrofitInstance.sendNotification(
+                                //    PushNotification(
+                                //        Notification("Ruka Ljubavi", "Benefiktor ${APIService.naziv} je odbio vašu donaciju kategorije ${donacije!!.nazivKategorije}.", DonatorHomePageActivity::class.java.name),
+                                //        "/topics/donator")
+                                //)
                             }
                         }
                     })
@@ -220,11 +220,11 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
                                     finish()
                                     loading.stopDialog()
 
-                                    FirebaseRetrofitInstance.sendNotification(
-                                        PushNotification(
-                                            Notification("Ruka Ljubavi", "Benefiktor ${APIService.naziv} je prihvatio vašu donaciju kategorije ${donacije!!.nazivKategorije}.", DonatorHomePageActivity::class.java.name),
-                                            "/topics/donator")
-                                    )
+                                    //FirebaseRetrofitInstance.sendNotification(
+                                    //    PushNotification(
+                                    //        Notification("Ruka Ljubavi", "Benefiktor ${APIService.naziv} je prihvatio vašu donaciju kategorije ${donacije!!.nazivKategorije}.", DonatorHomePageActivity::class.java.name),
+                                    //        "/topics/donator")
+                                    //)
                                 }
                             }
                         })
@@ -244,11 +244,11 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
                                     finish()
                                     loading.stopDialog()
 
-                                    FirebaseRetrofitInstance.sendNotification(
-                                        PushNotification(
-                                            Notification("Ruka Ljubavi", "Donator ${APIService.naziv} je preuzeo vašu donaciju kategorije ${donacije!!.nazivKategorije}.", BenefiktorHomePageActivity::class.java.name),
-                                            "/topics/benefiktor")
-                                    )
+                                    //FirebaseRetrofitInstance.sendNotification(
+                                    //    PushNotification(
+                                    //        Notification("Ruka Ljubavi", "Donator ${APIService.naziv} je preuzeo vašu donaciju kategorije ${donacije!!.nazivKategorije}.", BenefiktorHomePageActivity::class.java.name),
+                                    //        "/topics/benefiktor")
+                                    //)
                                 }
                             }
                         })
@@ -268,11 +268,11 @@ class DonacijaDetaljiActivity : AppCompatActivity() {
                                     finish()
                                     loading.stopDialog()
 
-                                    FirebaseRetrofitInstance.sendNotification(
-                                        PushNotification(
-                                            Notification("Ruka Ljubavi", "Benefiktor ${APIService.naziv} je preuzeo vašu donaciju kategorije ${donacije!!.nazivKategorije}.", BenefiktorHomePageActivity::class.java.name),
-                                            "/topics/donator")
-                                    )
+                                    //FirebaseRetrofitInstance.sendNotification(
+                                    //    PushNotification(
+                                    //        Notification("Ruka Ljubavi", "Benefiktor ${APIService.naziv} je preuzeo vašu donaciju kategorije ${donacije!!.nazivKategorije}.", BenefiktorHomePageActivity::class.java.name),
+                                    //        "/topics/donator")
+                                    //)
                                 }
                             }
                         })

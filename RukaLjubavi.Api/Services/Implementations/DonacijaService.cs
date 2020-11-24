@@ -14,14 +14,16 @@ namespace RukaLjubavi.Api.Services.Implementations
     {
         protected readonly RukaLjubaviDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IEmailService _emailService;
 
         public DonacijaService(
             RukaLjubaviDbContext context,
-            IMapper mapper
+            IMapper mapper, IEmailService _emailService
             )
         {
             _context = context;
             _mapper = mapper;
+            this._emailService = _emailService;
         }
 
         public IList<DonacijaDto> Get(DonacijaSearchRequest search)
@@ -112,10 +114,14 @@ namespace RukaLjubavi.Api.Services.Implementations
 
         public DonacijaDto Prihvati(int id, int userId)
         {
-            var entity = _context.Donacije.FirstOrDefault(x => x.Id == id);
-            if(entity.DonatorId == null)
+            var entity = _context.Donacije.Include(x => x.Donator).ThenInclude(x => x.Korisnik)
+                .Include(x => x.BenefiktorKategorije)
+                .Include(x => x.BenefiktorKategorije.Benefiktor)
+                .FirstOrDefault(x => x.Id == id);
+            if (entity.DonatorId == null)
             {
                 entity.DonatorId = userId;
+                
             }
             if (entity.BenefiktorId == null)
             {
@@ -129,9 +135,18 @@ namespace RukaLjubavi.Api.Services.Implementations
 
         public DonacijaDto PromjeniStatus(int id, StatusDonacije statusDonacije)
         {
-            var entity = _context.Donacije.FirstOrDefault(x => x.Id == id);
+            var entity = _context.Donacije.Include(x=>x.Donator).ThenInclude(x=>x.Korisnik)
+                .Include(x=>x.BenefiktorKategorije)
+                .Include(x=>x.BenefiktorKategorije.Benefiktor)
+                .FirstOrDefault(x => x.Id == id);
             entity.StatusDonacije = statusDonacije;
             _context.SaveChanges();
+
+            _emailService.Send(entity.Donator.Korisnik.Email, "Status donacije promijenjen!", @$"Postovani,
+            
+            Benefiktor {entity.BenefiktorKategorije.Benefiktor.NazivKompanije} je promjenio status vaše donacije.
+            
+            Vasa Ruka Ljubavi");
 
             return _mapper.Map<DonacijaDto>(entity);
         }

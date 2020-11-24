@@ -28,12 +28,14 @@ namespace RukaLjubavi.Api.Services
         public KorisnikService(
             RukaLjubaviDbContext context,
             IMapper mapper,
-            IOptions<AppSettings> options
+            IOptions<AppSettings> options,
+            IEmailService _emailService
             )
         {
             _context = context;
             _mapper = mapper;
             _options = options;
+            this._emailService = _emailService;
         }
 
         public UserDto Get(int id)
@@ -213,10 +215,13 @@ namespace RukaLjubavi.Api.Services
             }
 
             _context.SaveChanges();
-            //_emailService.Send(entity.Email, "Successfully registrated!", @$"Postovani,
-            //Uspjesno ste se registrovali kao {entity.TipKorisnika}. 
-            //Hvala vam na ukazanom povjerenju.
-            //Vasa Ruka Ljubavi");
+            _emailService.Send(entity.Email, "Registracija uspjesna", 
+            @$"Postovani,
+            \n
+            Uspjesno ste se registrovali kao {entity.TipKorisnika}. 
+            Hvala vam na ukazanom povjerenju.
+            \n
+            Vasa Ruka Ljubavi");
             return GetRegistrationOrUpdateUser(entity.Id);
         }
 

@@ -111,11 +111,11 @@ class PromjeniStatusDialog(var activity: Activity, var donacijaId: Int, var tren
                                 myAdapterZahtjeviVaseDonacije.notifyDataSetChanged()
                                 activity.finish()
                                 loading.stopDialog()
-                                FirebaseRetrofitInstance.sendNotification(
-                                    PushNotification(
-                                        Notification("Ruka Ljubavi", "Korisnik ${APIService.naziv} je promjenio status donacije.", DonatorHomePageActivity::class.java.name),
-                                        "/topics/donator")
-                                )
+                                //FirebaseRetrofitInstance.sendNotification(
+                                //    PushNotification(
+                                //        Notification("Ruka Ljubavi", "Korisnik ${APIService.naziv} je promjenio status donacije.", DonatorHomePageActivity::class.java.name),
+                                //        "/topics/donator")
+                                //)
                             }
                         }
                     })
